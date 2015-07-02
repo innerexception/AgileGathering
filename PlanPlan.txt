@@ -1,0 +1,29 @@
+Agile the Gathering - CCG for Learning Agile Concepts
+
+G: Complete 20 points before the other guy
+  -Resource Cards: Money, Manpower
+    -Examples:
+      -Manpower: Junior Engineer: Summon cost: 5 money, Points per turn (ppt): 2
+      -Manpower: Senior Engineer (UX Specialty (blue)): Summon cost: 10 money, PPT: 3(non-blue)/4(blue)
+      -Manpower: PO: Summon cost: 4 money, Attach to dev group to increase all dev ppt by 1
+      -Money: IPO: Grants 20 money, cost 1 money in dividends every other turn
+      -Money: Revenue: Grants 5 money
+  -Delays (Only playable on not your turn)
+    -Examples:
+      -Delay: Scope Creep: Causes targeted story to increase in both point value and time cost by 2
+      -Delay: Sick Time: Causes targeted Manpower card to be removed from the game for 1 turn
+      -Delay: Support Fail: Remove target Money card form the game
+  -Boosts (Only playable on your turn)
+    -Examples:
+      -Boost: Scope Shrink: Causes targeted story to decrease in pint value and time cost by 2
+      -Boost: Synergy: Causes all devs ppt to increase by 3 for 1 turn (requires story with one of all 3 types of devs attached)
+      -Boost: Perfect CI: 
+  -Stories (Worth points when completed)
+
+setup for each player:
+
+  [------ player hand ------]      Completed story points / 20
+  [deployed resource cards  ]
+  [active story cards       ]
+  [active story modifiers/resources on each story card]
+

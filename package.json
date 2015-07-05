@@ -2,7 +2,7 @@
   "name": "agilegathering",
   "version": "0.0.1",
   "description": "",
-  "main": "main.js",
+  "main": "app.js",
   "scripts": {
     "start": "webpack-dev-server --progress --colors",
     "build": "webpack --progress --colors"

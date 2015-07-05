@@ -1,5 +1,7 @@
 import React from 'react';
 import AgileGatheringBoard from 'AgileGatheringBoard.react.js';
+import AgileGatheringBuilder from 'AgileGatheringBuilder.react.js';
+import AgileGatheringLobby from 'AgileGatheringLobby.react.js';
 import Store from '../stores/AgileGatheringStore.js';
 
 let AgileGatheringHost = React.createClass({
@@ -15,14 +17,18 @@ let AgileGatheringHost = React.createClass({
     getInitialState(){
         return {
             selectedMatch: null,
+            selectedDeck: null,
             matches: Store.getMatches(),
-            deckList: Store.getDecks()
+            deckList: Store.getDecks(),
+            allCards: Store.getCards()
         }
     },
 
     render() {
         if(!this.state.playerDeck){
-            return (<AgileGatheringBuilder decks={ this.state.deckList } />);
+            return (<AgileGatheringBuilder decks={ this.state.deckList }
+                selectedDeck={ this.state.selectedDeck }
+                allCards={ this.state.allCards } />);
         }
         else if(this.state.selectedMatch && this.state.selectedMatch.hasStarted){
             return (<AgileGatheringBoard match={ this.state.selectedMatch } />);

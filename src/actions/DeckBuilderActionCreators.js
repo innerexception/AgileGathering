@@ -1,7 +1,7 @@
 import ActionTypes from '../Constants';
-import Dispatcher from 'utils/Dispatcher';
+import Dispatcher from 'flux';
 
-import RealtimeAPI from '../apis/RealtimeAPI';
+import RealtimeAPI from '../backend/RealtimeAPI';
 
 export default {
     chooseDeck(deck) {

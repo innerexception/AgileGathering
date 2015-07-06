@@ -1,10 +1,10 @@
 import React from 'react';
-import AgileGatheringBoard from 'AgileGatheringBoard.react.js';
-import AgileGatheringBuilder from 'AgileGatheringBuilder.react.js';
-import AgileGatheringLobby from 'AgileGatheringLobby.react.js';
+import AgileGatheringBoard from './AgileGatheringBoard.react.js';
+import AgileGatheringBuilder from './AgileGatheringBuilder.react.js';
+import AgileGatheringLobby from './AgileGatheringLobby.react.js';
 import MatchStore from '../stores/AgileGatheringMatchStore.js';
 
-let AgileGatheringHost = React.createClass({
+export default React.createClass({
 
     componentWillMount() {
         MatchStore.addChangeListener(this._onChange);
@@ -36,13 +36,11 @@ let AgileGatheringHost = React.createClass({
         }
     },
 
-    setSelectedMatch(){
-
+    setSelectedMatch(match){
+        this.setState({ selectedMatch: match });
     },
 
     _onChange() {
         this.setState(MatchStore.get());
     }
 });
-
-export default AgileGatheringHost;

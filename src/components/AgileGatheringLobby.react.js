@@ -1,7 +1,7 @@
 import React from 'react';
-import Actions from '../actions/MatchLobbyActionCreators.js';
+import LobbyActions from '../actions/MatchLobbyActionCreators.js';
 
-let AgileGatheringLobby = React.createClass({
+export default React.createClass({
 
     propTypes: {
         setSelectedMatch: React.PropTypes.func.isRequired,
@@ -28,20 +28,18 @@ let AgileGatheringLobby = React.createClass({
     },
 
     onMatchSelected(){
-        Actions.selectMatch(this.matchId);
+        LobbyActions.selectMatch(this.matchId);
     },
 
     onMatchCreated(){
-        Actions.createMatch(this.props.playerId, this.props.playerName);
+        LobbyActions.createMatch(this.props.playerId, this.props.playerName);
     },
 
     onMatchJoined(){
-        Actions.joinMatch(this.props.selectedMatch, this.props.playerId, this.props.playerName);
+        LobbyActions.joinMatch(this.props.selectedMatch, this.props.playerId, this.props.playerName);
     },
 
     onMatchStarted(){
-        Actions.startMatch(this.props.selectedMatch);
+        LobbyActions.startMatch(this.props.selectedMatch);
     }
 });
-
-export default AgileGatheringLobby;

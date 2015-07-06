@@ -1,15 +1,15 @@
-var _ = require('lodash');
+import _ from '../vendor/lodash.min.js';
 
-import Dispatcher from 'utils/Dispatcher';
-import StoreCreator from 'utils/StoreCreator';
+import Dispatcher from 'flux';
+import StoreCreator from '../backend/StoreCreator';
 import ActionTypes from '../Constants';
 import FileServerIP from '../Constants';
 import Decks from '../Constants';
 import Cards from '../Constants';
 
-var buzz = require('../backend/buzz.min.js');
+import buzz from '../vendor/buzz.min.js';
 
-var lobbySounds = {
+const lobbySounds = {
     startMatch: new buzz.sound("http://"+FileServerIP+":7777/matchMusic.mp3"),
     joinMatch: new buzz.sound("http://"+FileServerIP+":7777/joinMatch.mp3"),
     lobbyMusic: new buzz.sound("http://"+FileServerIP+":7777/lobbyMusic.mp3")

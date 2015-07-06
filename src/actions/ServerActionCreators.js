@@ -1,5 +1,5 @@
-var ActionTypes = require('../Constants').ActionTypes;
-var Dispatcher = require('utils/Dispatcher');
+import ActionTypes from '../Constants';
+import Dispatcher from 'flux';
 
 export default {
 

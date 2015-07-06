@@ -1,5 +1,6 @@
 import React from 'react';
-import Actions from '../actions/DeckBuilderActionCreators.js';
+import _ from '../vendor/lodash.min.js';
+import DeckActions from '../actions/DeckBuilderActionCreators.js';
 
 let AgileGatheringBuilder = React.createClass({
 
@@ -38,23 +39,23 @@ let AgileGatheringBuilder = React.createClass({
 
     onDeckChoose(){
         //Should set state of playerDeck for parent
-        Actions.chooseDeck(this.props.selectedDeck);
+        DeckActions.chooseDeck(this.props.selectedDeck);
     },
 
     onDeckSelected(){
-        Actions.selectDeck(this);
+        DeckActions.selectDeck(this);
     },
 
     onDeckDeleted(){
-        Actions.deleteDeck(this.props.selectedDeck);
+        DeckActions.deleteDeck(this.props.selectedDeck);
     },
 
     onDeckCreate(){
-        Actions.createDeck();
+        DeckActions.createDeck();
     },
 
     onCardSelected(){
-        Actions.toggleCardInDeck(this, this.props.selectedDeck);
+        DeckActions.toggleCardInDeck(this, this.props.selectedDeck);
     },
 
     _getAllCardEls(cardArray, selectedDeck){

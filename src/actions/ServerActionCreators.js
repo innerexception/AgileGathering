@@ -4,44 +4,52 @@ import Dispatcher from 'flux';
 export default {
 
   createdMatch(matchId, ownerId, matchName) {
-    Dispatcher.handleViewAction({
+    Dispatcher.dispatch({
       type: ActionTypes.CREATED_MATCH,
-      matchId: matchId,
-      ownerId: ownerId,
-      matchName: matchName
+      matchId,
+      ownerId,
+      matchName
     });
   },
 
   joinedMatch(match, playerId, playerName) {
-    Dispatcher.handleViewAction({
+    Dispatcher.dispatch({
       type: ActionTypes.JOINED_MATCH,
-      match: match,
-      playerId: playerId,
-      playerName: playerName
+      match,
+      playerId,
+      playerName
     });
   },
 
   startMatch(match){
-    Dispatcher.handleViewAction({
+    Dispatcher.dispatch({
       type: ActionTypes.MATCH_START,
-      match: match
+      match
     });
   },
 
   matchAvailable(matchId, ownerId, matchName, players){
-    Dispatcher.handleViewAction({
+    Dispatcher.dispatch({
       type: ActionTypes.MATCH_AVAILABLE,
-      matchId: matchId,
-      ownerId: ownerId,
-      matchName: matchName,
-      players: players
+      matchId,
+      ownerId,
+      matchName,
+      players
     });
   },
 
   timerUpdate(matchId){
-    Dispatcher.handleViewAction({
+    Dispatcher.dispatch({
       type: ActionTypes.TIMER_UPDATE,
-      matchId: matchId
+      matchId
+    });
+  },
+
+  cardMoved(cardId, targetArea){
+    Dispatcher.dispatch({
+      type: ActionTypes.CARD_MOVED,
+      cardId,
+      targetArea
     });
   }
 };

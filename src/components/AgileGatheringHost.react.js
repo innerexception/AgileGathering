@@ -22,9 +22,9 @@ export default React.createClass({
         if(!this.state.playerDeck){
             return (<AgileGatheringBuilder decks={ this.state.deckList }
                 selectedDeck={ this.state.selectedDeck }
-                allCards={ this.state.allCards } />);
+                allCards={ this.state.cards } />);
         }
-        else if(this.state.selectedMatch && this.state.selectedMatch.hasStarted){
+        else if(this.state.selectedMatch && this.state.started){
             return (<AgileGatheringBoard match={ this.state.selectedMatch } />);
         }
         else{

@@ -51,16 +51,16 @@ var disableJoinButton = false;
 var AgileGatheringMatchStore = StoreCreator.create({
     get: () => {
         return {
-            matches: matches,
-            currentPlayerId: currentPlayerId,
-            currentPlayerName: currentPlayerName,
-            selectedMatch: selectedMatch,
-            started: started,
-            catUrls: catUrls,
-            disableJoinButton: disableJoinButton,
-            decks: decks,
-            playerDeck: playerDeck,
-            cards: cards
+            matches,
+            currentPlayerId,
+            currentPlayerName,
+            selectedMatch,
+            started,
+            catUrls,
+            disableJoinButton,
+            decks,
+            playerDeck,
+            cards
         };
     }
 });
@@ -71,23 +71,31 @@ AgileGatheringMatchStore.Deck = function(deckName){
     this.deckId = Math.random() + '_deck';
 };
 
-AgileGatheringMatchStore.Card = function(cardName){
-    this.name = cardName;
-    this.cardId = Math.random() + '_card';
-};
-
 AgileGatheringMatchStore.dispatchToken = Dispatcher.register((payload) => {
-    var action = payload.action;
+    var action = payload;
 
     var changed = false;
 
     switch(action.type) {
         case ActionTypes.CREATED_MATCH:
             if(action.ownerId === currentPlayerId && !getMatchByOwner(action.ownerId)){
-                matches.push({matchId: action.matchId, ownerId: action.ownerId, matchName: action.matchName});
+                matches.push({
+                    matchId: action.matchId,
+                    ownerId: action.ownerId,
+                    matchName: action.matchName
+                });
                 selectedMatch = getMatchByOwner(action.ownerId);
                 selectedMatch.players = [];
-                selectedMatch.players.push({playerName: currentPlayerName, matchId: action.matchId, playerId: currentPlayerId});
+                selectedMatch.players.push({
+                    playerName: currentPlayerName,
+                    matchId: action.matchId,
+                    playerId: currentPlayerId,
+                    playerDeck,
+                    playerHand: [],
+                    playerResources: [],
+                    playerStories: [],
+                    playerPoints: 0
+                });
                 lobbySounds.joinMatch.play();
                 disableJoinButton = true;
                 changed = true;
@@ -95,7 +103,15 @@ AgileGatheringMatchStore.dispatchToken = Dispatcher.register((payload) => {
             break;
         case ActionTypes.JOINED_MATCH:
             var match = getMatchById(action.match.matchId);
-            match.players.push({playerId: action.playerId, playerName: action.playerName});
+            match.players.push({
+                playerId: action.playerId,
+                playerName: action.playerName,
+                playerDeck,
+                playerHand: [],
+                playerResources: [],
+                playerStories: [],
+                playerPoints: 0
+            });
             lobbySounds.joinMatch.play();
             changed = true;
             break;
@@ -110,7 +126,12 @@ AgileGatheringMatchStore.dispatchToken = Dispatcher.register((payload) => {
             break;
         case ActionTypes.MATCH_AVAILABLE:
             if(!getMatchByOwner(action.ownerId)){
-                matches.push({ matchId: action.matchId, ownerId: action.ownerId, matchName: action.matchName, players: action.players});
+                matches.push({
+                    matchId: action.matchId,
+                    ownerId: action.ownerId,
+                    matchName: action.matchName,
+                    players: action.players
+                });
             }
             changed = true;
             break;

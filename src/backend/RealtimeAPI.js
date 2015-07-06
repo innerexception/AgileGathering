@@ -90,6 +90,14 @@ export default {
     }));
   },
 
+  cardMoved(cardId, targetArea){
+    this.publishMessage(this.getMessageToPublish({
+      action: 'cardMove',
+      cardId,
+      targetArea
+    }));
+  },
+
   publishMessage: function(msg) {
     var message = this.getMessageToPublish(msg);
     if(message) {
@@ -123,6 +131,9 @@ export default {
             break;
         case 'timerUpdate':
             ServerActionCreators.timerUpdate(payload.matchId);
+            break;
+        case 'cardMove':
+            ServerActionCreators.cardMoved(payload.cardId, payload.cardPosition)
             break;
     }
   },

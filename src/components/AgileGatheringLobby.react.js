@@ -13,7 +13,7 @@ export default React.createClass({
 
     render(){
         const matchEls = _.map(this.props.matches, function(match){
-            return (<span onClick={ this.onMatchSelected.bind(match) }>
+            return (<span className={ match.players.length > 1 ? "match-disabled" : "match" } onClick={ this.onMatchSelected.bind(match) }>
                         <span>match.name</span>
                     </span>);
         });
@@ -40,6 +40,6 @@ export default React.createClass({
     },
 
     onMatchStarted(){
-        LobbyActions.startMatch(this.props.selectedMatch);
+        LobbyActions.startMatch(this.props.selectedMatch, this.props.playerId);
     }
 });

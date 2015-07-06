@@ -5,34 +5,34 @@ import RealtimeAPI from '../backend/RealtimeAPI';
 
 export default {
     chooseDeck(deck) {
-        Dispatcher.handleViewAction({
+        Dispatcher.dispatch({
             type: ActionTypes.CHOOSE_DECK,
             deck
         });
     },
 
     selectDeck(deck) {
-        Dispatcher.handleViewAction({
+        Dispatcher.dispatch({
             type: ActionTypes.SELECTED_DECK,
             deck
         });
     },
 
     deleteDeck(deck){
-        Dispatcher.handleViewAction({
+        Dispatcher.dispatch({
             type: ActionTypes.DELETE_DECK,
             deck
         });
     },
 
     createDeck() {
-        Dispatcher.handleViewAction({
+        Dispatcher.dispatch({
             type: ActionTypes.CREATE_DECK
         });
     },
 
     toggleCardInDeck(card, deck){
-        Dispatcher.handleViewAction({
+        Dispatcher.dispatch({
             type: ActionTypes.TOGGLE_CARD,
             deck,
             card

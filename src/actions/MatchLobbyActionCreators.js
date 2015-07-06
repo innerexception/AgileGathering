@@ -5,7 +5,7 @@ import RealtimeAPI from '../backend/RealtimeAPI';
 
 export default {
     selectMatch(matchId) {
-        Dispatcher.handleViewAction({
+        Dispatcher.dispatch({
             type: ActionTypes.SELECTED_MATCH,
             matchId: matchId
         });
@@ -16,7 +16,7 @@ export default {
     },
 
     matchReady(matchId, playerId){
-        Dispatcher.handleViewAction({
+        Dispatcher.dispatch({
             type: ActionTypes.MATCH_READY,
             matchId: matchId,
             playerId: playerId
@@ -25,13 +25,14 @@ export default {
 
     joinMatch(match, playerId, playerName) {
         RealtimeAPI.sendJoinMessage(match, playerId, playerName);
-        Dispatcher.handleViewAction({
+        Dispatcher.dispatch({
             type: ActionTypes.DISABLE_JOIN_BUTTON
         });
     },
 
-    startMatch(match){
-        Dispatcher.handleViewAction({
+    startMatch(match, playerId){
+        match.currentPlayerId = playerId;
+        Dispatcher.dispatch({
             type: ActionTypes.MATCH_START,
             match: match
         });

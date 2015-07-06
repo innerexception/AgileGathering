@@ -4,40 +4,53 @@ import Dispatcher from 'flux';
 import StoreCreator from '../backend/StoreCreator';
 import ActionTypes from '../Constants';
 
+let activePlayerId, match;
+
+const getCardByOwner = (card, ownerId) => {
+    let owner = _.filter(match.players, function(player){
+        return player.playerId === ownerId;
+    });
+    return _.filter(owner.playerDeck, function(cardItem){
+        return cardItem.cardId === card.cardId;
+    });
+};
+
 var AgileGatheringBoardStore = StoreCreator.create({
-    get: () => {
+    get: (matchProp, activePlayerIdProp) => {
         return {
-            matches,
-            currentPlayerId,
-            currentPlayerName,
-            selectedMatch,
-            started,
-            catUrls,
-            disableJoinButton,
-            decks,
-            playerDeck,
-            cards
+            match: matchProp ? matchProp : match,
+            activePlayerId: activePlayerIdProp ? activePlayerIdProp : activePlayerId
         };
     }
 });
 
 AgileGatheringBoardStore.dispatchToken = Dispatcher.register((payload) => {
-    var action = payload;
-
-    var changed = false;
+    const action = payload;
 
     switch(action.type) {
         case ActionTypes.CARD_MOVED:
-            //Just add to collection of proper type and it will get rendered in the correct row
+            let player = _.filter(match.players, function(player){
+                return player.playerId === action.playerId;
+            });
+            player[action.targetArea].push(action.card);
             break;
         case ActionTypes.CARD_MODIFIED:
-            //Just add to modifier collection of card and it will get drawn next to it
+            let card = getCardByOwner(action.targetCard, action.playerId);
+            card.modifiers.push(action.droppedCard);
+            match.modifierCards.push(action.droppedCard);
+            break;
+        case ActionTypes.CARD_UNMODIFIED:
+            let card = getCardByOwner(action.targetCard, action.playerId);
+            card.modifiers = _.filter(card.modifiers, function(modifier){
+                return modifier.cardId !== action.droppedCard.cardId;
+            });
+            match.modifierCards = _.filter(match.modifierCards, function(card){
+                return card.cardId !== action.droppedCard.cardId;
+            });
             break;
     }
 
-    if(changed) AgileGatheringBoardStore.emitChange();
+    AgileGatheringBoardStore.emitChange();
 });
-
-lobbySounds.lobbyMusic.setVolume(100).play().loop();
 
 export default AgileGatheringBoardStore;

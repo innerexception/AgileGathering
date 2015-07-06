@@ -17,15 +17,8 @@ export default React.createClass({
         BoardStore.removeChangeListener(this._onChange);
     },
 
-    //getInitialState(){
-    //    return BoardStore.get();
-    //},
-
     getInitialState(){
-        return {
-            match: this.props.match,
-            activePlayerId: this.props.currentPlayerId
-        }
+        return BoardStore.get(this.props.match, this.props.currentPlayerId);
     },
 
     render() {
@@ -34,7 +27,7 @@ export default React.createClass({
 
         const player = _.filter(match.players, function(player){
            return player.playerId === this.props.currentPlayerId;
-        });
+        }, this);
 
         if(player.playerHand.length < 7 && this.state.activePlayerId === this.props.currentPlayerId){
             this._drawCards(player, player.playerHand ? 7-player.playerHand.length : 7);
@@ -53,7 +46,7 @@ export default React.createClass({
 
         const enemy = _.filter(match.players, function(player){
             return player.playerId !== this.props.currentPlayerId;
-        });
+        }, this);
 
         if(enemy.playerHand.length < 7 && this.state.activePlayerId !== this.props.currentPlayerId){
             this._drawCards(enemy, enemy.playerHand ? 7-enemy.playerHand.length : 7);
@@ -85,10 +78,10 @@ export default React.createClass({
                 <div onDrop={ this._onCardDroppedOnStories } onDragOver={ this._allowDrop }>
                     { playerStoryEls }
                 </div>
-                <div onDrop={ this._onCardDroppedOnEnemyStory } onDragOver={ this._allowDrop }>
+                <div>
                     { enemyStoryEls }
                 </div>
-                <div onDrop={ this._onCardDroppedOnEnemyResource } onDragOver={ this._allowDrop }>
+                <div>
                     { enemyResourceEls }
                 </div>
                 <div>
@@ -96,6 +89,14 @@ export default React.createClass({
                 </div>
             </div>
         );
+    },
+
+    _onCardDroppedOnStories(e, target){
+        BoardActions.cardMove(target, 'playerStories', this.state.activePlayerId);
+    },
+
+    _onCardDroppedOnResources(e, target){
+        BoardActions.cardMove(target, 'playerResources', this.state.activePlayerId);
     },
 
     _drawCards(player, number){
@@ -112,12 +113,23 @@ export default React.createClass({
     },
 
     _getCardEl(card, draggable, isDropTarget, classes){
-        //TODO draw indication for any modifiers of this card
+
+        if(_.filter(this.state.match.modifierCards, function(cardItem){
+            return card.cardId === cardItem.cardId;
+            })){
+            return (<span></span>);
+        }
+
+        const modifierEls = _.map(card.modifiers, function(modifierCard){
+            return (<div>{ modifierCard.name }</div>);
+        });
+
         return (
             <span draggable={ draggable && this.state.activePlayerId === this.props.currentPlayerId ? "true" : "false"} onDrop={ isDropTarget && this._onCardDropped } onDragOver={ isDropTarget && this._allowDrop } className={ draggable ? "card-draggable" : "card" + classes} onDragStart={ this._onCardDragStart }>
                 <div>{card.name}</div>
                 <img src={ card.imagePath }/>
                 <div>{card.text}</div>
+                { modifierEls }
             </span>
         );
     },

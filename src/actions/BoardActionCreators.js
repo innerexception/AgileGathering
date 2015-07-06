@@ -3,13 +3,14 @@ import Dispatcher from 'flux';
 import RealtimeAPI from '../backend/RealtimeAPI';
 
 export default {
-    cardMove(card, targetArea){
+    cardMove(card, targetArea, playerId){
         Dispatcher.dispatch({
             type: ActionTypes.CARD_MOVE,
             card,
-            targetArea
+            targetArea,
+            playerId
         });
-        RealtimeAPI.cardMoved(card.cardId, targetArea);
+        RealtimeAPI.cardMoved(card.cardId, targetArea, playerId);
     },
     playerLost(playerId, message){
         Dispatcher.dispatch({
@@ -19,13 +20,13 @@ export default {
         });
         RealtimeAPI.gameLost(playerId, message);
     },
-    applyCardToTarget(targetCard, droppedCard){
-        //TODO this is what the store will do: targetCard.modifiers.push(droppedCard);
+    applyCardToTarget(targetCard, droppedCard, playerId){
         Dispatcher.dispatch({
             type: ActionTypes.CARD_MODIFIED,
             targetCard,
-            droppedCard
+            droppedCard,
+            playerId
         });
-        RealtimeAPI.cardModified(targetCard, droppedCard);
+        RealtimeAPI.cardModified(targetCard, droppedCard, playerId);
     }
 };

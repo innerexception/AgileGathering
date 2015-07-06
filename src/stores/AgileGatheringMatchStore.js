@@ -82,7 +82,8 @@ AgileGatheringMatchStore.dispatchToken = Dispatcher.register((payload) => {
                 matches.push({
                     matchId: action.matchId,
                     ownerId: action.ownerId,
-                    matchName: action.matchName
+                    matchName: action.matchName,
+                    modifierCards: []
                 });
                 selectedMatch = getMatchByOwner(action.ownerId);
                 selectedMatch.players = [];
@@ -130,7 +131,8 @@ AgileGatheringMatchStore.dispatchToken = Dispatcher.register((payload) => {
                     matchId: action.matchId,
                     ownerId: action.ownerId,
                     matchName: action.matchName,
-                    players: action.players
+                    players: action.players,
+                    modifierCards: []
                 });
             }
             changed = true;

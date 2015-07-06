@@ -2,26 +2,20 @@ import React from 'react';
 import AgileGatheringBoard from 'AgileGatheringBoard.react.js';
 import AgileGatheringBuilder from 'AgileGatheringBuilder.react.js';
 import AgileGatheringLobby from 'AgileGatheringLobby.react.js';
-import Store from '../stores/AgileGatheringStore.js';
+import MatchStore from '../stores/AgileGatheringMatchStore.js';
 
 let AgileGatheringHost = React.createClass({
 
     componentWillMount() {
-        Store.addChangeListener(this._onChange);
+        MatchStore.addChangeListener(this._onChange);
     },
 
     componentWillUnmount() {
-        Store.removeChangeListener(this._onChange);
+        MatchStore.removeChangeListener(this._onChange);
     },
 
     getInitialState(){
-        return {
-            selectedMatch: null,
-            selectedDeck: null,
-            matches: Store.getMatches(),
-            deckList: Store.getDecks(),
-            allCards: Store.getCards()
-        }
+        return MatchStore.get();
     },
 
     render() {
@@ -47,7 +41,7 @@ let AgileGatheringHost = React.createClass({
     },
 
     _onChange() {
-        this.setState(Store.get());
+        this.setState(MatchStore.get());
     }
 });
 

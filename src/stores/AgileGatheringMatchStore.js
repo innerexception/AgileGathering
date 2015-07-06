@@ -1,26 +1,11 @@
 var _ = require('lodash');
 
-var Dispatcher = require('utils/Dispatcher');
-var StoreCreator = require('utils/StoreCreator');
-var ActionTypes = require('../Constants').ActionTypes;
-var FileServerIP = require('../Constants').FileServerIP;
-
-//available matches
-var matches = [];
-var selectedMatch = null;
-var started = false;
-var catUrls = [
-  'http://www.sbs.com.au/news/sites/sbs.com.au.news/files/Grumpy%20Cat.jpg',
-  'http://cdn.cutestpaw.com/wp-content/uploads/2013/12/Most-Famous-Felines-001.jpg',
-  'http://i.ytimg.com/vi/4eGQ5VFt7P4/0.jpg',
-  'http://i1.kym-cdn.com/entries/icons/original/000/000/888/VanillaHappyCat.jpg',
-  'http://fc02.deviantart.net/fs70/f/2013/309/4/1/business_cat_by_wytrab8-d6t5znh.jpg'
-];
-
-var currentPlayerId = Rally.environment.getContext().getUser().ObjectID;
-var currentPlayerName = Rally.environment.getContext().getUser().DisplayName;
-
-var disableJoinButton = false;
+import Dispatcher from 'utils/Dispatcher';
+import StoreCreator from 'utils/StoreCreator';
+import ActionTypes from '../Constants';
+import FileServerIP from '../Constants';
+import Decks from '../Constants';
+import Cards from '../Constants';
 
 var buzz = require('../backend/buzz.min.js');
 
@@ -42,7 +27,28 @@ function getMatchById(matchId){
     });
 }
 
-var AgileGatheringStore = StoreCreator.create({
+//available matches
+var matches = [];
+var selectedMatch = null;
+var started = false;
+let decks = Decks;
+let selectedDeck = null;
+let playerDeck = null;
+let cards = Cards;
+var catUrls = [
+    'http://www.sbs.com.au/news/sites/sbs.com.au.news/files/Grumpy%20Cat.jpg',
+    'http://cdn.cutestpaw.com/wp-content/uploads/2013/12/Most-Famous-Felines-001.jpg',
+    'http://i.ytimg.com/vi/4eGQ5VFt7P4/0.jpg',
+    'http://i1.kym-cdn.com/entries/icons/original/000/000/888/VanillaHappyCat.jpg',
+    'http://fc02.deviantart.net/fs70/f/2013/309/4/1/business_cat_by_wytrab8-d6t5znh.jpg'
+];
+
+var currentPlayerId = Rally.environment.getContext().getUser().ObjectID;
+var currentPlayerName = Rally.environment.getContext().getUser().DisplayName;
+
+var disableJoinButton = false;
+
+var AgileGatheringMatchStore = StoreCreator.create({
     get: () => {
         return {
             matches: matches,
@@ -51,12 +57,26 @@ var AgileGatheringStore = StoreCreator.create({
             selectedMatch: selectedMatch,
             started: started,
             catUrls: catUrls,
-            disableJoinButton: disableJoinButton
+            disableJoinButton: disableJoinButton,
+            decks: decks,
+            playerDeck: playerDeck,
+            cards: cards
         };
     }
 });
 
-AgileGatheringStore.dispatchToken = Dispatcher.register((payload) => {
+AgileGatheringMatchStore.Deck = function(deckName){
+    this.cards = [];
+    this.name = deckName;
+    this.deckId = Math.random() + '_deck';
+};
+
+AgileGatheringMatchStore.Card = function(cardName){
+    this.name = cardName;
+    this.cardId = Math.random() + '_card';
+};
+
+AgileGatheringMatchStore.dispatchToken = Dispatcher.register((payload) => {
     var action = payload.action;
 
     var changed = false;
@@ -121,11 +141,46 @@ AgileGatheringStore.dispatchToken = Dispatcher.register((payload) => {
             disableJoinButton = true;
             changed = true;
             break;
+        case ActionTypes.CHOOSE_DECK:
+            playerDeck = action.deck;
+            changed = true;
+            break;
+        case ActionTypes.SELECTED_DECK:
+            selectedDeck = action.deck;
+            changed = true;
+            break;
+        case ActionTypes.DELETE_DECK:
+            decks = _.filter(decks, function(deck){
+                return deck.deckId !== action.deck.deckId;
+            });
+            changed = true;
+            break;
+        case ActionTypes.CREATE_DECK:
+            decks.push(new AgileGatheringMatchStore.Deck('Custom Deck'));
+            changed = true;
+            break;
+        case ActionTypes.TOGGLE_CARD:
+            let found = false;
+            _.each(action.deck.cards, function(card){
+                if(card.cardId === action.cardId){
+                    found = true;
+                }
+            });
+            if(!found){
+                action.deck.cards.push(action.card);
+            }
+            else{
+                action.deck.cards = _.filter(action.deck.cards, function(card){
+                    return card.cardId !== action.card.cardId;
+                })
+            }
+            changed = true;
+            break;
     }
 
-    if(changed) AgileGatheringStore.emitChange();
+    if(changed) AgileGatheringMatchStore.emitChange();
 });
 
 lobbySounds.lobbyMusic.setVolume(100).play().loop();
 
-export default AgileGatheringStore;
+export default AgileGatheringMatchStore;

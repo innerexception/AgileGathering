@@ -22,7 +22,7 @@ let AgileGatheringLobby = React.createClass({
                     <div>
                         { matchEls }
                     </div>
-                    <button onClick={ this.onMatchCreated }>{ this.props.selectedMatch.ownerId === this.props.playerId ? 'Start' : 'Create' }</button>
+                    <button onClick={ this.props.selectedMatch.ownerId === this.props.playerId ? this.onMatchCreated : this.onMatchStarted }>{ this.props.selectedMatch.ownerId === this.props.playerId ? 'Start' : 'Create' }</button>
                     <button enabled={ this.props.enableJoin } onClick={ this.onMatchJoined }>Join</button>
                 </div>)
     },

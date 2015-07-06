@@ -18,7 +18,7 @@ let AgileGatheringBuilder = React.createClass({
 
         let deckCardEls;
         if(this.props.selectedDeck){
-            deckCardEls = this._getCardEls(this.props.selectedDeck.cards);
+            deckCardEls = this._getAllCardEls(this.props.selectedDeck.cards);
         }
         let allCardEls = this._getAllCardEls(this.props.allCards, this.props.selectedDeck);
 
@@ -26,6 +26,7 @@ let AgileGatheringBuilder = React.createClass({
             <div>
                 <div>Decks</div>
                 <div>{ deckEls }</div>
+                <button onClick={ this.onDeckChoose }>Choose</button>
                 <button onClick={ this.onDeckCreate }>Create</button>
                 <button enabled={ this.props.selectedDeck } onClick={ this.onDeckDeleted }>Delete</button>
                 <div>{ deckCardEls }</div>
@@ -33,6 +34,11 @@ let AgileGatheringBuilder = React.createClass({
                 <div>{ allCardEls }</div>
             </div>
         )
+    },
+
+    onDeckChoose(){
+        //Should set state of playerDeck for parent
+        Actions.chooseDeck(this.props.selectedDeck);
     },
 
     onDeckSelected(){
@@ -51,26 +57,22 @@ let AgileGatheringBuilder = React.createClass({
         Actions.toggleCardInDeck(this, this.props.selectedDeck);
     },
 
-    _getCardEls(cardArray){
+    _getAllCardEls(cardArray, selectedDeck){
         return _.map(cardArray, function(card){
             return (
-                <span>
+                <span className={ selectedDeck && this._containsCard(selectedDeck.cards, card) ? 'card-selected' : 'card' } onClick={ this.onCardSelected.bind(card) }>
                     <div>{card.name}</div>
                     <img src={ card.imagePath }/>
+                    <div>{card.text}</div>
                 </span>
             );
         });
     },
 
-    _getAllCardEls(cardArray, selectedDeck){
-        return _.map(cardArray, function(card){
-            return (
-                <span className={ selectedDeck.cards.contains(card) ? 'card-selected' : 'card' } onClick={ this.onCardSelected.bind(card) }>
-                    <div>{card.name}</div>
-                    <img src={ card.imagePath }/>
-                </span>
-            );
-        });
+    _containsCard(cards, cardToFind){
+        return _.filter(cards, function(card){
+            return cardToFind.cardId === card.cardId;
+        }).length > 0;
     }
 });
 

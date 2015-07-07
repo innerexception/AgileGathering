@@ -101,7 +101,14 @@ export default {
   publishMessage: function(msg) {
     var message = this.getMessageToPublish(msg);
     if(message) {
-      this.websocket.send(msg);
+      if(!this.websocket){
+        this.launch().then(()=>{
+          this.websocket.send(msg);
+        }, this);
+      }
+      else{
+        this.websocket.send(msg);
+      }
     }
   },
 

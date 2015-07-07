@@ -3,7 +3,7 @@ import AgileGatheringBoard from './AgileGatheringBoard.react.js';
 import AgileGatheringBuilder from './AgileGatheringBuilder.react.js';
 import AgileGatheringLobby from './AgileGatheringLobby.react.js';
 import MatchStore from '../stores/AgileGatheringMatchStore.js';
-import bootstrap from '../vendor/bootstrap.min.css';
+import styles from './AgileGatheringHost.css';
 
 export default React.createClass({
 
@@ -21,17 +21,19 @@ export default React.createClass({
 
     render() {
         if(!this.state.playerDeck){
-            return (<AgileGatheringBuilder decks={ this.state.decks }
-                selectedDeck={ this.state.selectedDeck }
-                allCards={ this.state.cards } />);
+            return (
+                <AgileGatheringBuilder decks={ this.state.decks }
+                    selectedDeck={ this.state.selectedDeck }
+                    allCards={ this.state.cards } />
+               );
         }
         else if(this.state.selectedMatch && this.state.started){
-            return (<AgileGatheringBoard match={ this.state.selectedMatch } />);
+            return (<AgileGatheringBoard className="board" match={ this.state.selectedMatch } />);
         }
         else{
-            return (<AgileGatheringLobby matches={ this.state.matches }
-                playerName={ this.state.playerName }
-                playerId={ this.state.playerId }
+            return (<AgileGatheringLobby className="lobby" matches={ this.state.matches }
+                playerName={ this.state.currentPlayerName }
+                playerId={ this.state.currentPlayerName }
                 setSelectedMatch={ this.setSelectedMatch }
                 selectedMatch={ this.state.selectedMatch }/>);
         }

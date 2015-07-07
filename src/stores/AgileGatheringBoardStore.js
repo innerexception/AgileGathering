@@ -2,7 +2,7 @@ import _ from '../vendor/lodash.min.js';
 
 import Dispatcher from '../backend/AgileGatheringDispatcher';
 import StoreCreator from '../backend/StoreCreator';
-import ActionTypes from '../Constants';
+import { ActionTypes } from '../Constants';
 
 let activePlayerId, match;
 

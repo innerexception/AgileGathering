@@ -6,7 +6,7 @@ export default React.createClass({
     propTypes: {
         setSelectedMatch: React.PropTypes.func.isRequired,
         playerName:  React.PropTypes.string.isRequired,
-        playerId:  React.PropTypes.number.isRequired,
+        playerId:  React.PropTypes.string.isRequired,
         selectedMatch:  React.PropTypes.object,
         matches:  React.PropTypes.array.isRequired
     },
@@ -22,7 +22,7 @@ export default React.createClass({
                     <div>
                         { matchEls }
                     </div>
-                    <button onClick={ this.props.selectedMatch.ownerId === this.props.playerId ? this.onMatchCreated : this.onMatchStarted }>{ this.props.selectedMatch.ownerId === this.props.playerId ? 'Start' : 'Create' }</button>
+                    <button onClick={ this.props.selectedMatch && this.props.selectedMatch.ownerId === this.props.playerId ? this.onMatchStarted : this.onMatchCreated }>{ this.props.selectedMatch && this.props.selectedMatch.ownerId === this.props.playerId ? 'Start' : 'Create' }</button>
                     <button enabled={ this.props.enableJoin } onClick={ this.onMatchJoined }>Join</button>
                 </div>)
     },

@@ -52,6 +52,7 @@ var AgileGatheringMatchStore = StoreCreator.create({
             currentPlayerId,
             currentPlayerName,
             selectedMatch,
+            selectedDeck,
             started,
             catUrls,
             disableJoinButton,
@@ -181,17 +182,17 @@ AgileGatheringMatchStore.dispatchToken = Dispatcher.register((payload) => {
             break;
         case ActionTypes.TOGGLE_CARD:
             let found = false;
-            _.each(action.deck.cards, function(card){
-                if(card.cardId === action.cardId){
+            _.each(action.deck.cards, function(cardId){
+                if(cardId === action.card.cardId){
                     found = true;
                 }
             });
             if(!found){
-                action.deck.cards.push(action.card);
+                action.deck.cards.push(action.card.cardId);
             }
             else{
-                action.deck.cards = _.filter(action.deck.cards, function(card){
-                    return card.cardId !== action.card.cardId;
+                action.deck.cards = _.filter(action.deck.cards, function(cardId){
+                    return cardId !== action.card.cardId;
                 })
             }
             changed = true;

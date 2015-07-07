@@ -1,19 +1,19 @@
 import _ from '../vendor/lodash.min.js';
 
-import Dispatcher from 'flux';
+import Dispatcher from '../backend/AgileGatheringDispatcher';
 import StoreCreator from '../backend/StoreCreator';
 import ActionTypes from '../Constants';
 import FileServerIP from '../Constants';
 import Decks from '../Constants';
 import Cards from '../Constants';
 
-import buzz from '../vendor/buzz.min.js';
-
-const lobbySounds = {
-    startMatch: new buzz.sound("http://"+FileServerIP+":7777/matchMusic.mp3"),
-    joinMatch: new buzz.sound("http://"+FileServerIP+":7777/joinMatch.mp3"),
-    lobbyMusic: new buzz.sound("http://"+FileServerIP+":7777/lobbyMusic.mp3")
-};
+//import buzz from '../vendor/buzz.min.js';
+//
+//const lobbySounds = {
+//    startMatch: new buzz.sound("http://"+FileServerIP+":7777/matchMusic.mp3"),
+//    joinMatch: new buzz.sound("http://"+FileServerIP+":7777/joinMatch.mp3"),
+//    lobbyMusic: new buzz.sound("http://"+FileServerIP+":7777/lobbyMusic.mp3")
+//};
 
 function getMatchByOwner(ownerId){
     return _.find(matches, function(match){
@@ -43,8 +43,8 @@ var catUrls = [
     'http://fc02.deviantart.net/fs70/f/2013/309/4/1/business_cat_by_wytrab8-d6t5znh.jpg'
 ];
 
-var currentPlayerId = Rally.environment.getContext().getUser().ObjectID;
-var currentPlayerName = Rally.environment.getContext().getUser().DisplayName;
+var currentPlayerId = Math.random() + '_player';
+var currentPlayerName = 'Player';
 
 var disableJoinButton = false;
 
@@ -97,7 +97,7 @@ AgileGatheringMatchStore.dispatchToken = Dispatcher.register((payload) => {
                     playerStories: [],
                     playerPoints: 0
                 });
-                lobbySounds.joinMatch.play();
+                //lobbySounds.joinMatch.play();
                 disableJoinButton = true;
                 changed = true;
             }
@@ -113,7 +113,7 @@ AgileGatheringMatchStore.dispatchToken = Dispatcher.register((payload) => {
                 playerStories: [],
                 playerPoints: 0
             });
-            lobbySounds.joinMatch.play();
+            //lobbySounds.joinMatch.play();
             changed = true;
             break;
         case ActionTypes.DELETE_MATCH:
@@ -157,8 +157,8 @@ AgileGatheringMatchStore.dispatchToken = Dispatcher.register((payload) => {
         case ActionTypes.MATCH_START:
             started = true;
             changed = true;
-            lobbySounds.startMatch.play();
-            lobbySounds.lobbyMusic.stop();
+            //lobbySounds.startMatch.play();
+            //lobbySounds.lobbyMusic.stop();
             break;
         case ActionTypes.DISABLE_JOIN_BUTTON:
             disableJoinButton = true;
@@ -204,6 +204,6 @@ AgileGatheringMatchStore.dispatchToken = Dispatcher.register((payload) => {
     if(changed) AgileGatheringMatchStore.emitChange();
 });
 
-lobbySounds.lobbyMusic.setVolume(100).play().loop();
+//lobbySounds.lobbyMusic.setVolume(100).play().loop();
 
 export default AgileGatheringMatchStore;

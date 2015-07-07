@@ -5,17 +5,17 @@ import DeckActions from '../actions/DeckBuilderActionCreators.js';
 let AgileGatheringBuilder = React.createClass({
 
     propTypes: {
-        decks:  React.PropTypes.array.isRequired,
+        decks:  React.PropTypes.object.isRequired,
         selectedDeck: React.PropTypes.object,
-        allCards: React.PropTypes.array.isRequired
+        allCards: React.PropTypes.object.isRequired
     },
 
     render() {
         const deckEls = _.map(this.props.decks, function(deck){
-            return (<span onClick={ this.onDeckSelected.bind(deck) }>
+            return (<span onClick={ this.onDeckSelected }>
                         <span>{deck.name}</span>
                     </span>);
-        });
+        }, this);
 
         let deckCardEls;
         if(this.props.selectedDeck){
@@ -42,8 +42,8 @@ let AgileGatheringBuilder = React.createClass({
         DeckActions.chooseDeck(this.props.selectedDeck);
     },
 
-    onDeckSelected(){
-        DeckActions.selectDeck(this);
+    onDeckSelected(e, target){
+        DeckActions.selectDeck(target);
     },
 
     onDeckDeleted(){
@@ -54,20 +54,20 @@ let AgileGatheringBuilder = React.createClass({
         DeckActions.createDeck();
     },
 
-    onCardSelected(){
-        DeckActions.toggleCardInDeck(this, this.props.selectedDeck);
+    onCardSelected(e, target){
+        DeckActions.toggleCardInDeck(target, this.props.selectedDeck);
     },
 
     _getAllCardEls(cardArray, selectedDeck){
         return _.map(cardArray, function(card){
             return (
-                <span className={ selectedDeck && this._containsCard(selectedDeck.cards, card) ? 'card-selected' : 'card' } onClick={ this.onCardSelected.bind(card) }>
+                <span className={ selectedDeck && this._containsCard(selectedDeck.cards, card) ? 'card-selected' : 'card' } onClick={ this.onCardSelected }>
                     <div>{card.name}</div>
                     <img src={ card.imagePath }/>
                     <div>{card.text}</div>
                 </span>
             );
-        });
+        }, this);
     },
 
     _containsCard(cards, cardToFind){

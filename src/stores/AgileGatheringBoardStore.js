@@ -1,6 +1,6 @@
 import _ from '../vendor/lodash.min.js';
 
-import Dispatcher from 'flux';
+import Dispatcher from '../backend/AgileGatheringDispatcher';
 import StoreCreator from '../backend/StoreCreator';
 import ActionTypes from '../Constants';
 
@@ -40,8 +40,8 @@ AgileGatheringBoardStore.dispatchToken = Dispatcher.register((payload) => {
             match.modifierCards.push(action.droppedCard);
             break;
         case ActionTypes.CARD_UNMODIFIED:
-            let card = getCardByOwner(action.targetCard, action.playerId);
-            card.modifiers = _.filter(card.modifiers, function(modifier){
+            let unmodifyCard = getCardByOwner(action.targetCard, action.playerId);
+            unmodifyCard.modifiers = _.filter(unmodifyCard.modifiers, function(modifier){
                 return modifier.cardId !== action.droppedCard.cardId;
             });
             match.modifierCards = _.filter(match.modifierCards, function(card){

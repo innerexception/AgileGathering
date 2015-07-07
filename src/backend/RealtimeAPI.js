@@ -146,7 +146,7 @@ export default {
 };
 
 
-ReconnectingWebSocket = function (url, protocols) {
+const ReconnectingWebSocket = function (url, protocols) {
   protocols = protocols || [];
 
   // These can be altered by calling code.

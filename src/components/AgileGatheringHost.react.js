@@ -20,7 +20,7 @@ export default React.createClass({
 
     render() {
         if(!this.state.playerDeck){
-            return (<AgileGatheringBuilder decks={ this.state.deckList }
+            return (<AgileGatheringBuilder decks={ this.state.decks }
                 selectedDeck={ this.state.selectedDeck }
                 allCards={ this.state.cards } />);
         }

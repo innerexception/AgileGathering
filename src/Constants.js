@@ -131,8 +131,53 @@ export default {
       value: 10,
       upkeep: 1
     },
+    {
+      cardId: 'fancyDropDown',
+      modifiers: [],
+      name: 'Fancy Drop Down',
+      text: 'It drops it on down',
+      imagePath: './res/img/ddl.png',
+      type: 'story',
+      points: 3
+    },
+    {
+      cardId: 'loginScreen',
+      modifiers: [],
+      name: 'Login Screen',
+      text: 'It logs it on in',
+      imagePath: './res/img/login.png',
+      type: 'story',
+      points: 5
+    },
+    {
+      cardId: 'hotCheckBox',
+      modifiers: [],
+      name: 'Hot Checkbox',
+      text: 'So hot',
+      imagePath: './res/img/chxbox.png',
+      type: 'story',
+      points: 3
+    },
+    {
+      cardId: 'scopeCreep',
+      modifiers: [],
+      name: 'Scope Creep',
+      text: 'Scope it be Creepin',
+      imagePath: './res/img/scope.png',
+      type: 'delay',
+      points: 2
+    },
+    {
+      cardId: 'scopeCreep2',
+      modifiers: [],
+      name: 'Scope Creep',
+      text: 'Scope it be Creepin',
+      imagePath: './res/img/scope.png',
+      type: 'delay',
+      points: 2
+    }
 
   ],
-//'fancyDropDown', 'loginScreen', 'hotCheckbox', 'scopeCreep', 'scopeCreep2'
+
   FileServerIP: '10.32.32.156'
 };

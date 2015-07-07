@@ -15,7 +15,15 @@ export default {
     START_TIMER_TICK: 'stt',
     GAME_TIMER_TICK: 'gtt',
     TIMER_UPDATE: 'tu',
-    DISABLE_JOIN_BUTTON: 'djb'
+    DISABLE_JOIN_BUTTON: 'djb',
+    CHOOSE_DECK: 'cd',
+    SELECTED_DECK: 'sd',
+    DELETE_DECK: 'dd',
+    CREATE_DECK: 'crd',
+    TOGGLE_CARD: 'tc',
+    CARD_MOVED: 'crm',
+    CARD_MODIFIED: 'cmd',
+    CARD_UNMODIFIED: 'cum'
   },
 
   Decks: [

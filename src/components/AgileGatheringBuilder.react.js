@@ -5,9 +5,9 @@ import DeckActions from '../actions/DeckBuilderActionCreators.js';
 let AgileGatheringBuilder = React.createClass({
 
     propTypes: {
-        decks:  React.PropTypes.object.isRequired,
+        decks:  React.PropTypes.array.isRequired,
         selectedDeck: React.PropTypes.object,
-        allCards: React.PropTypes.object.isRequired
+        allCards: React.PropTypes.array.isRequired
     },
 
     render() {

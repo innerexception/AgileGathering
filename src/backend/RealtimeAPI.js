@@ -1,4 +1,4 @@
-var ENDPOINT = "ws://10.32.32.156:1337";
+var ENDPOINT = "ws://10.32.64.156:1337";
 
 import ServerActionCreators from '../actions/ServerActionCreators';
 
@@ -101,14 +101,7 @@ export default {
   publishMessage: function(msg) {
     var message = this.getMessageToPublish(msg);
     if(message) {
-      if(!this.websocket){
-        this.launch().then(()=>{
-          this.websocket.send(msg);
-        }, this);
-      }
-      else{
         this.websocket.send(msg);
-      }
     }
   },
 

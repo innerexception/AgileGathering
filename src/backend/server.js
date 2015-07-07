@@ -1,5 +1,5 @@
-import WebSocketServer from 'websocket';
-import http from 'http';
+var WebSocketServer = require('websocket').server;
+var http = require('http');
 
 /**
  * HTTP server

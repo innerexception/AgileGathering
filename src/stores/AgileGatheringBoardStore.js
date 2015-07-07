@@ -2,7 +2,7 @@ import _ from '../vendor/lodash.min.js';
 
 import Dispatcher from '../backend/AgileGatheringDispatcher';
 import StoreCreator from '../backend/StoreCreator';
-import { ActionTypes } from '../Constants';
+import { ActionTypes, Cards } from '../Constants';
 
 let activePlayerId, match;
 
@@ -17,15 +17,25 @@ const getCardByOwner = (card, ownerId) => {
 
 var AgileGatheringBoardStore = StoreCreator.create({
     get: (matchProp, activePlayerIdProp) => {
+        if(matchProp) match = matchProp;
+        if(activePlayerIdProp) activePlayerId = activePlayerIdProp;
         return {
-            match: matchProp ? matchProp : match,
-            activePlayerId: activePlayerIdProp ? activePlayerIdProp : activePlayerId
+            match,
+            activePlayerId
         };
     }
 });
 
+AgileGatheringBoardStore.getCardById = (cardId)=>{
+    return _.filter(Cards, function(card){
+        return card.cardId === cardId;
+    })[0];
+};
+
 AgileGatheringBoardStore.dispatchToken = Dispatcher.register((payload) => {
     const action = payload;
+
+    let changed = false;
 
     switch(action.type) {
         case ActionTypes.CARD_MOVED:
@@ -33,11 +43,13 @@ AgileGatheringBoardStore.dispatchToken = Dispatcher.register((payload) => {
                 return player.playerId === action.playerId;
             });
             player[action.targetArea].push(action.card);
+            changed = true;
             break;
         case ActionTypes.CARD_MODIFIED:
             let card = getCardByOwner(action.targetCard, action.playerId);
             card.modifiers.push(action.droppedCard);
             match.modifierCards.push(action.droppedCard);
+            changed = true;
             break;
         case ActionTypes.CARD_UNMODIFIED:
             let unmodifyCard = getCardByOwner(action.targetCard, action.playerId);
@@ -47,10 +59,11 @@ AgileGatheringBoardStore.dispatchToken = Dispatcher.register((payload) => {
             match.modifierCards = _.filter(match.modifierCards, function(card){
                 return card.cardId !== action.droppedCard.cardId;
             });
+            changed = true;
             break;
     }
 
-    AgileGatheringBoardStore.emitChange();
+    if(changed) AgileGatheringBoardStore.emitChange();
 });
 
 export default AgileGatheringBoardStore;

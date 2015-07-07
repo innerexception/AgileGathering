@@ -40,8 +40,8 @@ var catUrls = [
     'http://fc02.deviantart.net/fs70/f/2013/309/4/1/business_cat_by_wytrab8-d6t5znh.jpg'
 ];
 
-var currentPlayerId = Math.random() + '_player';
-var currentPlayerName = 'Player';
+const currentPlayerId = Math.random() + '_player';
+const currentPlayerName = 'Player';
 
 var disableJoinButton = false;
 
@@ -132,8 +132,8 @@ AgileGatheringMatchStore.dispatchToken = Dispatcher.register((payload) => {
                     players: action.players,
                     modifierCards: []
                 });
+                changed = true;
             }
-            changed = true;
             break;
         case ActionTypes.MATCH_READY:
             if(selectedMatch.Id === action.matchId){

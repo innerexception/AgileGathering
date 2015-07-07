@@ -3,7 +3,6 @@ import AgileGatheringBoard from './AgileGatheringBoard.react.js';
 import AgileGatheringBuilder from './AgileGatheringBuilder.react.js';
 import AgileGatheringLobby from './AgileGatheringLobby.react.js';
 import MatchStore from '../stores/AgileGatheringMatchStore.js';
-import styles from './AgileGatheringHost.css';
 
 export default React.createClass({
 
@@ -28,12 +27,14 @@ export default React.createClass({
                );
         }
         else if(this.state.selectedMatch && this.state.started){
-            return (<AgileGatheringBoard className="board" match={ this.state.selectedMatch } />);
+            return (<AgileGatheringBoard match={ this.state.selectedMatch } currentPlayerId={ this.state.currentPlayerId } />);
         }
         else{
-            return (<AgileGatheringLobby className="lobby" matches={ this.state.matches }
+            return (<AgileGatheringLobby matches={ this.state.matches }
                 playerName={ this.state.currentPlayerName }
-                playerId={ this.state.currentPlayerName }
+                playerId={ this.state.currentPlayerId }
+                selectedDeck={ this.state.selectedDeck }
+                enableJoin={ !this.state.disableJoinButton }
                 setSelectedMatch={ this.setSelectedMatch }
                 selectedMatch={ this.state.selectedMatch }/>);
         }

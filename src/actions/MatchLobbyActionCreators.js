@@ -1,11 +1,12 @@
-import ActionTypes from '../Constants';
-import Dispatcher from 'flux';
+import { ActionTypes } from '../Constants';
+import AgileGatheringDispatcher from '../backend/AgileGatheringDispatcher';
 
 import RealtimeAPI from '../backend/RealtimeAPI';
+RealtimeAPI.launch();
 
 export default {
     selectMatch(matchId) {
-        Dispatcher.dispatch({
+        AgileGatheringDispatcher.dispatch({
             type: ActionTypes.SELECTED_MATCH,
             matchId: matchId
         });
@@ -16,7 +17,7 @@ export default {
     },
 
     matchReady(matchId, playerId){
-        Dispatcher.dispatch({
+        AgileGatheringDispatcher.dispatch({
             type: ActionTypes.MATCH_READY,
             matchId: matchId,
             playerId: playerId
@@ -25,14 +26,14 @@ export default {
 
     joinMatch(match, playerId, playerName) {
         RealtimeAPI.sendJoinMessage(match, playerId, playerName);
-        Dispatcher.dispatch({
+        AgileGatheringDispatcher.dispatch({
             type: ActionTypes.DISABLE_JOIN_BUTTON
         });
     },
 
     startMatch(match, playerId){
         match.currentPlayerId = playerId;
-        Dispatcher.dispatch({
+        AgileGatheringDispatcher.dispatch({
             type: ActionTypes.MATCH_START,
             match: match
         });

@@ -187,5 +187,5 @@ export default {
 
   ],
 
-  FileServerIP: '10.32.32.156'
+  FileServerIP: '10.32.64.156'
 };

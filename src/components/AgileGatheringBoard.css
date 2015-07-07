@@ -1,0 +1,26 @@
+.player-hand{
+    max-height: 207px;
+    width: 1000px;
+}
+
+.player-hand-frame{
+    height: 207px;
+    overflow-x: scroll;
+    max-width: 100%;
+}
+
+.player-resources{
+    height: 207px;
+    border: 2px solid blue;
+    border-radius: 8px;
+}
+
+.player-stories{
+    height: 207px;
+    border: 2px solid red;
+    border-radius: 8px;
+}
+
+.score-right{
+    margin-left: 75%;
+}

@@ -1,10 +1,10 @@
-import ActionTypes from '../Constants';
-import Dispatcher from 'flux';
+import { ActionTypes } from '../Constants';
+import AgileGatheringDispatcher from '../backend/AgileGatheringDispatcher';
 
 export default {
 
   createdMatch(matchId, ownerId, matchName) {
-    Dispatcher.dispatch({
+    AgileGatheringDispatcher.dispatch({
       type: ActionTypes.CREATED_MATCH,
       matchId,
       ownerId,
@@ -13,7 +13,7 @@ export default {
   },
 
   joinedMatch(match, playerId, playerName) {
-    Dispatcher.dispatch({
+    AgileGatheringDispatcher.dispatch({
       type: ActionTypes.JOINED_MATCH,
       match,
       playerId,
@@ -22,14 +22,14 @@ export default {
   },
 
   startMatch(match){
-    Dispatcher.dispatch({
+    AgileGatheringDispatcher.dispatch({
       type: ActionTypes.MATCH_START,
       match
     });
   },
 
   matchAvailable(matchId, ownerId, matchName, players){
-    Dispatcher.dispatch({
+    AgileGatheringDispatcher.dispatch({
       type: ActionTypes.MATCH_AVAILABLE,
       matchId,
       ownerId,
@@ -39,14 +39,14 @@ export default {
   },
 
   timerUpdate(matchId){
-    Dispatcher.dispatch({
+    AgileGatheringDispatcher.dispatch({
       type: ActionTypes.TIMER_UPDATE,
       matchId
     });
   },
 
   cardMoved(cardId, targetArea){
-    Dispatcher.dispatch({
+    AgileGatheringDispatcher.dispatch({
       type: ActionTypes.CARD_MOVED,
       cardId,
       targetArea

@@ -1,6 +1,7 @@
 import React from 'react';
 import _ from '../vendor/lodash.min.js';
 import DeckActions from '../actions/DeckBuilderActionCreators.js';
+import css from './AgileGatheringBuilder.css';
 
 let AgileGatheringBuilder = React.createClass({
 
@@ -12,7 +13,7 @@ let AgileGatheringBuilder = React.createClass({
 
     render() {
         const deckEls = _.map(this.props.decks, function(deck){
-            return (<span onClick={ this.onDeckSelected }>
+            return (<span className="deck" onClick={ this.onDeckSelected }>
                         <span>{deck.name}</span>
                     </span>);
         }, this);
@@ -24,7 +25,7 @@ let AgileGatheringBuilder = React.createClass({
         let allCardEls = this._getAllCardEls(this.props.allCards, this.props.selectedDeck);
 
         return (
-            <div>
+            <div className="deck-builder">
                 <div>Decks</div>
                 <div>{ deckEls }</div>
                 <button onClick={ this.onDeckChoose }>Choose</button>

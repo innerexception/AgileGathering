@@ -3,6 +3,7 @@ import AgileGatheringBoard from './AgileGatheringBoard.react.js';
 import AgileGatheringBuilder from './AgileGatheringBuilder.react.js';
 import AgileGatheringLobby from './AgileGatheringLobby.react.js';
 import MatchStore from '../stores/AgileGatheringMatchStore.js';
+import bootstrap from '../vendor/bootstrap.min.css';
 
 export default React.createClass({
 

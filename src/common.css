@@ -1,0 +1,16 @@
+@font-face {
+    font-family: 'MAGIC';
+    src: url('./fonts/MAGIC.ttf') format('truetype');
+}
+@font-face {
+    font-family: 'mtg';
+    src: url('./fonts/Mplantin.ttf') format('truetype');
+}
+
+div{
+    font-family: 'mtg', serif;
+}
+
+h3{
+    font-family: 'MAGIC', serif;
+}

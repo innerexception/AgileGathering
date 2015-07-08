@@ -78,6 +78,7 @@ AgileGatheringMatchStore.dispatchToken = Dispatcher.register((payload) => {
         case ActionTypes.CREATED_MATCH:
             if(action.match.ownerId === currentPlayerId && !getMatchByOwner(action.match.ownerId)){
                 matches.push(action.match);
+                selectedMatch = action.match;
                 //lobbySounds.joinMatch.play();
                 disableJoinButton = true;
                 changed = true;
@@ -141,16 +142,16 @@ AgileGatheringMatchStore.dispatchToken = Dispatcher.register((payload) => {
             break;
         case ActionTypes.TOGGLE_CARD:
             let found = false;
-            _.each(action.deck.cards, function(cardId){
+            _.each(action.deck.cardIds, function(cardId){
                 if(cardId === action.card.cardId){
                     found = true;
                 }
             });
             if(!found){
-                action.deck.cards.push(action.card.cardId);
+                action.deck.cardIds.push(action.card.cardId);
             }
             else{
-                action.deck.cards = _.filter(action.deck.cards, function(cardId){
+                action.deck.cardIds = _.filter(action.deck.cardIds, function(cardId){
                     return cardId !== action.card.cardId;
                 })
             }

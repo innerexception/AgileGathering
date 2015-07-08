@@ -20,11 +20,14 @@ let AgileGatheringBuilder = React.createClass({
 
     render() {
         const deckEls = _.map(this.props.decks, function(deck){
-            return (<button className={ this.props.selectedDeck && this.props.selectedDeck.deckId === deck.deckId ? "deck deck-selected deck-face" : "deck deck-face" }
+            return (<div className={ this.props.selectedDeck && this.props.selectedDeck.deckId === deck.deckId ? "deck deck-selected card-back" : "deck card-back" }
                           onClick={ this.onDeckSelected.bind(this, deck) }>
-                            <div>{deck.name}</div>
+                            <div className="card-back-inner"></div>
+                            <div className="card-back-title">Agile:</div>
+                            <div className="card-back-subtitle">The Gathering</div>
+                            <div className="deck-name">{deck.name}</div>
                             <img src={deck.imagePath}/>
-                    </button>);
+                    </div>);
         }, this);
 
         let allCardEls = this._getAllCardEls(this.props.allCards, this.props.selectedDeck);
@@ -56,7 +59,7 @@ let AgileGatheringBuilder = React.createClass({
     _getAllCardEls(cardArray, selectedDeck){
         return _.map(cardArray, function(card){
             return (
-                <div className={ selectedDeck && this._containsCard(selectedDeck.cards, card) ? 'card card-selected' : 'card' } onClick={ this.onCardSelected.bind(this, card) }>
+                <div className={ selectedDeck && this._containsCard(selectedDeck.cardIds, card) ? 'card card-selected' : 'card' } onClick={ this.onCardSelected.bind(this, card) }>
                     <div className="card-title">{card.name}</div>
                     <img className="card-picture" src={ card.imagePath }/>
                     <div className="card-type">{card.type}</div>

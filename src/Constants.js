@@ -3,6 +3,8 @@ export default {
 
   ActionTypes: {
     CREATED_MATCH: 'cm',
+    DRAW_CARDS: 'dc',
+    END_TURN: 'et',
     SELECTED_MATCH: 'sm',
     MATCH_READY: 'mr',
     MATCH_AVAILABLE: 'ma',
@@ -30,19 +32,19 @@ export default {
     {
       deckId: 'SBP',
       name: 'Standard Business Practices',
-      cards: ['juniorEngineer', 'juniorEngineer2', 'engineerII', 'engineerII2', 'seniorEngineer', 'asset', 'asset2', 'asset3',
+      cardIds: ['juniorEngineer', 'juniorEngineer2', 'engineerII', 'engineerII2', 'seniorEngineer', 'asset', 'asset2', 'asset3',
               'IPO', 'fancyDropDown', 'loginScreen', 'hotCheckbox', 'scopeCreep', 'scopeCreep2']
     },
     {
       deckId: 'VCM',
       name: 'VC Money',
-      cards: ['juniorEngineer', 'juniorEngineer2', 'engineerII', 'engineerII2', 'seniorEngineer', 'asset', 'asset2', 'asset3',
+      cardIds: ['juniorEngineer', 'juniorEngineer2', 'engineerII', 'engineerII2', 'seniorEngineer', 'asset', 'asset2', 'asset3',
         'VC', 'fancyDropDown', 'loginScreen', 'hotCheckbox', 'scopeCreep', 'scopeCreep2']
     },
     {
       deckId: 'Custom',
       name: 'Custom Deck',
-      cards: []
+      cardIds: []
     }
   ],
 
@@ -163,7 +165,7 @@ export default {
       points: 5
     },
     {
-      cardId: 'hotCheckBox',
+      cardId: 'hotCheckbox',
       modifiers: [],
       name: 'Hot Checkbox',
       text: 'So hot',

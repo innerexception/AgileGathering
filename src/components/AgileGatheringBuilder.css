@@ -1,12 +1,3 @@
-.deck{
-    border-radius: 10px;
-    height: 200px;
-    width: 150px;
-    background-color: transparent;
-    margin: 10px;
-    display: inline-block;
-    vertical-align: middle;
-}
 
 .deck-builder-transition{
     margin-top: 1000px;
@@ -19,9 +10,12 @@
     opacity: 1;
 }
 
-.deck-face{
-    background-image: url("/res/img/leatherpattern.jpg");
-    background-size: cover;
+.deck-name{
+    margin-left: 60px;
+    margin-top: 20px;
+    font-family: 'MAGIC', serif;
+    font-style: italic;
+    width: 70px;
 }
 
 .deck-selected{
@@ -44,6 +38,41 @@
     margin: 5px;
     border: 2px dotted green;
     background-size: cover;
+}
+
+.card-back{
+    height: 201px;
+    width: 145px;
+    background-image: url("/res/img/leatherpattern.jpg");
+    background-repeat: no-repeat;
+    border-radius: 10px;
+    display: inline-block;
+    vertical-align: top;
+    margin: 5px;
+    border: 2px dotted green;
+    background-size: cover;
+}
+
+.card-back .card-back-inner{
+    border-radius: 304px / 875px;
+    background-color: orange;
+    height: 180px;
+    margin-top: 9px;
+    margin-left: 6px;
+    width: 130px;
+}
+
+.card-back .card-back-title{
+    margin-top: -143px;
+    margin-left: 25px;
+    font-family: 'MAGIC', serif;
+    font-size: 28px;
+}
+
+.card-back .card-back-subtitle{
+    margin-left: 35px;
+    font-family: 'MAGIC', serif;
+    font-size: 16px;
 }
 
 .card-selected{

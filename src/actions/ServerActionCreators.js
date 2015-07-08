@@ -46,5 +46,13 @@ export default {
       targetArea,
       playerId
     });
+  },
+
+  drawCards(player, number){
+    AgileGatheringDispatcher.dispatch({
+      type: ActionTypes.DRAW_CARDS,
+      player,
+      number
+    });
   }
 };

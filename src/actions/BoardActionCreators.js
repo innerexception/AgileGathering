@@ -9,5 +9,8 @@ export default {
     },
     applyCardToTarget(targetCard, droppedCard, playerId){
         RealtimeAPI.cardModified(targetCard, droppedCard, playerId);
+    },
+    drawCards(player, number){
+        RealtimeAPI.drawCards(player, number);
     }
 };

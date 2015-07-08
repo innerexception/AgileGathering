@@ -92,6 +92,14 @@ export default {
     }));
   },
 
+  drawCards(player, number){
+    this.publishMessage(this.getMessageToPublish({
+      action: 'drawCards',
+      player,
+      number
+    }));
+  },
+
   publishMessage: function(msg) {
     var message = this.getMessageToPublish(msg);
     if(message) {
@@ -129,6 +137,8 @@ export default {
         case 'cardMove':
             ServerActionCreators.cardMoved(payload.cardId, payload.targetArea, payload.playerId);
             break;
+        case 'drawCards':
+            ServerActionCreators.drawCards(payload.player, payload.number);
     }
   },
 

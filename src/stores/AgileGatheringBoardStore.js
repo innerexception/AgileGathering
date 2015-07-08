@@ -4,19 +4,28 @@ import Dispatcher from '../backend/AgileGatheringDispatcher';
 import StoreCreator from '../backend/StoreCreator';
 import { ActionTypes, Cards } from '../Constants';
 
-let activePlayerId, match;
+let activePlayerId, match, hasNotDrawnThisTurn = true;
 
 const getCardByOwner = (card, ownerId) => {
     let owner = _.filter(match.players, function(player){
         return player.playerId === ownerId;
     })[0];
-    let deckMatches = _.filter(owner.playerDeck, function(cardId){
+    let deckIdMatches = _.filter(owner.playerDeck.cardIds, function(cardId){
         return cardId === card.cardId;
     })[0];
-    if(deckMatches) return deckMatches;
+
+    if(deckIdMatches){
+        return getCardById(deckIdMatches);
+    }
 
     return _.filter(owner.playerHand, function(cardItem){
         return card.cardId === cardItem.cardId;
+    })[0];
+};
+
+const getCardById = (cardId)=>{
+    return _.filter(Cards, function(card){
+        return cardId === card.cardId;
     })[0];
 };
 
@@ -24,10 +33,13 @@ const getCardByOwnerAndId = (cardId, ownerId) => {
     let owner = _.filter(match.players, function(player){
         return player.playerId === ownerId;
     })[0];
-    let deckMatches = _.filter(owner.playerDeck.cards, function(cardItem){
+    let deckIdMatches = _.filter(owner.playerDeck.cardIds, function(cardItem){
         return cardItem === cardId;
     })[0];
-    if(deckMatches) return deckMatches;
+
+    if(deckIdMatches){
+        return getCardById(deckIdMatches);
+    }
 
     return _.filter(owner.playerHand, function(card){
         return card.cardId === cardId;
@@ -40,7 +52,8 @@ var AgileGatheringBoardStore = StoreCreator.create({
         if(activePlayerIdProp) activePlayerId = activePlayerIdProp;
         return {
             match,
-            activePlayerId
+            activePlayerId,
+            hasNotDrawnThisTurn
         };
     }
 });
@@ -61,7 +74,14 @@ AgileGatheringBoardStore.dispatchToken = Dispatcher.register((payload) => {
             let player = _.filter(match.players, function(player){
                 return player.playerId === action.playerId;
             })[0];
+
             player[action.targetArea].push(getCardByOwnerAndId(action.cardId, action.playerId));
+            var cardIndex=0;
+            _.each(player.playerHand, function(card, i){
+                if(card.cardId === action.cardId) cardIndex=i;
+            });
+            player.playerHand.splice(cardIndex, 1);
+
             changed = true;
             break;
         case ActionTypes.CARD_MODIFIED:
@@ -78,6 +98,40 @@ AgileGatheringBoardStore.dispatchToken = Dispatcher.register((payload) => {
             match.modifierCards = _.filter(match.modifierCards, function(card){
                 return card.cardId !== action.droppedCard.cardId;
             })[0];
+
+            changed = true;
+            break;
+        case ActionTypes.DRAW_CARDS:
+
+            let remotePlayer = _.filter(match.players, function(player){
+                return player.playerId === action.player.playerId;
+            })[0];
+
+            if(remotePlayer.playerId === activePlayerId){
+                if(!hasNotDrawnThisTurn){
+                    return;
+                }
+                hasNotDrawnThisTurn = false;
+            }
+
+            if(remotePlayer.playerDeck.cardIds.length >= action.number){
+                if(remotePlayer.playerHand.length < 7){
+                    for(var i = 0; i < action.number; i++) {
+                        let cardId = remotePlayer.playerDeck.cardIds.shift();
+                        let card = getCardById(cardId);
+                        card.justDrawn = true;
+                        remotePlayer.playerHand.push(card);
+                    }
+                }
+            }
+            else{
+                remotePlayer.playerDeck.cardIds = [];
+                remotePlayer.playerHand = [];
+            }
+            changed = true;
+            break;
+        case ActionTypes.END_TURN:
+            hasNotDrawnThisTurn = true;
             changed = true;
             break;
     }

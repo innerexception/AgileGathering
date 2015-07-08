@@ -21,6 +21,19 @@
     border-radius: 8px;
 }
 
+.enemy-stories{
+    margin-top: 50px;
+    height: 207px;
+    border: 2px solid red;
+    border-radius: 8px;
+}
+
+.enemy-resources{
+    height: 207px;
+    border: 2px solid blue;
+    border-radius: 8px;
+}
+
 .score-right{
     margin-left: 75%;
 }

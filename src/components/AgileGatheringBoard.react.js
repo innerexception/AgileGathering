@@ -30,7 +30,7 @@ export default React.createClass({
            return player.playerId === this.props.currentPlayerId;
         }, this)[0];
 
-        if(player.playerHand.length < 7 && this.state.activePlayerId === this.props.currentPlayerId){
+        if(player.playerHand.length < 7 && this.state.activePlayerId === this.props.currentPlayerId && this.state.hasNotDrawnThisTurn){
             this._drawCards(player, player.playerHand ? 7-player.playerHand.length : 7);
         }
         const playerHandEls = _.map(player.playerHand, function(card){
@@ -53,7 +53,7 @@ export default React.createClass({
             this._drawCards(enemy, enemy.playerHand ? 7-enemy.playerHand.length : 7);
         }
         const enemyHandEls = _.map(enemy.playerHand, function(card){
-            return this._getCardEl(card, true, false, card.justDrawn ? card.justDrawn = false && ' drawn-transition enemy-card' : 'enemy-card');
+            return this._getCardEl(card, true, false, card.justDrawn ? card.justDrawn = false && ' drawn-transition enemy-card' : 'enemy-card', true);
         }, this);
 
         const enemyResourceEls = _.map(enemy.playerResources, function(card){
@@ -75,10 +75,10 @@ export default React.createClass({
                         { playerHandEls }
                     </div>
                 </div>
-                <div className="player-resources" onDrop={ this._onCardDroppedOnResources } onDragOver={ this._allowDrop }>
+                <div className="player-resources" onDrop={ this._onCardDroppedOnResources } onDragOver={ this._allowDropOnResources }>
                     { playerResourceEls }
                 </div>
-                <div className="player-stories" onDrop={ this._onCardDroppedOnStories } onDragOver={ this._allowDrop }>
+                <div className="player-stories" onDrop={ this._onCardDroppedOnStories } onDragOver={ this._allowDropOnStories }>
                     { playerStoryEls }
                 </div>
                 <div className="enemy-stories">
@@ -95,32 +95,22 @@ export default React.createClass({
     },
 
     _onCardDroppedOnStories(e){
-        BoardActions.cardMove(this.state.dragPayload, 'playerStories', this.state.activePlayerId);
+        if(this.state.dragPayload.type === 'story') BoardActions.cardMove(this.state.dragPayload, 'playerStories', this.state.activePlayerId);
     },
 
     _onCardDroppedOnResources(e){
-        BoardActions.cardMove(this.state.dragPayload, 'playerResources', this.state.activePlayerId);
+        if(this.state.dragPayload.type === 'resource') BoardActions.cardMove(this.state.dragPayload, 'playerResources', this.state.activePlayerId);
     },
 
     _drawCards(player, number){
-        if(player.playerDeck.cards.length >= number){
-            _.times(number, function(){
-                let cardId = player.playerDeck.cards.shift();
-                let card = this._getCardById(cardId);
-                card.justDrawn = true;
-                player.playerHand.push(card);
-            }, this);
-        }
-        else{
-            BoardActions.playerLost(this.props.currentPlayerId, 'Ran out of cards!');
-        }
+        BoardActions.drawCards(player, number);
     },
 
     _getCardById(cardId){
         return BoardStore.getCardById(cardId);
     },
 
-    _getCardEl(card, draggable, isDropTarget, classes){
+    _getCardEl(card, draggable, isDropTarget, classes, showCardBack){
 
         //If in modifier cards collection we do not draw here.
         if(_.filter(this.state.match.modifierCards, function(cardItem){
@@ -129,12 +119,25 @@ export default React.createClass({
             return (<span></span>);
         }
 
+        if(showCardBack){
+            return (<div className="card-back">
+                        <div className="card-back-inner"></div>
+                        <div className="card-back-title">Agile:</div>
+                        <div className="card-back-subtitle">The Gathering</div>
+                    </div>);
+        }
+
         const modifierEls = _.map(card.modifiers, function(modifierCard){
             return (<div>{ modifierCard.name }</div>);
         });
 
         return (
-            <div draggable={ draggable && this.state.activePlayerId === this.props.currentPlayerId ? "true" : "false"} onDrop={ isDropTarget && this._onCardDropped.bind(this, card) } onDragOver={ isDropTarget && this._allowDrop } className={ draggable ? "card card-draggable" : "card" + classes} onDragStart={ this._onCardDragStart.bind(this, card) }>
+            <div draggable={ draggable && this.state.activePlayerId === this.props.currentPlayerId ? true : false}
+                onDrop={ isDropTarget && this._onCardDropped.bind(this, card) }
+                onDragOver={ isDropTarget && this._allowDrop }
+                className={ draggable ? "card card-draggable" : "card " + classes}
+                onDragStart={ this._onCardDragStart.bind(this, card) }>
+
                 <div className="card-title">{card.name}</div>
                 <img className="card-picture" src={ card.imagePath }/>
                 <div className="card-type">{card.type}</div>
@@ -155,6 +158,14 @@ export default React.createClass({
 
     _allowDrop(e) {
         e.preventDefault();
+    },
+
+    _allowDropOnResources(e) {
+        if(this.state.dragPayload.type === 'resource') e.preventDefault();
+    },
+
+    _allowDropOnStories(e) {
+        if(this.state.dragPayload.type === 'story') e.preventDefault();
     },
 
     _endTurn(e){

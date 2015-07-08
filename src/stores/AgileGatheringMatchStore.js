@@ -63,12 +63,6 @@ var AgileGatheringMatchStore = StoreCreator.create({
     }
 });
 
-AgileGatheringMatchStore.Deck = function(deckName){
-    this.cards = [];
-    this.name = deckName;
-    this.deckId = Math.random() + '_deck';
-};
-
 AgileGatheringMatchStore.dispatchToken = Dispatcher.register((payload) => {
     var action = payload;
 

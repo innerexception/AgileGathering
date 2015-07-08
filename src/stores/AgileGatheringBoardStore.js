@@ -2,9 +2,9 @@ import _ from '../vendor/lodash.min.js';
 
 import Dispatcher from '../backend/AgileGatheringDispatcher';
 import StoreCreator from '../backend/StoreCreator';
-import { ActionTypes, Cards } from '../Constants';
+import { ActionTypes } from '../Constants';
 
-let activePlayerId, match, hasNotDrawnThisTurn = true;
+let cards, activePlayerId, match, hasNotDrawnThisTurn = true;
 
 const getCardByOwner = (card, ownerId) => {
 
@@ -45,14 +45,15 @@ const getCardByOwner = (card, ownerId) => {
 };
 
 const getCardById = (cardId)=>{
-    return _.filter(Cards, function(card){
+    return _.filter(cards, function(card){
         return cardId === card.cardId;
     })[0];
 };
 
 var AgileGatheringBoardStore = StoreCreator.create({
-    get: (matchProp, activePlayerIdProp) => {
+    get: (matchProp, activePlayerIdProp, cardsProp) => {
         if(matchProp) match = matchProp;
+        if(cardsProp) cards = cardsProp;
         if(activePlayerIdProp) activePlayerId = activePlayerIdProp;
         return {
             match,
@@ -63,7 +64,7 @@ var AgileGatheringBoardStore = StoreCreator.create({
 });
 
 AgileGatheringBoardStore.getCardById = (cardId)=>{
-    return _.filter(Cards, function(card){
+    return _.filter(cards, function(card){
         return card.cardId === cardId;
     })[0];
 };

@@ -7,7 +7,8 @@ export default React.createClass({
 
     propTypes: {
         match:  React.PropTypes.object.isRequired,
-        currentPlayerId: React.PropTypes.string.isRequired
+        currentPlayerId: React.PropTypes.string.isRequired,
+        cards: React.PropTypes.array.isRequired
     },
 
     componentWillMount() {
@@ -19,7 +20,7 @@ export default React.createClass({
     },
 
     getInitialState(){
-        return BoardStore.get(this.props.match, this.props.currentPlayerId);
+        return BoardStore.get(this.props.match, this.props.currentPlayerId, this.props.cards);
     },
 
     render() {
@@ -67,7 +68,7 @@ export default React.createClass({
         return (
             <div>
                 <div className='score-right'>
-                    <span>{ match.playerName }, SP: { match.playerPoints } / 20</span>
+                    <span>{ player.playerName }, SP: { player.playerPoints } / 20</span>
                     <button onClick={ this._endTurn }>End Turn</button>
                 </div>
                 <div className="player-hand-frame">

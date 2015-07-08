@@ -27,7 +27,9 @@ export default React.createClass({
                );
         }
         else if(this.state.selectedMatch && this.state.started){
-            return (<AgileGatheringBoard match={ this.state.selectedMatch } currentPlayerId={ this.state.currentPlayerId } />);
+            return (<AgileGatheringBoard match={ this.state.selectedMatch }
+                                         currentPlayerId={ this.state.currentPlayerId }
+                                         cards={ this.state.cards } />);
         }
         else{
             return (<AgileGatheringLobby matches={ this.state.matches }

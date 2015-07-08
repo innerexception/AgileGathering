@@ -1,12 +1,13 @@
 .player-hand{
     max-height: 207px;
-    width: 1000px;
+    width: 100%;
 }
 
 .player-hand-frame{
     height: 207px;
     overflow-x: scroll;
     max-width: 100%;
+    margin-bottom: 50px;
 }
 
 .player-resources{
@@ -40,8 +41,4 @@
 
 .card-stacks{
     display: inline-block;
-}
-
-.card-modifier{
-    margin-right:-120px;
 }

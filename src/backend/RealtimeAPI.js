@@ -46,14 +46,6 @@ export default {
     clearInterval(this.matchReadyPingInterval);
   },
 
-  getReadyMessage: function(matchId, ownerId){
-    return this.getMessageToPublish({
-      action: 'matchReady',
-      matchId: matchId,
-      ownerId: ownerId
-    });
-  },
-
   sendJoinMessage: function(match, player){
     this.publishMessage(this.getMessageToPublish({
         action: 'joinMatch',
@@ -74,6 +66,7 @@ export default {
         action: 'matchStart',
         match: match
     }));
+    this.stopMatchReadyPing();
   },
 
   timerUpdate: function(matchId){

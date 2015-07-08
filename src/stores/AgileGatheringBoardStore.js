@@ -7,6 +7,11 @@ import { ActionTypes, Cards } from '../Constants';
 let activePlayerId, match, hasNotDrawnThisTurn = true;
 
 const getCardByOwner = (card, ownerId) => {
+
+    if(typeof card !== 'object'){
+        card = getCardById(card);
+    }
+
     let owner = _.filter(match.players, function(player){
         return player.playerId === ownerId;
     })[0];
@@ -18,31 +23,30 @@ const getCardByOwner = (card, ownerId) => {
         return getCardById(deckIdMatches);
     }
 
-    return _.filter(owner.playerHand, function(cardItem){
+    let resourceMatches = _.filter(owner.playerResources, function(cardItem){
         return card.cardId === cardItem.cardId;
     })[0];
+
+    if(resourceMatches) return resourceMatches;
+
+    let storyMatches = _.filter(owner.playerStories, function(cardItem){
+        return card.cardId === cardItem.cardId;
+    })[0];
+
+    if(storyMatches) return storyMatches;
+
+    let handMatches = _.filter(owner.playerHand, function(cardItem){
+        return card.cardId === cardItem.cardId;
+    })[0];
+
+    if(handMatches) return handMatches;
+
+    else return {error: 'getCardByOwner: Card was not found!'};
 };
 
 const getCardById = (cardId)=>{
     return _.filter(Cards, function(card){
         return cardId === card.cardId;
-    })[0];
-};
-
-const getCardByOwnerAndId = (cardId, ownerId) => {
-    let owner = _.filter(match.players, function(player){
-        return player.playerId === ownerId;
-    })[0];
-    let deckIdMatches = _.filter(owner.playerDeck.cardIds, function(cardItem){
-        return cardItem === cardId;
-    })[0];
-
-    if(deckIdMatches){
-        return getCardById(deckIdMatches);
-    }
-
-    return _.filter(owner.playerHand, function(card){
-        return card.cardId === cardId;
     })[0];
 };
 
@@ -75,7 +79,7 @@ AgileGatheringBoardStore.dispatchToken = Dispatcher.register((payload) => {
                 return player.playerId === action.playerId;
             })[0];
 
-            player[action.targetArea].push(getCardByOwnerAndId(action.cardId, action.playerId));
+            player[action.targetArea].push(getCardByOwner(action.cardId, action.playerId));
             var cardIndex=0;
             _.each(player.playerHand, function(card, i){
                 if(card.cardId === action.cardId) cardIndex=i;

@@ -95,11 +95,13 @@ export default React.createClass({
     },
 
     _onCardDroppedOnStories(e){
-        if(this.state.dragPayload.type === 'story') BoardActions.cardMove(this.state.dragPayload, 'playerStories', this.state.activePlayerId);
+        if(this.state.dragPayload && this.state.dragPayload.type === 'story') BoardActions.cardMove(this.state.dragPayload, 'playerStories', this.state.activePlayerId);
+        delete this.state.dragPayload;
     },
 
     _onCardDroppedOnResources(e){
-        if(this.state.dragPayload.type === 'resource') BoardActions.cardMove(this.state.dragPayload, 'playerResources', this.state.activePlayerId);
+        if(this.state.dragPayload && this.state.dragPayload.type === 'resource') BoardActions.cardMove(this.state.dragPayload, 'playerResources', this.state.activePlayerId);
+        delete this.state.dragPayload;
     },
 
     _drawCards(player, number){
@@ -152,7 +154,7 @@ export default React.createClass({
     },
 
     _onCardDropped(context, event){
-        BoardActions.applyCardToTarget(context, this.state.dragPayload);
+        BoardActions.applyCardToTarget(context, this.state.dragPayload, this.props.currentPlayerId);
         delete this.state.dragPayload;
     },
 

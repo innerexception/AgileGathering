@@ -48,6 +48,15 @@ export default {
     });
   },
 
+  cardModified(targetCard, droppedCard, playerId){
+    AgileGatheringDispatcher.dispatch({
+      type: ActionTypes.CARD_MODIFIED,
+      targetCard,
+      droppedCard,
+      playerId
+    });
+  },
+
   drawCards(player, number){
     AgileGatheringDispatcher.dispatch({
       type: ActionTypes.DRAW_CARDS,

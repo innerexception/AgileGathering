@@ -92,6 +92,15 @@ export default {
     }));
   },
 
+  cardModified(targetCard, droppedCard, playerId){
+    this.publishMessage(this.getMessageToPublish({
+      action: 'cardModified',
+      targetCard,
+      droppedCard,
+      playerId
+    }));
+  },
+
   drawCards(player, number){
     this.publishMessage(this.getMessageToPublish({
       action: 'drawCards',
@@ -136,6 +145,9 @@ export default {
             break;
         case 'cardMove':
             ServerActionCreators.cardMoved(payload.cardId, payload.targetArea, payload.playerId);
+            break;
+        case 'cardModified':
+            ServerActionCreators.cardModified(payload.targetCard, payload.droppedCard, payload.playerId);
             break;
         case 'drawCards':
             ServerActionCreators.drawCards(payload.player, payload.number);

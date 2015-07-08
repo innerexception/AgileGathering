@@ -43,11 +43,21 @@ export default React.createClass({
     },
 
     onMatchCreated(){
-        LobbyActions.createMatch(this.props.playerId, this.props.playerName);
+        LobbyActions.createMatch(this.props.playerId, this.props.playerName, this.props.selectedDeck);
     },
 
     onMatchJoined(){
-        LobbyActions.joinMatch(this.props.selectedMatch, this.props.playerId, this.props.playerName);
+        const player = {
+            playerName: this.props.playerName,
+            matchId: this.props.selectedMatch.matchId,
+            playerId: this.props.playerId,
+            playerDeck: this.props.selectedDeck,
+            playerHand: [],
+            playerResources: [],
+            playerStories: [],
+            playerPoints: 0
+        };
+        LobbyActions.joinMatch(this.props.selectedMatch, player);
     },
 
     onMatchStarted(){
@@ -55,7 +65,7 @@ export default React.createClass({
     },
 
     _getMatchClassName(match){
-        let classes = match.players.length > 1 ? "match match-disabled" : "match";
+        let classes = match.players && match.players.length > 1 ? "match match-disabled" : "match";
         classes += this.props.selectedMatch && this.props.selectedMatch.matchId === match.matchId ? " match-selected" : "";
         return classes;
     }

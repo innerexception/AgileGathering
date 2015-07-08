@@ -1,7 +1,7 @@
 import React from 'react';
 import BoardActions from '../actions/BoardActionCreators.js';
 import BoardStore from '../stores/AgileGatheringBoardStore.js';
-import styles from 'AgileGatheringBoard.css';
+import styles from './AgileGatheringBoard.css';
 
 export default React.createClass({
 

@@ -38,6 +38,11 @@ export default {
       name: 'VC Money',
       cards: ['juniorEngineer', 'juniorEngineer2', 'engineerII', 'engineerII2', 'seniorEngineer', 'asset', 'asset2', 'asset3',
         'VC', 'fancyDropDown', 'loginScreen', 'hotCheckbox', 'scopeCreep', 'scopeCreep2']
+    },
+    {
+      deckId: 'Custom',
+      name: 'Custom Deck',
+      cards: []
     }
   ],
 

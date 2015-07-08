@@ -18,19 +18,6 @@ export default {
         });
     },
 
-    deleteDeck(deck){
-        AgileGatheringDispatcher.dispatch({
-            type: ActionTypes.DELETE_DECK,
-            deck
-        });
-    },
-
-    createDeck() {
-        AgileGatheringDispatcher.dispatch({
-            type: ActionTypes.CREATE_DECK
-        });
-    },
-
     toggleCardInDeck(card, deck){
         AgileGatheringDispatcher.dispatch({
             type: ActionTypes.TOGGLE_CARD,

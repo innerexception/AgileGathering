@@ -33,9 +33,7 @@ let AgileGatheringBuilder = React.createClass({
             <div className={ this.state && this.state.transitionIn ? "deck-builder deck-builder-transition jumbotron deck-builder-in" : "deck-builder deck-builder-transition jumbotron" }>
                 <div>Choose a Deck:</div>
                 <div className="deck-list">{ deckEls }</div>
-                <button onClick={ this.onDeckChoose }>Choose</button>
-                <button onClick={ this.onDeckCreate }>Create</button>
-                <button enabled={ this.props.selectedDeck } onClick={ this.onDeckDeleted }>Delete</button>
+                <button disabled={ !!!this.props.selectedDeck } onClick={ this.onDeckChoose }>Choose</button>
                 <div>Cards</div>
                 <div className="card-list">{ this.props.selectedDeck && allCardEls }</div>
             </div>
@@ -49,14 +47,6 @@ let AgileGatheringBuilder = React.createClass({
 
     onDeckSelected(context, event){
         DeckActions.selectDeck(context);
-    },
-
-    onDeckDeleted(){
-        DeckActions.deleteDeck(this.props.selectedDeck);
-    },
-
-    onDeckCreate(){
-        DeckActions.createDeck();
     },
 
     onCardSelected(context, event){

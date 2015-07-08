@@ -3,21 +3,18 @@ import AgileGatheringDispatcher from '../backend/AgileGatheringDispatcher';
 
 export default {
 
-  createdMatch(matchId, ownerId, matchName) {
+  createdMatch(match) {
     AgileGatheringDispatcher.dispatch({
       type: ActionTypes.CREATED_MATCH,
-      matchId,
-      ownerId,
-      matchName
+      match
     });
   },
 
-  joinedMatch(match, playerId, playerName) {
+  joinedMatch(match, player) {
     AgileGatheringDispatcher.dispatch({
       type: ActionTypes.JOINED_MATCH,
       match,
-      playerId,
-      playerName
+      player
     });
   },
 
@@ -28,13 +25,10 @@ export default {
     });
   },
 
-  matchAvailable(matchId, ownerId, matchName, players){
+  matchAvailable(match){
     AgileGatheringDispatcher.dispatch({
       type: ActionTypes.MATCH_AVAILABLE,
-      matchId,
-      ownerId,
-      matchName,
-      players
+      match
     });
   },
 
@@ -45,11 +39,12 @@ export default {
     });
   },
 
-  cardMoved(cardId, targetArea){
+  cardMoved(cardId, targetArea, playerId){
     AgileGatheringDispatcher.dispatch({
       type: ActionTypes.CARD_MOVED,
       cardId,
-      targetArea
+      targetArea,
+      playerId
     });
   }
 };

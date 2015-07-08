@@ -1,4 +1,4 @@
-var ENDPOINT = "ws://10.32.64.156:1337";
+var ENDPOINT = "ws://localhost:1337";
 
 import ServerActionCreators from '../actions/ServerActionCreators';
 
@@ -30,19 +30,16 @@ export default {
     this.websocket.disconnect();
   },
 
-  matchPing: function(matchId, ownerId, matchName, players){
+  matchPing: function(match){
     this.publishMessage(this.getMessageToPublish({
       action: 'matchPing',
-      matchId: matchId,
-      ownerId: ownerId,
-      matchName: matchName,
-      players: players
+      match
     }));
   },
 
-  startMatchReadyPing: function(matchId, ownerId, matchName, players){
+  startMatchReadyPing: function(match){
     var that = this;
-    this.matchReadyPingInterval = setInterval(function(){that.matchPing(matchId, ownerId, matchName, players)}, 2000);
+    this.matchReadyPingInterval = setInterval(function(){that.matchPing(match)}, 2000);
   },
 
   stopMatchReadyPing: function(){
@@ -57,22 +54,18 @@ export default {
     });
   },
 
-  sendJoinMessage: function(match, playerId, playerName){
+  sendJoinMessage: function(match, player){
     this.publishMessage(this.getMessageToPublish({
         action: 'joinMatch',
-        match: match,
-        playerId: playerId,
-        playerName: playerName
+        match,
+        player
     }));
   },
 
-  createMatch: function(playerId, playerName){
+  createMatch: function(match){
     this.publishMessage(this.getMessageToPublish({
         action: 'matchCreate',
-        matchId: playerName + "'s match" + Math.random(),
-        ownerId: playerId,
-        matchName: playerName + "'s match",
-        players: [{playerId: playerId, playerName: playerName}]
+        match
     }));
   },
 
@@ -90,11 +83,12 @@ export default {
     }));
   },
 
-  cardMoved(cardId, targetArea){
+  cardMoved(cardId, targetArea, playerId){
     this.publishMessage(this.getMessageToPublish({
       action: 'cardMove',
       cardId,
-      targetArea
+      targetArea,
+      playerId
     }));
   },
 
@@ -114,11 +108,11 @@ export default {
 
     switch(payload.action){
         case 'matchCreate':
-            ServerActionCreators.createdMatch(payload.matchId, payload.ownerId, payload.matchName);
-            this.startMatchReadyPing(payload.matchId, payload.ownerId, payload.matchName, payload.players);
+            ServerActionCreators.createdMatch(payload.match);
+            this.startMatchReadyPing(payload.match);
             break;
         case 'joinMatch':
-            ServerActionCreators.joinedMatch(payload.match, payload.playerId, payload.playerName);
+            ServerActionCreators.joinedMatch(payload.match, payload.player);
             break;
         case 'matchReady':
             ServerActionCreators.matchReady();
@@ -127,13 +121,13 @@ export default {
             ServerActionCreators.startMatch(payload.match);
             break;
         case 'matchPing':
-            ServerActionCreators.matchAvailable(payload.matchId, payload.ownerId, payload.matchName, payload.players);
+            ServerActionCreators.matchAvailable(payload.match);
             break;
         case 'timerUpdate':
             ServerActionCreators.timerUpdate(payload.matchId);
             break;
         case 'cardMove':
-            ServerActionCreators.cardMoved(payload.cardId, payload.cardPosition)
+            ServerActionCreators.cardMoved(payload.cardId, payload.targetArea, payload.playerId);
             break;
     }
   },

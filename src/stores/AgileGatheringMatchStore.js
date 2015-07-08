@@ -76,41 +76,16 @@ AgileGatheringMatchStore.dispatchToken = Dispatcher.register((payload) => {
 
     switch(action.type) {
         case ActionTypes.CREATED_MATCH:
-            if(action.ownerId === currentPlayerId && !getMatchByOwner(action.ownerId)){
-                matches.push({
-                    matchId: action.matchId,
-                    ownerId: action.ownerId,
-                    matchName: action.matchName,
-                    modifierCards: []
-                });
-                selectedMatch = getMatchByOwner(action.ownerId);
-                selectedMatch.players = [];
-                selectedMatch.players.push({
-                    playerName: currentPlayerName,
-                    matchId: action.matchId,
-                    playerId: currentPlayerId,
-                    playerDeck,
-                    playerHand: [],
-                    playerResources: [],
-                    playerStories: [],
-                    playerPoints: 0
-                });
+            if(action.match.ownerId === currentPlayerId && !getMatchByOwner(action.match.ownerId)){
+                matches.push(action.match);
                 //lobbySounds.joinMatch.play();
                 disableJoinButton = true;
                 changed = true;
             }
             break;
         case ActionTypes.JOINED_MATCH:
-            var match = getMatchById(action.match.matchId);
-            match.players.push({
-                playerId: action.playerId,
-                playerName: action.playerName,
-                playerDeck,
-                playerHand: [],
-                playerResources: [],
-                playerStories: [],
-                playerPoints: 0
-            });
+            let match = getMatchById(action.match.matchId);
+            match.players.push(action.player);
             //lobbySounds.joinMatch.play();
             changed = true;
             break;
@@ -124,14 +99,8 @@ AgileGatheringMatchStore.dispatchToken = Dispatcher.register((payload) => {
             changed = true;
             break;
         case ActionTypes.MATCH_AVAILABLE:
-            if(!getMatchByOwner(action.ownerId)){
-                matches.push({
-                    matchId: action.matchId,
-                    ownerId: action.ownerId,
-                    matchName: action.matchName,
-                    players: action.players,
-                    modifierCards: []
-                });
+            if(!getMatchByOwner(action.match.ownerId)){
+                matches.push(action.match);
                 changed = true;
             }
             break;
@@ -168,16 +137,6 @@ AgileGatheringMatchStore.dispatchToken = Dispatcher.register((payload) => {
             break;
         case ActionTypes.SELECTED_DECK:
             selectedDeck = action.deck;
-            changed = true;
-            break;
-        case ActionTypes.DELETE_DECK:
-            decks = _.filter(decks, function(deck){
-                return deck.deckId !== action.deck.deckId;
-            });
-            changed = true;
-            break;
-        case ActionTypes.CREATE_DECK:
-            decks.push(new AgileGatheringMatchStore.Deck('Custom Deck'));
             changed = true;
             break;
         case ActionTypes.TOGGLE_CARD:

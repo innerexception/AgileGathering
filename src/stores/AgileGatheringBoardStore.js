@@ -9,10 +9,29 @@ let activePlayerId, match;
 const getCardByOwner = (card, ownerId) => {
     let owner = _.filter(match.players, function(player){
         return player.playerId === ownerId;
-    });
-    return _.filter(owner.playerDeck, function(cardItem){
-        return cardItem.cardId === card.cardId;
-    });
+    })[0];
+    let deckMatches = _.filter(owner.playerDeck, function(cardId){
+        return cardId === card.cardId;
+    })[0];
+    if(deckMatches) return deckMatches;
+
+    return _.filter(owner.playerHand, function(cardItem){
+        return card.cardId === cardItem.cardId;
+    })[0];
+};
+
+const getCardByOwnerAndId = (cardId, ownerId) => {
+    let owner = _.filter(match.players, function(player){
+        return player.playerId === ownerId;
+    })[0];
+    let deckMatches = _.filter(owner.playerDeck.cards, function(cardItem){
+        return cardItem === cardId;
+    })[0];
+    if(deckMatches) return deckMatches;
+
+    return _.filter(owner.playerHand, function(card){
+        return card.cardId === cardId;
+    })[0];
 };
 
 var AgileGatheringBoardStore = StoreCreator.create({
@@ -41,8 +60,8 @@ AgileGatheringBoardStore.dispatchToken = Dispatcher.register((payload) => {
         case ActionTypes.CARD_MOVED:
             let player = _.filter(match.players, function(player){
                 return player.playerId === action.playerId;
-            });
-            player[action.targetArea].push(action.card);
+            })[0];
+            player[action.targetArea].push(getCardByOwnerAndId(action.cardId, action.playerId));
             changed = true;
             break;
         case ActionTypes.CARD_MODIFIED:
@@ -55,10 +74,10 @@ AgileGatheringBoardStore.dispatchToken = Dispatcher.register((payload) => {
             let unmodifyCard = getCardByOwner(action.targetCard, action.playerId);
             unmodifyCard.modifiers = _.filter(unmodifyCard.modifiers, function(modifier){
                 return modifier.cardId !== action.droppedCard.cardId;
-            });
+            })[0];
             match.modifierCards = _.filter(match.modifierCards, function(card){
                 return card.cardId !== action.droppedCard.cardId;
-            });
+            })[0];
             changed = true;
             break;
     }

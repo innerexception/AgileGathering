@@ -12,8 +12,23 @@ export default {
         });
     },
 
-    createMatch(playerId, playerName) {
-        RealtimeAPI.createMatch(playerId, playerName);
+    createMatch(playerId, playerName, playerDeck) {
+        let match ={
+            matchId: Math.random() + '_match',
+            ownerId: playerId,
+            matchName: playerName + ' \'s game',
+            modifierCards: [],
+            players: [{
+                playerName,
+                playerId,
+                playerDeck,
+                playerHand: [],
+                playerResources: [],
+                playerStories: [],
+                playerPoints: 0
+            }]
+        };
+        RealtimeAPI.createMatch(match);
     },
 
     matchReady(matchId, playerId){
@@ -24,8 +39,8 @@ export default {
         });
     },
 
-    joinMatch(match, playerId, playerName) {
-        RealtimeAPI.sendJoinMessage(match, playerId, playerName);
+    joinMatch(match, player) {
+        RealtimeAPI.sendJoinMessage(match, player);
         AgileGatheringDispatcher.dispatch({
             type: ActionTypes.DISABLE_JOIN_BUTTON
         });

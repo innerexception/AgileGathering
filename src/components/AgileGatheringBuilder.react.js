@@ -1,7 +1,8 @@
 import React from 'react';
 import _ from '../vendor/lodash.min.js';
-import DeckActions from '../actions/DeckBuilderActionCreators.js';
+import DeckActions from '../actions/DeckBuilderActionCreators';
 import css from './AgileGatheringBuilder.css';
+import { CardTypes } from '../Constants';
 
 let AgileGatheringBuilder = React.createClass({
 
@@ -59,7 +60,7 @@ let AgileGatheringBuilder = React.createClass({
     _getAllCardEls(cardArray, selectedDeck){
         return _.map(cardArray, function(card){
             return (
-                <div className={ selectedDeck && this._containsCard(selectedDeck.cardIds, card) ? 'card card-selected' : 'card' } onClick={ this.onCardSelected.bind(this, card) }>
+                <div style={{ backgroundImage: "url(\""+CardTypes[card.type].imagePath+"\")"}} className={ selectedDeck && this._containsCard(selectedDeck.cardIds, card) ? 'card card-selected' : 'card' } onClick={ this.onCardSelected.bind(this, card) }>
                     <div className="card-title">{card.name}</div>
                     <img className="card-picture" src={ card.imagePath }/>
                     <div className="card-type">{card.type}</div>

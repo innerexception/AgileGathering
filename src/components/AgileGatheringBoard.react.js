@@ -2,6 +2,7 @@ import React from 'react';
 import BoardActions from '../actions/BoardActionCreators.js';
 import BoardStore from '../stores/AgileGatheringBoardStore.js';
 import styles from './AgileGatheringBoard.css';
+import { CardTypes } from '../Constants';
 
 export default React.createClass({
 
@@ -131,7 +132,7 @@ export default React.createClass({
         const length = card.modifiers.length;
         const modifierEls = _.map(card.modifiers, function(modifierCard, i){
             return (
-                <div className="card card-modifier" style={{marginTop:-25*(length-i), marginRight: "-120px"}}>
+                <div className="card card-modifier" style={{marginTop:-25*(length-i), marginRight: "-120px", backgroundImage: "url(\""+CardTypes[card.type].imagePath+"\")"}}>
                     <div className="card-title">{modifierCard.name}</div>
                     <img className="card-picture" src={ modifierCard.imagePath }/>
                     <div className="card-type">{modifierCard.type}</div>
@@ -143,7 +144,7 @@ export default React.createClass({
         return (
             <div className="card-stacks">
                 { modifierEls }
-                <div draggable={ draggable && this.state.activePlayerId === this.props.currentPlayerId ? true : false}
+                <div style={{ backgroundImage: "url(\""+CardTypes[card.type].imagePath+"\")"}} draggable={ draggable && this.state.activePlayerId === this.props.currentPlayerId ? true : false}
                     onDrop={ isDropTarget && this._onCardDropped.bind(this, card) }
                     onDragOver={ isDropTarget && this._allowDrop.bind(this, card) }
                     className={ draggable ? "card card-draggable" : "card " + classes}
@@ -163,20 +164,24 @@ export default React.createClass({
     },
 
     _onCardDropped(context, event){
-        BoardActions.applyCardToTarget(context, this.state.dragPayload, this.props.currentPlayerId);
+        if(this._isValidTarget(context, this.state.dragPayload)){
+            BoardActions.applyCardToTarget(context, this.state.dragPayload, this.props.currentPlayerId);
+        }
         delete this.state.dragPayload;
     },
 
     _allowDrop(context, event) {
-        if(this._isValidTarget(context, this.state.dragPayload)) event.preventDefault();
+        //if(this._isValidTarget(context, this.state.dragPayload)){
+        //    event.preventDefault();
+        //}
     },
 
     _allowDropOnResources(e) {
-        if(this.state.dragPayload.type === 'resource') e.preventDefault();
+        if(this.state.dragPayload && this.state.dragPayload.type === 'resource') e.preventDefault();
     },
 
     _allowDropOnStories(e) {
-        if(this.state.dragPayload.type === 'story') e.preventDefault();
+        if(this.state.dragPayload && this.state.dragPayload.type === 'story') e.preventDefault();
     },
 
     _endTurn(e){

@@ -30,7 +30,6 @@
 .card{
     height: 201px;
     width: 145px;
-    background-image: url("/res/img/greencardtemplate.png");
     background-repeat: no-repeat;
     border-radius: 10px;
     display: inline-block;

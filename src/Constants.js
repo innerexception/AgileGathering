@@ -28,6 +28,21 @@ export default {
     CARD_UNMODIFIED: 'cum'
   },
 
+  CardTypes: {
+    resource:{
+      imagePath: '/res/img/greencardtemplate.png'
+    },
+    story: {
+      imagePath: '/res/img/bluecardtemplate.png'
+    },
+    delay: {
+      imagePath: '/res/img/blackcardtemplate.png'
+    },
+    boost: {
+      imagePath: '/res/img/whitecardtemplate.png'
+    }
+  },
+
   Decks: [
     {
       deckId: 'SBP',

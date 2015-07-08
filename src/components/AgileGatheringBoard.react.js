@@ -35,15 +35,15 @@ export default React.createClass({
             this._drawCards(player, player.playerHand ? 7-player.playerHand.length : 7);
         }
         const playerHandEls = _.map(player.playerHand, function(card){
-           return this._getCardEl(card, true, false, card.justDrawn ?  card.justDrawn = false && ' drawn-transition card' : 'card');
+           return this._getCardEl(card, true, false, card.justDrawn ?  card.justDrawn = false && ' drawn-transition card' : 'card', false, player.modifierCards);
         }, this);
 
         const playerResourceEls = _.map(player.playerResources, function(card){
-           return this._getCardEl(card, true, true);
+           return this._getCardEl(card, true, true, null, false, player.modifierCards);
         }, this);
 
         const playerStoryEls = _.map(player.playerStories, function(card){
-           return this._getCardEl(card, false, true);
+           return this._getCardEl(card, false, true, null, false, player.modifierCards);
         }, this);
 
         const enemy = _.filter(match.players, function(player){
@@ -54,15 +54,15 @@ export default React.createClass({
             this._drawCards(enemy, enemy.playerHand ? 7-enemy.playerHand.length : 7);
         }
         const enemyHandEls = _.map(enemy.playerHand, function(card){
-            return this._getCardEl(card, true, false, card.justDrawn ? card.justDrawn = false && ' drawn-transition enemy-card' : 'enemy-card', true);
+            return this._getCardEl(card, true, false, card.justDrawn ? card.justDrawn = false && ' drawn-transition enemy-card' : 'enemy-card', true, enemy.modifierCards);
         }, this);
 
         const enemyResourceEls = _.map(enemy.playerResources, function(card){
-            return this._getCardEl(card, true, true);
+            return this._getCardEl(card, true, true, null, false, enemy.modifierCards);
         }, this);
 
         const enemyStoryEls = _.map(enemy.playerStories, function(card){
-            return this._getCardEl(card, false, true);
+            return this._getCardEl(card, false, true, null, false, enemy.modifierCards);
         }, this);
 
         return (
@@ -109,14 +109,10 @@ export default React.createClass({
         BoardActions.drawCards(player, number);
     },
 
-    _getCardById(cardId){
-        return BoardStore.getCardById(cardId);
-    },
-
-    _getCardEl(card, draggable, isDropTarget, classes, showCardBack){
+    _getCardEl(card, draggable, isDropTarget, classes, showCardBack, playerModifierCards){
 
         //If in modifier cards collection we do not draw here.
-        if(_.filter(this.state.match.modifierCards, function(cardItem){
+        if(_.filter(playerModifierCards, function(cardItem){
             return card.cardId === cardItem.cardId;
             }).length > 0){
             return (<span></span>);

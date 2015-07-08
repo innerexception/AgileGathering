@@ -15,6 +15,7 @@ const getCardByOwner = (card, ownerId) => {
     let owner = _.filter(match.players, function(player){
         return player.playerId === ownerId;
     })[0];
+    //TODO need to return new instance potentially if found in deck
     let deckIdMatches = _.filter(owner.playerDeck.cardIds, function(cardId){
         return cardId === card.cardId;
     })[0];
@@ -50,6 +51,12 @@ const getCardById = (cardId)=>{
     })[0];
 };
 
+const getPlayer = (playerId) =>{
+    return _.filter(match.players, function(player){
+        return player.playerId === playerId;
+    })[0];
+}
+
 var AgileGatheringBoardStore = StoreCreator.create({
     get: (matchProp, activePlayerIdProp, cardsProp) => {
         if(matchProp) match = matchProp;
@@ -63,12 +70,6 @@ var AgileGatheringBoardStore = StoreCreator.create({
     }
 });
 
-AgileGatheringBoardStore.getCardById = (cardId)=>{
-    return _.filter(cards, function(card){
-        return card.cardId === cardId;
-    })[0];
-};
-
 AgileGatheringBoardStore.dispatchToken = Dispatcher.register((payload) => {
     const action = payload;
 
@@ -76,10 +77,7 @@ AgileGatheringBoardStore.dispatchToken = Dispatcher.register((payload) => {
 
     switch(action.type) {
         case ActionTypes.CARD_MOVED:
-            let player = _.filter(match.players, function(player){
-                return player.playerId === action.playerId;
-            })[0];
-
+            let player = getPlayer(action.playerId);
             player[action.targetArea].push(getCardByOwner(action.cardId, action.playerId));
             var cardIndex=0;
             _.each(player.playerHand, function(card, i){
@@ -92,7 +90,9 @@ AgileGatheringBoardStore.dispatchToken = Dispatcher.register((payload) => {
         case ActionTypes.CARD_MODIFIED:
             let card = getCardByOwner(action.targetCard, action.playerId);
             card.modifiers.push(action.droppedCard);
-            match.modifierCards.push(action.droppedCard);
+            let otherRemotePlayer = getPlayer(action.playerId);
+            if(!otherRemotePlayer.modifierCards) otherRemotePlayer.modifierCards = [];
+            otherRemotePlayer.modifierCards.push(action.droppedCard);
             changed = true;
             break;
         case ActionTypes.CARD_UNMODIFIED:
@@ -108,9 +108,7 @@ AgileGatheringBoardStore.dispatchToken = Dispatcher.register((payload) => {
             break;
         case ActionTypes.DRAW_CARDS:
 
-            let remotePlayer = _.filter(match.players, function(player){
-                return player.playerId === action.player.playerId;
-            })[0];
+            let remotePlayer = getPlayer(action.player.playerId);
 
             if(remotePlayer.playerId === activePlayerId){
                 if(!hasNotDrawnThisTurn){
@@ -124,8 +122,17 @@ AgileGatheringBoardStore.dispatchToken = Dispatcher.register((payload) => {
                     for(var i = 0; i < action.number; i++) {
                         let cardId = remotePlayer.playerDeck.cardIds.shift();
                         let card = getCardById(cardId);
-                        card.justDrawn = true;
-                        remotePlayer.playerHand.push(card);
+
+                        remotePlayer.playerHand.push({
+                            cardId: card.cardId,
+                            modifiers: [],
+                            name: card.name,
+                            text: card.text,
+                            imagePath: card.imagePath,
+                            type: card.type,
+                            points: card.points,
+                            justDrawn: true
+                        });
                     }
                 }
             }

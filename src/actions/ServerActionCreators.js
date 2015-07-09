@@ -63,5 +63,19 @@ export default {
       player,
       number
     });
+  },
+
+  setActivePlayer(playerId){
+    AgileGatheringDispatcher.dispatch({
+      type: ActionTypes.SET_ACTIVE_PLAYER,
+      playerId
+    });
+  },
+
+  endTurn(playerId){
+    AgileGatheringDispatcher.dispatch({
+      type: ActionTypes.END_TURN,
+      playerId
+    });
   }
 };

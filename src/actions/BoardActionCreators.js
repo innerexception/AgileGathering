@@ -12,5 +12,8 @@ export default {
     },
     drawCards(player, number){
         RealtimeAPI.drawCards(player, number);
+    },
+    endTurn(playerId){
+        RealtimeAPI.endTurn(playerId);
     }
 };

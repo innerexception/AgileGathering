@@ -36,7 +36,7 @@ export default {
       imagePath: '/res/img/bluecardtemplate.png'
     },
     delay: {
-      imagePath: '/res/img/blackcardtemplate.png'
+      imagePath: '/res/img/greycardtemplate.jpg'
     },
     boost: {
       imagePath: '/res/img/whitecardtemplate.png'

@@ -66,11 +66,15 @@ export default React.createClass({
             return this._getCardEl(card, false, true, null, false, enemy.modifierCards);
         }, this);
 
-        return (
-            <div>
+        return this.state.victoryForPlayer ? (<div className="victory">Victory: { this.state.victoryForPlayer.playerName }</div>) :
+            (<div>
                 <div className='score-right'>
                     <span>{ player.playerName }, SP: { player.playerPoints } / 20</span>
                     <button onClick={ this._endTurn }>End Turn</button>
+                </div>
+                //TODO add resource pool meter
+                <div className="resource-pool">
+                    { resourcePoolEls }
                 </div>
                 <div className="player-hand-frame">
                     <div className="player-hand">
@@ -141,26 +145,53 @@ export default React.createClass({
             );
         });
 
+        let pptEl = card.ppt && (<div className="card-ppt-badge">{ card.ppt }</div>);
+        let valueEl = card.value && (<div className="card-value-badge">{ card.value }</div>);
+        let costEl = card.cost ? (<div className="card-cost-badge-fill">
+            <div className="card-cost-badge">{ card.cost }</div>
+        </div>) :
+            (<div className="card-cost-badge-fill">
+                <div className="card-cost-badge">0</div>
+            </div>);
+
         return (
             <div className="card-stacks">
                 { modifierEls }
                 <div style={{ backgroundImage: "url(\""+CardTypes[card.type].imagePath+"\")"}} draggable={ draggable && this.state.activePlayerId === this.props.currentPlayerId ? true : false}
                     onDrop={ isDropTarget && this._onCardDropped.bind(this, card) }
                     onDragOver={ isDropTarget && this._allowDrop.bind(this, card) }
-                    className={ draggable ? "card card-draggable" : "card " + classes}
+                    onClick={ card.type === 'resource' && this._addResourceToPool.bind(this, card) }
+                    className={ (draggable ? "card card-draggable" : "card ") + classes + (" "+card.isCompleted && " card-complete ") + (card.isInPool && " card-pooled")}
                     onDragStart={ this._onCardDragStart.bind(this, card) }>
-
+                    { costEl }
                     <div className="card-title">{card.name}</div>
                     <img className="card-picture" src={ card.imagePath }/>
                     <div className="card-type">{card.type}</div>
-                    <div className="card-text">{card.text}</div>
+                    { valueEl}
+                    <div className="card-text">{card.text + this._getPointsText(card) + this._getPptText(card)}</div>
+                    { pptEl }
                 </div>
             </div>
         );
     },
 
+    _getPointsText(card) {
+        return card.points ? (' ' + (card.points > 0 && card.type === 'story' ? '+' : '') + card.points + ' points to complete ' + (card.type !== 'story' ? ' on targeted card' : '')) : '';
+    },
+
+    _getPptText(card){
+        return card.ppt ? (' +' +card.ppt+ ' points completed on \'stories\' per turn'):'';
+    },
+
     _onCardDragStart(context, event){
-        this.state.dragPayload = context;
+        if(this._hasEnoughResources(context)){
+            this.state.dragPayload = context;
+        }
+        else{
+            //TODO flash resource meter
+            //TODO add flaire
+            BoardActions.showFlaire('Not enough resources available!');
+        }
     },
 
     _onCardDropped(context, event){
@@ -185,12 +216,7 @@ export default React.createClass({
     },
 
     _endTurn(e){
-        //TODO
-        //Check my stories on the board to see if done (including modifiers) and clear if so
-        //See if any modifiers have expired or have no target
-        //See if any resources are now freed
-        //Set activePlayer to the next person
-        //BoardActions.setActivePlayer(enemyPlayerId);
+        BoardActions.endTurn(this.props.currentPlayerId);
     },
 
     _isValidTarget(targetCard, droppedCard){
@@ -204,6 +230,26 @@ export default React.createClass({
         }
         //(Delays and boosts can't be drop targets.)
         return false;
+    },
+
+    _addResourceToPool(context, event){
+        let player = _.filter(this.state.match.players, function(player){
+            return player.playerId === this.props.currentPlayerId;
+        });
+        if(context.value && !context.isInPool){
+            context.isInPool = true;
+            player.resourceCardPool.push(context);
+            BoardActions.showFlaire('Resource added to pool.');
+        }
+    },
+
+    _hasEnoughResources(card){
+        let player = _.filter(this.state.match.players, function(player){
+            return player.playerId === this.props.currentPlayerId;
+        });
+
+        //TODO loop though card pool to see if it is enough
+        return player.resourceCardPool.value >= card.cost;
     },
 
     _onChange() {

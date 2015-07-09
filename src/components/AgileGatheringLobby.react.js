@@ -54,6 +54,7 @@ export default React.createClass({
             playerDeck: this.props.selectedDeck,
             playerHand: [],
             playerResources: [],
+            playerResourceCardPool: [],
             playerStories: [],
             playerPoints: 0
         };

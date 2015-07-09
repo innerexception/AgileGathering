@@ -85,9 +85,10 @@
 }
 
 .card-picture{
-    width: 116px;
+    width: 115px;
     height: 85px;
-    margin-left: 15px;
+    margin-left: 13px;
+    margin-top: -3px;
 }
 
 .card-text{

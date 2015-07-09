@@ -69,6 +69,13 @@ export default {
     this.stopMatchReadyPing();
   },
 
+  endTurn: function(playerId){
+    this.publishMessage(this.getMessageToPublish({
+      action: 'endTurn',
+      playerId
+    }));
+  },
+
   timerUpdate: function(matchId){
     this.publishMessage(this.getMessageToPublish({
       action: 'timerUpdate',
@@ -144,6 +151,10 @@ export default {
             break;
         case 'drawCards':
             ServerActionCreators.drawCards(payload.player, payload.number);
+            break;
+        case 'endTurn':
+            ServerActionCreators.endTurn(payload.playerId);
+            break;
     }
   },
 

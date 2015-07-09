@@ -24,6 +24,7 @@ export default {
                 playerDeck,
                 playerHand: [],
                 playerResources: [],
+                playerResourceCardPool: [],
                 playerStories: [],
                 playerPoints: 0
             }]

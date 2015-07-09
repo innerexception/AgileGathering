@@ -123,9 +123,8 @@
     margin-top: 10px;
     border: 1px inset blue;
 }
-.cost-margin{
-    margin-top: 52px;
-}
-.value-margin{
-    margin-top: 32px;
+.card-value-badge{
+    float: right;
+    margin-right: 20px;
+    margin-top: -13px;
 }

@@ -100,5 +100,32 @@
 .card-type{
     font-size: 9px;
     margin-left: 16px;
-    margin-top: 0;
+    margin-top: -2px;
+}
+
+.card-ppt-badge{
+    margin-left: 113px;
+    font-size: 10px;
+    margin-top: 38px;
+}
+
+.card-cost-badge{
+    margin-left: 4px;
+    font-size: 10px;
+}
+
+.card-cost-badge-fill{
+    background-color: white;
+    width: 15px;
+    border-radius: 8px;
+    float: right;
+    margin-right: 15px;
+    margin-top: 10px;
+    border: 1px inset blue;
+}
+.cost-margin{
+    margin-top: 52px;
+}
+.value-margin{
+    margin-top: 32px;
 }

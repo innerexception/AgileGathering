@@ -166,7 +166,7 @@ export default {
       cardId: 'seniorSalesGuy',
       modifiers: [],
       name: 'Head Sales Guy',
-      text: 'Get the cream ya\'ll.,
+      text: 'Get the cream ya\'ll.',
       imagePath: './res/img/software.png',
       type: 'resource',
       value: 6,

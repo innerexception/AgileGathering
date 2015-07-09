@@ -59,12 +59,26 @@ let AgileGatheringBuilder = React.createClass({
 
     _getAllCardEls(cardArray, selectedDeck){
         return _.map(cardArray, function(card){
+            let pptEl = card.ppt && (<div className="card-ppt-badge">{ card.ppt }</div>);
+            let valueEl = card.value && (<div className="card-value-badge">{ card.value }</div>);
+            let costEl = card.cost ? (<div className="card-cost-badge-fill">
+                                        <div className="card-cost-badge">{ card.cost }</div>
+                                      </div>) :
+                                     (<div className="card-cost-badge-fill">
+                                         <div className="card-cost-badge">0</div>
+                                      </div>);
+            let modifierEl = card.points ? (<div className="card-points-badge">{ card.points }</div>) : (<div></div>);
+
             return (
                 <div style={{ backgroundImage: "url(\""+CardTypes[card.type].imagePath+"\")"}} className={ selectedDeck && this._containsCard(selectedDeck.cardIds, card) ? 'card card-selected' : 'card' } onClick={ this.onCardSelected.bind(this, card) }>
+                    { costEl }
                     <div className="card-title">{card.name}</div>
                     <img className="card-picture" src={ card.imagePath }/>
                     <div className="card-type">{card.type}</div>
                     <div className="card-text">{card.text}</div>
+                    { valueEl}
+                    { pptEl }
+                    { modifierEl }
                 </div>
             );
         }, this);

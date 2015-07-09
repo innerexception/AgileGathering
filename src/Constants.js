@@ -115,6 +115,26 @@ export default {
       cost: 5
     },
     {
+      cardId: 'productOwner',
+      modifiers: [],
+      name: 'Product Owner',
+      text: 'I own the products.',
+      imagePath: './res/img/rgreen.png',
+      type: 'resource',
+      pptBonus: 1,
+      cost: 2
+    },
+    {
+      cardId: 'scrumMaster',
+      modifiers: [],
+      name: 'Scrum Master',
+      text: 'Hug it out.',
+      imagePath: './res/img/rgreen.png',
+      type: 'resource',
+      pptBonus: 1,
+      cost: 2
+    },
+    {
       cardId: 'asset',
       modifiers: [],
       name: 'Asset',
@@ -133,13 +153,24 @@ export default {
       value: 1
     },
     {
-      cardId: 'asset3',
+      cardId: 'salesGuy',
       modifiers: [],
-      name: 'Asset',
-      text: 'It has been monetized!',
+      name: 'Sales Guy',
+      text: 'Make it rain!',
       imagePath: './res/img/software.png',
       type: 'resource',
-      value: 3
+      value: 3,
+      cost: 1
+    },
+    {
+      cardId: 'seniorSalesGuy',
+      modifiers: [],
+      name: 'Head Sales Guy',
+      text: 'Get the cream ya\'ll.,
+      imagePath: './res/img/software.png',
+      type: 'resource',
+      value: 6,
+      cost: 3
     },
     {
       cardId: 'IPO',
@@ -171,6 +202,24 @@ export default {
       points: 3
     },
     {
+      cardId: 'ext4',
+      modifiers: [],
+      name: 'Ext4 Upgrade',
+      text: 'Oh no. please dear God no whyyyyy.',
+      imagePath: './res/img/ddl.png',
+      type: 'story',
+      points: 10
+    },
+    {
+      cardId: 'sharedviews',
+      modifiers: [],
+      name: 'Shaved Views',
+      text: 'Make a view and show it to someone',
+      imagePath: './res/img/ddl.png',
+      type: 'story',
+      points: 6
+    },
+    {
       cardId: 'loginScreen',
       modifiers: [],
       name: 'Login Screen',
@@ -195,7 +244,8 @@ export default {
       text: 'Scope it be Creepin',
       imagePath: './res/img/scope.png',
       type: 'delay',
-      points: 2
+      points: 2,
+      cost: 1
     },
     {
       cardId: 'scopeCreep2',
@@ -204,10 +254,111 @@ export default {
       text: 'Scope it be Creepin',
       imagePath: './res/img/scope.png',
       type: 'delay',
-      points: 2
+      points: 2,
+      cost: 1
+    },
+    {
+      cardId: 'sickDay',
+      modifiers: [],
+      name: 'Sick Day',
+      text: 'I think I have the black lung, pop.',
+      imagePath: './res/img/scope.png',
+      type: 'delay',
+      points: 2,
+      cost: 1
+    },
+    {
+      cardId: 'hackathon',
+      modifiers: [],
+      name: 'Hackathon!',
+      text: 'We\'ll be faster after though.',
+      imagePath: './res/img/scope.png',
+      type: 'delay',
+      points: 6,
+      pptBonus: 2,
+      cost: 3
+    },
+    {
+      cardId: 'powderDay',
+      modifiers: [],
+      name: 'Powder Day',
+      text: 'It\'s going to melt though.',
+      imagePath: './res/img/scope.png',
+      type: 'delay',
+      points: 3,
+      cost: 2
+    },
+    {
+      cardId: 'longLunch',
+      modifiers: [],
+      name: '3 hour lunch',
+      text: 'CA\'s paying.',
+      imagePath: './res/img/scope.png',
+      type: 'delay',
+      points: 1,
+      cost: 1
+    },
+    {
+      cardId: 'jarvis',
+      modifiers: [],
+      name: 'Jarvis',
+      text: 'Jarvis make me a sandwich. Jarvis?',
+      imagePath: './res/img/scope.png',
+      type: 'delay',
+      points: 1,
+      cost: 1
+    },
+    {
+      cardId: 'raise',
+      modifiers: [],
+      name: 'Raise!',
+      text: 'This close to buying my island.',
+      imagePath: './res/img/scope.png',
+      type: 'boost',
+      points: -1,
+      cost: 1
+    },
+    {
+      cardId: 'ssd',
+      modifiers: [],
+      name: 'Solid State Drive',
+      text: 'No more beach balls.',
+      imagePath: './res/img/scope.png',
+      type: 'boost',
+      points: -1,
+      cost: 1
+    },
+    {
+      cardId: 'foosBall',
+      modifiers: [],
+      name: 'Foos?',
+      text: 'Click click, boom.',
+      imagePath: './res/img/scope.png',
+      type: 'boost',
+      points: -1,
+      cost: 1
+    },
+    {
+      cardId: 'jenkins',
+      modifiers: [],
+      name: 'Jenkins',
+      text: 'My shell is so lonely now.',
+      imagePath: './res/img/scope.png',
+      type: 'boost',
+      points: -3,
+      cost: 2
+    },
+    {
+      cardId: 'react',
+      modifiers: [],
+      name: 'React',
+      text: 'Why were we using Ext again?',
+      imagePath: './res/img/scope.png',
+      type: 'boost',
+      points: -5,
+      cost: 4
     }
-
   ],
 
-  FileServerIP: '10.32.64.156'
+  FileServerIP: 'localhost'
 };

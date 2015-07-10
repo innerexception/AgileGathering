@@ -191,31 +191,40 @@ AgileGatheringBoardStore.dispatchToken = Dispatcher.register((payload) => {
             playerTurnOver.playerTurn++;
             playerTurnOver.resourcePool = playerTurnOver.playerTurn;
             _.each(playerTurnOver.playerStories, function(storyCard){
-                _.each(storyCard.modifiers, function(modifierCard){
-                    if(modifierCard.type === 'resource'){
-                        if(modifierCard.ppt){
-                            storyCard.points -= modifierCard.ppt;
-                            playerTurnOver.playerPoints += modifierCard.ppt;
-                            if(playerTurnOver.playerPoints >= 20){
-                                victoryForPlayer = playerTurnOver;
-                            }
-                            if(storyCard.points <= 0){
-                                let freedResources = _.filter(storyCard.modifierCards, function(card){
-                                    return card.type === 'resource';
-                                });
-                                playerTurnOver.playerResources = playerTurnOver.playerResources.concat(freedResources);
+                if(!storyCard.maxPoints) storyCard.maxPoints = storyCard.points;
+                if(!storyCard.isCompleted){
+                    _.each(storyCard.modifiers, function(modifierCard){
+                        if(modifierCard.type === 'resource' && storyCard.points > 0){
+                            if(modifierCard.ppt){
+                                 storyCard.points -= modifierCard.ppt;
+                                if(storyCard.points < 0) storyCard.points = 0;
+                                if(storyCard.points <= 0){
+                                    let freedResources = _.filter(storyCard.modifiers, function(card){
+                                        return card.type === 'resource';
+                                    });
+                                    playerTurnOver.playerResources = playerTurnOver.playerResources.concat(freedResources);
 
-                                storyCard.modifierCards = _.filter(storyCard.modifierCards, function(card){
-                                    return card.type !== 'resource';
-                                });
-                                playerTurnOver.modifierCards = _.filter(playerTurnOver.modifierCards, function(card){
-                                    return card.cardId !== storyCard.cardId;
-                                });
-                                storyCard.isCompleted = true;
+                                    storyCard.modifiers = _.filter(storyCard.modifiers, function(card){
+                                        return card.type !== 'resource';
+                                    });
+
+                                    _.each(freedResources, function(freedCard){
+                                        playerTurnOver.modifierCards = _.filter(playerTurnOver.modifierCards, function(modCard){
+                                            return modCard.cardId !== freedCard.cardId;
+                                        });
+                                    });
+
+                                    storyCard.isCompleted = true;
+
+                                    playerTurnOver.playerPoints += storyCard.maxPoints;
+                                    if(playerTurnOver.playerPoints >= 20){
+                                        victoryForPlayer = playerTurnOver;
+                                    }
+                                }
                             }
                         }
-                    }
-                })
+                    })
+                }
             });
 
             //Set activePlayer to the next person

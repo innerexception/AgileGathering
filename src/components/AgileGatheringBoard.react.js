@@ -201,9 +201,9 @@ export default React.createClass({
     },
 
     _allowDrop(context, event) {
-        //if(this._isValidTarget(context, this.state.dragPayload)){
-        //    event.preventDefault();
-        //}
+        if(this._isValidTarget(context, this.state.dragPayload)){
+            event.preventDefault();
+        }
     },
 
     _allowDropOnResources(e) {
@@ -232,12 +232,18 @@ export default React.createClass({
     },
 
     _hasEnoughResources(card){
-        let player = _.filter(this.state.match.players, function(player){
-            return player.playerId === this.props.currentPlayerId;
-        }, this)[0];
+        if(!card.isPayedFor){
+            let player = _.filter(this.state.match.players, function(player){
+                return player.playerId === this.props.currentPlayerId;
+            }, this)[0];
 
-        if(!card.cost) card.cost = 0;
-        return card.cost <= player.resourcePool;
+            if(!card.cost) card.cost = 0;
+            return card.cost <= player.resourcePool;
+        }
+        else{
+            return true;
+        }
+
     },
 
     _onChange() {

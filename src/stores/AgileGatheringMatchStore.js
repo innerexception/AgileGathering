@@ -99,25 +99,12 @@ AgileGatheringMatchStore.dispatchToken = Dispatcher.register((payload) => {
                 changed = true;
             }
             break;
-        case ActionTypes.MATCH_READY:
-            if(selectedMatch.Id === action.matchId){
-                var player = _.find(players, function(player){
-                    return player.Id === action.playerId
-                });
-                player.ready = true;
-            }
-            if(_.all(players, function(player){
-                  return player.ready;
-              })){
-                Dispatcher.handleViewAction({
-                    type: ActionTypes.MATCH_START,
-                    matchId: action.matchId
-                });
-            }
-            changed = true;
-            break;
         case ActionTypes.MATCH_START:
             started = true;
+            _.each(matches, function(match){
+                if(match.matchId === action.match.matchId) match.activePlayerId = action.match.activePlayerId;
+            });
+
             changed = true;
             //lobbySounds.startMatch.play();
             //lobbySounds.lobbyMusic.stop();

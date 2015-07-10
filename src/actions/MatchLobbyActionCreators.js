@@ -49,7 +49,7 @@ export default {
     },
 
     startMatch(match, playerId){
-        match.currentPlayerId = playerId;
+        match.activePlayerId = playerId;
         AgileGatheringDispatcher.dispatch({
             type: ActionTypes.MATCH_START,
             match: match

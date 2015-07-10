@@ -9,6 +9,7 @@ export default React.createClass({
     propTypes: {
         match:  React.PropTypes.object.isRequired,
         currentPlayerId: React.PropTypes.string.isRequired,
+        activePlayerId: React.PropTypes.string.isRequired,
         cards: React.PropTypes.array.isRequired
     },
 
@@ -21,7 +22,7 @@ export default React.createClass({
     },
 
     getInitialState(){
-        return BoardStore.get(this.props.match, this.props.currentPlayerId, this.props.cards);
+        return BoardStore.get(this.props.match, this.props.activePlayerId, this.props.currentPlayerId, this.props.cards);
     },
 
     render() {
@@ -73,7 +74,7 @@ export default React.createClass({
                         <div className="resource-count">{ player.resourcePool }</div>
                     </div>
                     <span>{ player.playerName }, SP: { player.playerPoints } / 20</span>
-                    <button onClick={ this._endTurn }>End Turn</button>
+                    <button disabled={ this.state.activePlayerId !== this.props.currentPlayerId } onClick={ this._endTurn }>End Turn</button>
                 </div>
                 <div className="player-hand-frame">
                     <div className="player-hand">

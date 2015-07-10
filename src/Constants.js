@@ -47,13 +47,13 @@ export default {
     {
       deckId: 'SBP',
       name: 'Standard Business Practices',
-      cardIds: ['juniorEngineer', 'juniorEngineer2', 'engineerII', 'engineerII2', 'seniorEngineer', 'asset', 'asset2', 'asset3',
+      cardIds: ['juniorEngineer', 'juniorEngineer2', 'engineerII', 'engineerII2', 'seniorEngineer',
               'IPO', 'fancyDropDown', 'loginScreen', 'hotCheckbox', 'scopeCreep', 'scopeCreep2']
     },
     {
       deckId: 'VCM',
       name: 'VC Money',
-      cardIds: ['juniorEngineer', 'juniorEngineer2', 'engineerII', 'engineerII2', 'seniorEngineer', 'asset', 'asset2', 'asset3',
+      cardIds: ['juniorEngineer', 'juniorEngineer2', 'engineerII', 'engineerII2', 'seniorEngineer',
         'VC', 'fancyDropDown', 'loginScreen', 'hotCheckbox', 'scopeCreep', 'scopeCreep2']
     },
     {
@@ -133,24 +133,6 @@ export default {
       type: 'resource',
       pptBonus: 1,
       cost: 2
-    },
-    {
-      cardId: 'asset',
-      modifiers: [],
-      name: 'Asset',
-      text: 'It has been monetized!',
-      imagePath: './res/img/software.png',
-      type: 'resource',
-      value: 2
-    },
-    {
-      cardId: 'asset2',
-      modifiers: [],
-      name: 'Asset',
-      text: 'It has been monetized!',
-      imagePath: './res/img/software.png',
-      type: 'resource',
-      value: 1
     },
     {
       cardId: 'salesGuy',

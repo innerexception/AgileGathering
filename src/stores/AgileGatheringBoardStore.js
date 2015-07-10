@@ -4,7 +4,7 @@ import Dispatcher from '../backend/AgileGatheringDispatcher';
 import StoreCreator from '../backend/StoreCreator';
 import { ActionTypes } from '../Constants';
 
-let cards, activePlayerId, match, hasNotDrawnThisTurn = true, currentplayerId, victoryForPlayer;
+let cards, activePlayerId, match, hasNotDrawnThisTurn = true, currentPlayerId, victoryForPlayer;
 
 const getCardByOwner = (card, ownerId) => {
 
@@ -42,7 +42,7 @@ const getCardByOwner = (card, ownerId) => {
 
     if(handMatches) return handMatches;
 
-    else return {error: 'getCardByOwner: Card was not found!'};
+    else throw 'getCardByOwner() Card not found!!';
 };
 
 const getCardById = (cardId)=>{
@@ -72,16 +72,17 @@ const checkAllPlayerCardStats = (player, newCard)=>{
 };
 
 var AgileGatheringBoardStore = StoreCreator.create({
-    get: (matchProp, activePlayerIdProp, cardsProp) => {
+    get: (matchProp, activePlayerIdProp, currentPlayerIdProp, cardsProp) => {
         if(matchProp) match = matchProp;
         if(cardsProp) cards = cardsProp;
         if(activePlayerIdProp){
             activePlayerId = activePlayerIdProp;
-            currentplayerId = activePlayerIdProp;
+            currentPlayerId = currentPlayerIdProp;
         }
         return {
             match,
             activePlayerId,
+            currentPlayerId,
             hasNotDrawnThisTurn,
             victoryForPlayer
         };
@@ -106,7 +107,7 @@ AgileGatheringBoardStore.dispatchToken = Dispatcher.register((payload) => {
             });
             if(cardIndex > -1) player.playerHand.splice(cardIndex, 1);
 
-            if(!card.isPayedFor && action.playerId === currentplayerId){
+            if(!card.isPayedFor && action.playerId === currentPlayerId){
                 player.resourcePool -= card.cost;
                 card.isPayedFor = true;
             }
@@ -121,7 +122,7 @@ AgileGatheringBoardStore.dispatchToken = Dispatcher.register((payload) => {
             let modifiedCard = getCardByOwner(action.targetCard, action.playerId);
             modifiedCard.modifiers.push(action.droppedCard);
 
-            if(!action.droppedCard.isPayedFor && action.playerId === currentplayerId){
+            if(!action.droppedCard.isPayedFor && action.playerId === currentPlayerId){
                 otherRemotePlayer.resourcePool -= action.droppedCard.cost;
                 action.droppedCard.isPayedFor = true;
             }
@@ -222,6 +223,7 @@ AgileGatheringBoardStore.dispatchToken = Dispatcher.register((payload) => {
                 return player.playerId !== playerTurnOver.playerId;
             })[0];
             activePlayerId = enemy.playerId;
+            if(activePlayerId === currentPlayerId) hasNotDrawnThisTurn = true;
 
             changed = true;
             break;

@@ -54,9 +54,10 @@ export default React.createClass({
             playerDeck: this.props.selectedDeck,
             playerHand: [],
             playerResources: [],
-            playerResourceCardPool: [],
+            resourcePool: 1,
             playerStories: [],
-            playerPoints: 0
+            playerPoints: 0,
+            playerTurn: 1
         };
         LobbyActions.joinMatch(this.props.selectedMatch, player);
     },

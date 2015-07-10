@@ -66,16 +66,11 @@ export default React.createClass({
             return this._getCardEl(card, false, true, null, false, enemy.modifierCards);
         }, this);
 
-        let resourceCount = 0;
-        _.each(player.playerResourceCardPool, function(card){
-            resourceCount += card.value;
-        });
-
         return this.state.victoryForPlayer ? (<div className="victory">Victory: { this.state.victoryForPlayer.playerName }</div>) :
             (<div>
                 <div className='score-right'>
                     <div className="resource-pool">
-                        <div className="resource-count">{ resourceCount }</div>
+                        <div className="resource-count">{ player.resourcePool }</div>
                     </div>
                     <span>{ player.playerName }, SP: { player.playerPoints } / 20</span>
                     <button onClick={ this._endTurn }>End Turn</button>
@@ -164,7 +159,6 @@ export default React.createClass({
                 <div style={{ backgroundImage: "url(\""+CardTypes[card.type].imagePath+"\")"}} draggable={ draggable && this.state.activePlayerId === this.props.currentPlayerId ? true : false}
                     onDrop={ isDropTarget && this._onCardDropped.bind(this, card) }
                     onDragOver={ isDropTarget && this._allowDrop.bind(this, card) }
-                    onClick={ card.type === 'resource' && this._addResourceToPool.bind(this, card) }
                     className={ (draggable ? "card card-draggable" : "card ") + classes + (" "+card.isCompleted && " card-complete ") + (card.isInPool && " card-pooled")}
                     onDragStart={ this._onCardDragStart.bind(this, card) }>
                     { costEl }
@@ -236,35 +230,13 @@ export default React.createClass({
         return false;
     },
 
-    _addResourceToPool(context, event){
-        let player = _.filter(this.state.match.players, function(player){
-            return player.playerId === this.props.currentPlayerId;
-        }, this)[0];
-        if(_.filter(player.playerResources, function(card){
-                return card.cardId === context.cardId;
-            }).length > 0){
-            if(context.value && !context.isInPool){
-                context.isInPool = true;
-                player.playerResourceCardPool.push(context);
-                //TODO
-                //BoardActions.showFlaire('Resource added to pool.');
-                //Yep, I'm a cheater
-                this.setState(BoardStore.get());
-            }
-        }
-    },
-
     _hasEnoughResources(card){
         let player = _.filter(this.state.match.players, function(player){
             return player.playerId === this.props.currentPlayerId;
-        }, this);
+        }, this)[0];
 
-        let resources = 0;
-        _.each(player.resourceCardPool, function(card){
-            resources += card.value;
-        });
         if(!card.cost) card.cost = 0;
-        return card.cost <= resources;
+        return card.cost <= player.resourcePool;
     },
 
     _onChange() {

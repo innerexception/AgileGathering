@@ -107,20 +107,7 @@ AgileGatheringBoardStore.dispatchToken = Dispatcher.register((payload) => {
             if(cardIndex > -1) player.playerHand.splice(cardIndex, 1);
 
             if(!card.isPayedFor && action.playerId === currentplayerId){
-
-                let paid =0;
-                let removeIndexes = [];
-                _.each(player.resourceCardPool, function(resourceCard, i){
-                   if(paid < card.cost){
-                       card.modifierCards.push(resourceCard);
-                       paid += resourceCard.value;
-                       removeIndexes.push(i);
-                   }
-                });
-                _.each(removeIndexes, function(index){
-                   player.resourceCardPool.splice(index, 1);
-                });
-
+                player.resourcePool -= card.cost;
                 card.isPayedFor = true;
             }
 
@@ -135,19 +122,7 @@ AgileGatheringBoardStore.dispatchToken = Dispatcher.register((payload) => {
             modifiedCard.modifiers.push(action.droppedCard);
 
             if(!action.droppedCard.isPayedFor && action.playerId === currentplayerId){
-                let paid =0;
-                let removeIndexes = [];
-                _.each(otherRemotePlayer.resourceCardPool, function(resourceCard, i){
-                    if(paid < card.cost){
-                        card.modifierCards.push(resourceCard);
-                        paid += resourceCard.value;
-                        removeIndexes.push(i);
-                    }
-                });
-                _.each(removeIndexes, function(index){
-                    otherRemotePlayer.resourceCardPool.splice(index, 1);
-                });
-
+                otherRemotePlayer.resourcePool -= action.droppedCard.cost;
                 action.droppedCard.isPayedFor = true;
             }
 
@@ -212,6 +187,8 @@ AgileGatheringBoardStore.dispatchToken = Dispatcher.register((payload) => {
             break;
         case ActionTypes.END_TURN:
             let playerTurnOver = getPlayer(action.playerId);
+            playerTurnOver.playerTurn++;
+            playerTurnOver.resourcePool = playerTurnOver.playerTurn;
             _.each(playerTurnOver.playerStories, function(storyCard){
                 _.each(storyCard.modifiers, function(modifierCard){
                     if(modifierCard.type === 'resource'){

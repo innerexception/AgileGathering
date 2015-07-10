@@ -93,7 +93,7 @@
 
 .card-text{
     font-size: 10px;
-    margin-top: 1px;
+    margin-top: 3px;
     margin-left: 15px;
     max-width: 115px;
 }
@@ -107,7 +107,7 @@
 .card-ppt-badge{
     margin-left: 113px;
     font-size: 10px;
-    margin-top: 38px;
+    margin-top: 11px;
 }
 
 .card-cost-badge{

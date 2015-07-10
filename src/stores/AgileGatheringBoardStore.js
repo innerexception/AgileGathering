@@ -4,7 +4,7 @@ import Dispatcher from '../backend/AgileGatheringDispatcher';
 import StoreCreator from '../backend/StoreCreator';
 import { ActionTypes } from '../Constants';
 
-let cards, activePlayerId, match, hasNotDrawnThisTurn, currentplayerId = true, victoryForPlayer;
+let cards, activePlayerId, match, hasNotDrawnThisTurn = true, currentplayerId, victoryForPlayer;
 
 const getCardByOwner = (card, ownerId) => {
 
@@ -194,7 +194,12 @@ AgileGatheringBoardStore.dispatchToken = Dispatcher.register((payload) => {
                             imagePath: card.imagePath,
                             type: card.type,
                             points: card.points,
-                            justDrawn: true
+                            justDrawn: true,
+                            upkeep: card.upkeep,
+                            value: card.value,
+                            pptBonus: card.pptBonus,
+                            ppt: card.ppt,
+                            cost: card.cost
                         });
                     }
                 }

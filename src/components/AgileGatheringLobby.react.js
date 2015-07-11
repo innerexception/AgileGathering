@@ -28,7 +28,7 @@ export default React.createClass({
                         <div className="match-name">{ match.matchName }</div>
                     </div>);
         }, this);
-        return (<div className={ this.state && this.state.transitionIn ? "matches lobby-transition jumbotron lobby-in" : "matches lobby-transition jumbotron" }>>
+        return (<div className={ this.state && this.state.transitionIn ? "matches lobby-transition jumbotron lobby-in" : "matches lobby-transition jumbotron" }>
                     <div>Matches</div>
                     <div className="match-list">
                         { matchEls }

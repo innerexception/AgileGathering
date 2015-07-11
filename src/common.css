@@ -7,6 +7,24 @@
     src: url('./fonts/Mplantin.ttf') format('truetype');
 }
 
+html {
+    background: url('../res/img/background2.jpg') no-repeat center center fixed;
+    -webkit-background-size: cover;
+    -moz-background-size: cover;
+    -o-background-size: cover;
+    background-size: cover;
+    min-height: 100%;
+}
+html body {
+    min-height: 100%
+}
+
+button {
+    background-image: url('../res/img/background2.jpg');
+    text-shadow: 0px -2px 2px orange;
+    margin: 5px;
+}
+
 div{
     font-family: 'mtg', serif;
 }

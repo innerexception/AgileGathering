@@ -1,10 +1,10 @@
 @font-face {
     font-family: 'MAGIC';
-    src: url('./fonts/MAGIC.ttf') format('truetype');
+    src: url('/AgileGathering/src/fonts/MAGIC.ttf') format('truetype');
 }
 @font-face {
     font-family: 'mtg';
-    src: url('./fonts/Mplantin.ttf') format('truetype');
+    src: url('/AgileGathering/src/fonts/Mplantin.ttf') format('truetype');
 }
 
 html {
@@ -25,6 +25,8 @@ button {
     margin: 5px;
     border: 1px solid black;
     color: bisque;
+    font-family: 'MAGIC', serif;
+    font-size: 16px;
 }
 
 .button-disabled{

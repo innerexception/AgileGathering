@@ -34,7 +34,7 @@ export default React.createClass({
         return (<div className={ this.state && this.state.transitionIn ? "matches lobby-transition jumbotron lobby-in" : "matches lobby-transition jumbotron" }>
                     <div className="atg-label">Matches</div>
                     <div className="match-list">
-                        { matchEls }
+                        { matchEls.length > 0 ? matchEls : <div className="atg-label" style={{fontSize:"12px"}}>No Current Matches</div> }
                     </div>
                     <button onClick={ this.props.selectedMatch && this.props.selectedMatch.ownerId === this.props.playerId ? this.onMatchStarted : this.onMatchCreated }>{ this.props.selectedMatch && this.props.selectedMatch.ownerId === this.props.playerId ? 'Start' : 'Create' }</button>
                     <button className={ !this.props.enableJoin && this.props.selectedMatch ? "button-disabled" : ""} disabled={ !this.props.enableJoin && this.props.selectedMatch } onClick={ this.onMatchJoined }>Join</button>

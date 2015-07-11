@@ -68,13 +68,14 @@ export default React.createClass({
         }, this);
 
         return this.state.victoryForPlayer ? (<div className="victory">Victory: { this.state.victoryForPlayer.playerName }</div>) :
-            (<div>
+            (<div className="jumbotron">
                 <div className='score-right'>
-                    <div className="resource-pool">
-                        <div className="resource-count">{ player.resourcePool }</div>
+                    Resources:
+                    <div className="player-resource-count-outer">
+                        <div className="player-resource-count-inner">{ player.resourcePool }</div>
                     </div>
-                    <span>{ player.playerName }, SP: { player.playerPoints } / 20</span>
-                    <button disabled={ this.state.activePlayerId !== this.props.currentPlayerId } onClick={ this._endTurn }>End Turn</button>
+                    <span className="name-score-label">{ player.playerName }, SP: { player.playerPoints } / 20</span>
+                    <button disabled={ this.state.activePlayerId !== this.props.currentPlayerId } onClick={ this._endTurn }>{ this.state.activePlayerId !== this.props.currentPlayerId ? "Enemy Turn" : "End Turn"}</button>
                 </div>
                 <div className="player-hand-frame">
                     <div className="player-hand">
@@ -96,6 +97,10 @@ export default React.createClass({
                 <div className="enemy-hand">
                     { enemyHandEls }
                 </div>
+                <div className="resources-label">Resources</div>
+                <div className="story-label">Stories</div>
+                <div className="you-label">You</div>
+                <div className="enemy-label">Enemy</div>
             </div>
         );
     },

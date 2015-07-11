@@ -30,16 +30,16 @@ export default {
 
   CardTypes: {
     resource:{
-      imagePath: '/res/img/greencardtemplate.png'
+      imagePath: './res/img/greencardtemplate.png'
     },
     story: {
-      imagePath: '/res/img/bluecardtemplate.png'
+      imagePath: './res/img/bluecardtemplate.png'
     },
     delay: {
-      imagePath: '/res/img/greycardtemplate.jpg'
+      imagePath: './res/img/greycardtemplate.jpg'
     },
     boost: {
-      imagePath: '/res/img/whitecardtemplate.png'
+      imagePath: './res/img/whitecardtemplate.png'
     }
   },
 

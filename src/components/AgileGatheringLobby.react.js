@@ -25,16 +25,19 @@ export default React.createClass({
     render(){
         const matchEls = _.map(this.props.matches, function(match){
             return (<div className={ this._getMatchClassName(match) } onClick={ this.onMatchSelected.bind(this, match) }>
-                        <div className="match-name">{ match.matchName }</div>
-                    </div>);
+                        <div className="card-back-inner"></div>
+                        <div className="card-back-title">Agile:</div>
+                        <div className="card-back-subtitle">The Gathering</div>
+                        <div className="deck-name">{ match.matchName }</div>
+            </div>);
         }, this);
         return (<div className={ this.state && this.state.transitionIn ? "matches lobby-transition jumbotron lobby-in" : "matches lobby-transition jumbotron" }>
-                    <div>Matches</div>
+                    <div className="atg-label">Matches</div>
                     <div className="match-list">
                         { matchEls }
                     </div>
                     <button onClick={ this.props.selectedMatch && this.props.selectedMatch.ownerId === this.props.playerId ? this.onMatchStarted : this.onMatchCreated }>{ this.props.selectedMatch && this.props.selectedMatch.ownerId === this.props.playerId ? 'Start' : 'Create' }</button>
-                    <button disabled={ !this.props.enableJoin && this.props.selectedMatch } onClick={ this.onMatchJoined }>Join</button>
+                    <button className={ !this.props.enableJoin && this.props.selectedMatch ? "button-disabled" : ""} disabled={ !this.props.enableJoin && this.props.selectedMatch } onClick={ this.onMatchJoined }>Join</button>
                 </div>)
     },
 
@@ -67,8 +70,8 @@ export default React.createClass({
     },
 
     _getMatchClassName(match){
-        let classes = match.players && match.players.length > 1 ? "match match-disabled" : "match";
-        classes += this.props.selectedMatch && this.props.selectedMatch.matchId === match.matchId ? " match-selected" : "";
+        let classes = match.players && match.players.length > 1 ? " deck card-back match-disabled " : " deck card-back ";
+        classes += this.props.selectedMatch && this.props.selectedMatch.matchId === match.matchId ? " deck card-back match-selected " : "";
         return classes;
     }
 });

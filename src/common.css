@@ -23,6 +23,12 @@ button {
     background-image: url('../res/img/background2.jpg');
     text-shadow: 0px -2px 2px orange;
     margin: 5px;
+    border: 1px solid black;
+    color: bisque;
+}
+
+.button-disabled{
+    color: dimgray;
 }
 
 div{
@@ -44,6 +50,8 @@ h3{
     background-image: url('../res/img/background.png');
     background-repeat: no-repeat;
     background-size: cover;
+    padding-top: 25px;
+    padding-bottom: 25px;
 }
 
 .container-fluid{

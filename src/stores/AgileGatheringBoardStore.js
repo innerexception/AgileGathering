@@ -183,6 +183,9 @@ AgileGatheringBoardStore.dispatchToken = Dispatcher.register((payload) => {
             else{
                 remotePlayer.playerDeck.cardIds = [];
                 remotePlayer.playerHand = [];
+                RealtimeAPI.playerWon(_.filter(match.players, function(player){
+                    return player.playerId != remotePlayer.playerId;
+                })[0]);
             }
             changed = true;
             break;
@@ -194,7 +197,7 @@ AgileGatheringBoardStore.dispatchToken = Dispatcher.register((payload) => {
                 if(!storyCard.maxPoints) storyCard.maxPoints = storyCard.points;
                 if(!storyCard.isCompleted){
                     _.each(storyCard.modifiers, function(modifierCard){
-                        if(modifierCard.type === 'resource' && storyCard.points > 0){
+                        if(modifierCard.type === 'resource' && storyCard.points > 0 && !storyCard.isCompleted){
                             if(modifierCard.ppt){
                                  storyCard.points -= modifierCard.ppt;
                                 if(storyCard.points < 0) storyCard.points = 0;
@@ -202,7 +205,14 @@ AgileGatheringBoardStore.dispatchToken = Dispatcher.register((payload) => {
                                     let freedResources = _.filter(storyCard.modifiers, function(card){
                                         return card.type === 'resource';
                                     });
-                                    playerTurnOver.playerResources = playerTurnOver.playerResources.concat(freedResources);
+
+                                    _.each(freedResources, function(freeCard){
+                                        if(_.filter(playerTurnOver.playerResources, function(resCard){
+                                                return freeCard.cardId === resCard.cardId;
+                                            }).length === 0){
+                                            playerTurnOver.playerResources.push(freeCard);
+                                        }
+                                    });
 
                                     storyCard.modifiers = _.filter(storyCard.modifiers, function(card){
                                         return card.type !== 'resource';
@@ -218,7 +228,8 @@ AgileGatheringBoardStore.dispatchToken = Dispatcher.register((payload) => {
 
                                     playerTurnOver.playerPoints += storyCard.maxPoints;
                                     if(playerTurnOver.playerPoints >= 20){
-                                        victoryForPlayer = playerTurnOver;
+                                        //TODO
+                                        RealtimeAPI.playerWon(playerTurnOver);
                                     }
                                 }
                             }

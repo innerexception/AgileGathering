@@ -34,7 +34,7 @@ export default React.createClass({
                         { matchEls }
                     </div>
                     <button onClick={ this.props.selectedMatch && this.props.selectedMatch.ownerId === this.props.playerId ? this.onMatchStarted : this.onMatchCreated }>{ this.props.selectedMatch && this.props.selectedMatch.ownerId === this.props.playerId ? 'Start' : 'Create' }</button>
-                    <button disabled={ !this.props.enableJoin } onClick={ this.onMatchJoined }>Join</button>
+                    <button disabled={ !this.props.enableJoin && this.props.selectedMatch } onClick={ this.onMatchJoined }>Join</button>
                 </div>)
     },
 

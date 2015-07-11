@@ -6,9 +6,9 @@ import styles from './common.css';
 
 let App = React.createClass({
     render() {
-        return (<div className="container-fluid" style={{marginRight:"25px", marginLeft:"25px", maxHeight:"1024px"}}>
+        return (<div className="container-fluid" style={{maxHeight:"1024px", backgroundImage: "url('./res/img/background2.jpg')", backgroundSize: "cover"}}>
                     <div className="header clearfix">
-                        <h3 className="text-muted" style={{marginLeft: "auto", marginRight: "auto", width: "250px"}}>Agile: The Gathering</h3>
+                        <h3>Agile: The Gathering</h3>
                         <AgileGatheringHost/>
                     </div>
                 </div>

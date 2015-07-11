@@ -35,10 +35,9 @@ let AgileGatheringBuilder = React.createClass({
 
         return (
             <div className={ this.state && this.state.transitionIn ? "deck-builder deck-builder-transition jumbotron deck-builder-in" : "deck-builder deck-builder-transition jumbotron" }>
-                <div>Choose a Deck:</div>
+                <div className="choose-label">CHOOSE:</div>
                 <div className="deck-list">{ deckEls }</div>
                 <button disabled={ !!!this.props.selectedDeck } onClick={ this.onDeckChoose }>Choose</button>
-                <div>Cards</div>
                 <div className="card-list">{ this.props.selectedDeck && allCardEls }</div>
             </div>
         )
@@ -68,7 +67,7 @@ let AgileGatheringBuilder = React.createClass({
                                          <div className="card-cost-badge">0</div>
                                       </div>);
             return (
-                <div style={{ backgroundImage: "url(\""+CardTypes[card.type].imagePath+"\")"}} className={ selectedDeck && this._containsCard(selectedDeck.cardIds, card) ? 'card card-selected' : 'card' } onClick={ this.onCardSelected.bind(this, card) }>
+                <div style={{ backgroundImage: "url(\""+CardTypes[card.type].imagePath+"\")"}} className={ selectedDeck && this._containsCard(selectedDeck.cardIds, card) ? 'card card-selected' : 'card card-unselected' } onClick={ this.onCardSelected.bind(this, card) }>
                     { costEl }
                     <div className="card-title">{card.name}</div>
                     <img className="card-picture" src={ card.imagePath }/>

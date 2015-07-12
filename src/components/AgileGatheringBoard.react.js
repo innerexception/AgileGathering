@@ -13,6 +13,13 @@ export default React.createClass({
         cards: React.PropTypes.array.isRequired
     },
 
+    componentDidMount(){
+        let self=this;
+        setTimeout(()=>{
+            self.setState({ transitionIn: true});
+        }, 500);
+    },
+
     componentWillMount() {
         BoardStore.addChangeListener(this._onChange);
     },
@@ -67,14 +74,14 @@ export default React.createClass({
             return this._getCardEl(card, false, true, null, false, enemy.modifierCards);
         }, this);
 
-        return this.state.victoryForPlayer ? (<div className="victory">Victory: { this.state.victoryForPlayer.playerName }</div>) :
-            (<div className="jumbotron">
+        return this.state.victoryForPlayer ? (<div className="jumbotron atg-label victory">Victory: { this.state.victoryForPlayer.playerName }</div>) :
+            (<div className={ this.state && this.state.transitionIn ? "deck-builder-transition jumbotron deck-builder-in" : "deck-builder-transition jumbotron" }>
                 <div className='score-right'>
                     Resources:
                     <div className="player-resource-count-outer">
                         <div className="player-resource-count-inner">{ player.resourcePool }</div>
                     </div>
-                    <span className="name-score-label">{ player.playerName }, SP: { player.playerPoints } / 20</span>
+                    <span className="name-score-label">{ player.playerName }, SP: { player.playerPoints } / 20, Deck Remaining: { player.playerDeck.cardIds.length }</span>
                     <button disabled={ this.state.activePlayerId !== this.props.currentPlayerId } onClick={ this._endTurn }>{ this.state.activePlayerId !== this.props.currentPlayerId ? "Enemy Turn" : "End Turn"}</button>
                 </div>
                 <div className="player-hand-frame">

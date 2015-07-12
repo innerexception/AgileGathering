@@ -77,5 +77,12 @@ export default {
       type: ActionTypes.END_TURN,
       playerId
     });
+  },
+
+  playerWon(player){
+    AgileGatheringDispatcher.dispatch({
+      type: ActionTypes.PLAYER_WON,
+      player
+    });
   }
 };

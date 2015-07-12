@@ -122,3 +122,27 @@
     left: 3%;
     color: white;
 }
+
+.drawn-transition{
+    animation-duration: 0.5s;
+    animation-name: cardFlip;
+    animation-iteration-count: 1;
+    animation-direction: alternate;
+}
+
+@keyframes victoryPop {
+    from {
+        transform: rotateX(180deg);
+    }
+
+    to {
+        transform: rotateX(0deg);
+    }
+}
+
+.victory{
+    animation-duration: 1s;
+    animation-name: victoryPop;
+    animation-iteration-count: 2;
+    animation-direction: alternate;
+}

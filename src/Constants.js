@@ -10,6 +10,7 @@ export default {
     MATCH_AVAILABLE: 'ma',
     JOINED_MATCH: 'jm',
     UPDATE_MATCH: 'um',
+    PLAYER_WON: 'pw',
     DELETE_MATCH: 'dm',
     MATCH_START: 'ms',
     CREATE_NEW_PLAYER: 'cnp',

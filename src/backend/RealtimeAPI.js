@@ -92,6 +92,13 @@ export default {
     }));
   },
 
+  playerWon(player){
+    this.publishMessage(this.getMessageToPublish({
+      action: 'playerWon',
+      player
+    }));
+  },
+
   cardModified(targetCard, droppedCard, playerId){
     this.publishMessage(this.getMessageToPublish({
       action: 'cardModified',
@@ -154,6 +161,9 @@ export default {
             break;
         case 'endTurn':
             ServerActionCreators.endTurn(payload.playerId);
+            break;
+        case 'playerWon':
+            ServerActionCreators.playerWon(payload.player);
             break;
     }
   },

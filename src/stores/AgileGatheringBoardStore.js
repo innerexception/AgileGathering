@@ -1,6 +1,7 @@
 import _ from '../vendor/lodash.min.js';
 
 import Dispatcher from '../backend/AgileGatheringDispatcher';
+import RealtimeAPI from '../backend/RealtimeAPI';
 import StoreCreator from '../backend/StoreCreator';
 import { ActionTypes } from '../Constants';
 
@@ -245,6 +246,10 @@ AgileGatheringBoardStore.dispatchToken = Dispatcher.register((payload) => {
             activePlayerId = enemy.playerId;
             if(activePlayerId === currentPlayerId) hasNotDrawnThisTurn = true;
 
+            changed = true;
+            break;
+        case ActionTypes.PLAYER_WON:
+            victoryForPlayer = action.player;
             changed = true;
             break;
     }

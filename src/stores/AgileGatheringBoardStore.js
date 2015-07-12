@@ -7,6 +7,13 @@ import { ActionTypes } from '../Constants';
 
 let cards, activePlayerId, match, hasNotDrawnThisTurn = true, currentPlayerId, victoryForPlayer;
 
+import buzz from '../vendor/buzz.min.js';
+
+const matchSounds = {
+    cardSelect: new buzz.sound("./res/snd/select.mp3")
+
+};
+
 const getCardByOwner = (card, ownerId) => {
 
     if(typeof card !== 'object'){

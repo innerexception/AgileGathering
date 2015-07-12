@@ -16,7 +16,8 @@ html {
     min-height: 100%;
 }
 html body {
-    min-height: 100%
+    min-height: 100%;
+    cursor: url('../res/img/wand.png'), auto;
 }
 
 button {
@@ -26,7 +27,7 @@ button {
     border: 1px solid black;
     color: bisque;
     font-family: 'MAGIC', serif;
-    font-size: 16px;
+    font-size: 20px;
 }
 
 .button-disabled{
@@ -59,4 +60,17 @@ h3{
 .container-fluid{
     padding-right: 4%;
     padding-left: 4%;
+}
+
+.help-question{
+    float: right;
+    font-size: 25px;
+    font-family: 'MAGIC', serif;
+    background-color: rgba(255, 228, 196, 0.87);
+    border-radius: 15px;
+    width: 30px;
+    text-align: center;
+    border: 1px solid black;
+    margin: 5px;
+    padding-top:3px;
 }

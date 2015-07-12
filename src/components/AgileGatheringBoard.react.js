@@ -44,7 +44,7 @@ export default React.createClass({
             this._drawCards(player, player.playerHand ? 7-player.playerHand.length : 7);
         }
         const playerHandEls = _.map(player.playerHand, function(card){
-           return this._getCardEl(card, true, false, card.justDrawn ?  card.justDrawn = false && ' drawn-transition card' : 'card', false, player.modifierCards);
+           return this._getCardEl(card, true, false, card.justDrawn ?  card.justDrawn = false && ' drawn-transition card ' : 'card', false, player.modifierCards);
         }, this);
 
         const playerResourceEls = _.map(player.playerResources, function(card){
@@ -81,7 +81,7 @@ export default React.createClass({
                     <div className="player-resource-count-outer">
                         <div className="player-resource-count-inner">{ player.resourcePool }</div>
                     </div>
-                    <span className="name-score-label">{ player.playerName }, SP: { player.playerPoints } / 20, Deck Remaining: { player.playerDeck.cardIds.length }</span>
+                    <span className="name-score-label">{ player.playerName },  SP: { player.playerPoints } / 20 Deck Remaining: { player.playerDeck.cardIds.length }</span>
                     <button disabled={ this.state.activePlayerId !== this.props.currentPlayerId } onClick={ this._endTurn }>{ this.state.activePlayerId !== this.props.currentPlayerId ? "Enemy Turn" : "End Turn"}</button>
                 </div>
                 <div className="player-hand-frame">

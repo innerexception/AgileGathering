@@ -10,6 +10,13 @@ export default React.createClass({
         MatchStore.addChangeListener(this._onChange);
     },
 
+    componentDidMount(){
+        let self=this;
+        setTimeout(()=>{
+            self.setState({ transitionIn: true});
+        }, 500);
+    },
+
     componentWillUnmount() {
         MatchStore.removeChangeListener(this._onChange);
     },
@@ -19,7 +26,15 @@ export default React.createClass({
     },
 
     render() {
-        if(!this.state.playerDeck){
+        if(!this.state.currentPlayerName){
+            return (
+                <div className={ this.state && this.state.transitionIn ? "deck-builder-transition jumbotron deck-builder-in" : "deck-builder-transition jumbotron" }>
+                    <div className="atg-label">Your name, Sir?</div>
+                    <input style={{marginLeft:"37%", width:"25%", fontFamily: "MAGIC", backgroundColor: "rgba(255, 228, 196, 0.78)", fontSize:"20px"}} type="text" />
+                    <button onClick={ this.onNameChoose }>Next</button>
+                </div>);
+        }
+        else if(!this.state.playerDeck){
             return (
                 <AgileGatheringBuilder decks={ this.state.decks }
                     selectedDeck={ this.state.selectedDeck }
@@ -45,6 +60,11 @@ export default React.createClass({
 
     setSelectedMatch(match){
         this.setState({ selectedMatch: match });
+    },
+
+    onNameChoose(event){
+        MatchStore.setCurrentPlayerName(event.currentTarget.previousSibling.value);
+        this.setState({currentPlayerName: event.currentTarget.previousSibling.value});
     },
 
     _onChange() {

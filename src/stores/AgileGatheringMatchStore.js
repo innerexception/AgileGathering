@@ -4,13 +4,14 @@ import Dispatcher from '../backend/AgileGatheringDispatcher';
 import StoreCreator from '../backend/StoreCreator';
 import { Decks, FileServerIP, ActionTypes, Cards } from '../Constants';
 
-//import buzz from '../vendor/buzz.min.js';
-//
-//const lobbySounds = {
-//    startMatch: new buzz.sound("http://"+FileServerIP+":7777/matchMusic.mp3"),
-//    joinMatch: new buzz.sound("http://"+FileServerIP+":7777/joinMatch.mp3"),
-//    lobbyMusic: new buzz.sound("http://"+FileServerIP+":7777/lobbyMusic.mp3")
-//};
+import buzz from '../vendor/buzz.min.js';
+
+const lobbySounds = {
+    lobbyMusic: new buzz.sound("./res/mp3/preGame.mp3"),
+    startMatch: new buzz.sound("./res/mp3/battle.mp3"),
+    joinMatch: new buzz.sound("./res/snd/join.mp3"),
+    cardSelect: new buzz.sound("./res/snd/cardFlip.mp3")
+};
 
 function getMatchByOwner(ownerId){
     return _.find(matches, function(match){
@@ -41,7 +42,7 @@ var catUrls = [
 ];
 
 const currentPlayerId = Math.random() + '_player';
-const currentPlayerName = 'Player';
+let currentPlayerName;
 
 var disableJoinButton = false;
 
@@ -62,6 +63,10 @@ var AgileGatheringMatchStore = StoreCreator.create({
         };
     }
 });
+
+AgileGatheringMatchStore.setCurrentPlayerName = (name)=>{
+    currentPlayerName = name;
+};
 
 AgileGatheringMatchStore.dispatchToken = Dispatcher.register((payload) => {
     var action = payload;
@@ -106,8 +111,8 @@ AgileGatheringMatchStore.dispatchToken = Dispatcher.register((payload) => {
             });
 
             changed = true;
-            //lobbySounds.startMatch.play();
-            //lobbySounds.lobbyMusic.stop();
+            lobbySounds.startMatch.setVolume(60).play().loop();
+            lobbySounds.lobbyMusic.stop();
             break;
         case ActionTypes.DISABLE_JOIN_BUTTON:
             disableJoinButton = true;
@@ -143,6 +148,6 @@ AgileGatheringMatchStore.dispatchToken = Dispatcher.register((payload) => {
     if(changed) AgileGatheringMatchStore.emitChange();
 });
 
-//lobbySounds.lobbyMusic.setVolume(100).play().loop();
+lobbySounds.lobbyMusic.setVolume(60).play().loop();
 
 export default AgileGatheringMatchStore;

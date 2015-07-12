@@ -9,6 +9,7 @@ let App = React.createClass({
         return (<div className="container-fluid" style={{backgroundImage: "url('./res/img/background2.jpg')", backgroundSize: "cover", height:"100%"}}>
                     <div className="header clearfix">
                         <h3>Agile: The Gathering</h3>
+                        <a className="help-question" href="./res/mp4/tutorial.mp4">?</a>
                         <AgileGatheringHost/>
                     </div>
                 </div>

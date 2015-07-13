@@ -47,15 +47,15 @@ export default {
   Decks: [
     {
       deckId: 'SBP',
-      name: 'Standard Business Practices',
+      name: 'Agile Business Practices',
       cardIds: ['juniorEngineer', 'juniorEngineer2', 'engineerII', 'engineerII2', 'seniorEngineer',
-              'IPO', 'fancyDropDown', 'loginScreen', 'hotCheckbox', 'scopeCreep', 'scopeCreep2']
+                'fancyDropDown', 'loginScreen', 'hotCheckbox', 'scopeCreep', 'scopeCreep2']
     },
     {
       deckId: 'VCM',
-      name: 'VC Money',
+      name: 'Agile Waterfall',
       cardIds: ['juniorEngineer', 'juniorEngineer2', 'engineerII', 'engineerII2', 'seniorEngineer',
-        'VC', 'fancyDropDown', 'loginScreen', 'hotCheckbox', 'scopeCreep', 'scopeCreep2']
+                'fancyDropDown', 'loginScreen', 'hotCheckbox', 'scopeCreep', 'scopeCreep2']
     },
     {
       deckId: 'Custom',
@@ -77,6 +77,16 @@ export default {
     },
     {
       cardId: 'juniorEngineer2',
+      modifiers: [],
+      name: 'Junior Engineer',
+      text: 'I\'ll just watch.',
+      imagePath: './res/img/rgreen.png',
+      type: 'resource',
+      ppt: 1,
+      cost: 1
+    },
+    {
+      cardId: 'juniorEngineer3',
       modifiers: [],
       name: 'Junior Engineer',
       text: 'I\'ll just watch.',
@@ -116,6 +126,16 @@ export default {
       cost: 5
     },
     {
+      cardId: 'seniorEngineer2',
+      modifiers: [],
+      name: 'Senior Engineer',
+      text: 'I engineer seniority.',
+      imagePath: './res/img/rick.jpg',
+      type: 'resource',
+      ppt: 4,
+      cost: 5
+    },
+    {
       cardId: 'productOwner',
       modifiers: [],
       name: 'Product Owner',
@@ -126,7 +146,27 @@ export default {
       cost: 2
     },
     {
+      cardId: 'productOwner2',
+      modifiers: [],
+      name: 'Product Owner',
+      text: 'I own the products.',
+      imagePath: './res/img/stolt.jpg',
+      type: 'resource',
+      pptBonus: 1,
+      cost: 2
+    },
+    {
       cardId: 'scrumMaster',
+      modifiers: [],
+      name: 'Scrum Master',
+      text: 'Hug it out.',
+      imagePath: './res/img/rgreen.png',
+      type: 'resource',
+      pptBonus: 1,
+      cost: 2
+    },
+    {
+      cardId: 'scrumMaster2',
       modifiers: [],
       name: 'Scrum Master',
       text: 'Hug it out.',
@@ -190,6 +230,15 @@ export default {
       points: 3
     },
     {
+      cardId: 'hotCheckbox2',
+      modifiers: [],
+      name: 'Hot Checkbox',
+      text: 'So hot',
+      imagePath: './res/img/checkbox.gif',
+      type: 'story',
+      points: 3
+    },
+    {
       cardId: 'scopeCreep',
       modifiers: [],
       name: 'Scope Creep',
@@ -210,6 +259,16 @@ export default {
       cost: 1
     },
     {
+      cardId: 'ie2',
+      modifiers: [],
+      name: 'IE',
+      text: 'We have to support WHAT?',
+      imagePath: './res/img/ie.gif',
+      type: 'delay',
+      points: 2,
+      cost: 1
+    },
+    {
       cardId: 'scopeCreep2',
       modifiers: [],
       name: 'Scope Creep',
@@ -221,6 +280,16 @@ export default {
     },
     {
       cardId: 'sickDay',
+      modifiers: [],
+      name: 'Sick Day',
+      text: 'I think I have the black lung, pop.',
+      imagePath: './res/img/sick_day.gif',
+      type: 'delay',
+      points: 2,
+      cost: 1
+    },
+    {
+      cardId: 'sickDay2',
       modifiers: [],
       name: 'Sick Day',
       text: 'I think I have the black lung, pop.',
@@ -271,6 +340,16 @@ export default {
       cost: 1
     },
     {
+      cardId: 'longLunch2',
+      modifiers: [],
+      name: '3 hour lunch',
+      text: 'CA\'s paying.',
+      imagePath: './res/img/lunch.jpg',
+      type: 'delay',
+      points: 1,
+      cost: 1
+    },
+    {
       cardId: 'raise',
       modifiers: [],
       name: 'Raise!',
@@ -311,7 +390,27 @@ export default {
       cost: 2
     },
     {
+      cardId: 'jenkins2',
+      modifiers: [],
+      name: 'Jenkins',
+      text: 'My shell is so lonely now.',
+      imagePath: './res/img/jenkins.png',
+      type: 'boost',
+      points: -3,
+      cost: 2
+    },
+    {
       cardId: 'react',
+      modifiers: [],
+      name: 'React',
+      text: 'Why were we using Ext again?',
+      imagePath: './res/img/react.png',
+      type: 'boost',
+      points: -5,
+      cost: 4
+    },
+    {
+      cardId: 'react2',
       modifiers: [],
       name: 'React',
       text: 'Why were we using Ext again?',

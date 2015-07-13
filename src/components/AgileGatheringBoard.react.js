@@ -74,14 +74,14 @@ export default React.createClass({
             return this._getCardEl(card, false, true, null, false, enemy.modifierCards);
         }, this);
 
-        return this.state.victoryForPlayer ? (<div className="jumbotron atg-label victory">Victory: { this.state.victoryForPlayer.playerName }</div>) :
+        return this.state.victoryForPlayer ? (<div className="jumbotron atg-label victory">Victory to: { this.state.victoryForPlayer.playerName + " " + this.state.victoryForPlayer.victoryMessage }</div>) :
             (<div className={ this.state && this.state.transitionIn ? "deck-builder-transition jumbotron deck-builder-in" : "deck-builder-transition jumbotron" }>
                 <div className='score-right'>
                     Resources:
                     <div className="player-resource-count-outer">
                         <div className="player-resource-count-inner">{ player.resourcePool }</div>
                     </div>
-                    <span className="name-score-label">{ player.playerName },  SP: { player.playerPoints } / 20 Deck Remaining: { player.playerDeck.cardIds.length }</span>
+                    <span className="name-score-label">{ player.playerName },  SP: { player.playerPoints } / 20, Deck Remaining: { player.playerDeck.cardIds.length }</span>
                     <button disabled={ this.state.activePlayerId !== this.props.currentPlayerId } onClick={ this._endTurn }>{ this.state.activePlayerId !== this.props.currentPlayerId ? "Enemy Turn" : "End Turn"}</button>
                 </div>
                 <div className="player-hand-frame">
@@ -89,25 +89,29 @@ export default React.createClass({
                         { playerHandEls }
                     </div>
                 </div>
-                <div className="player-resources" onDrop={ this._onCardDroppedOnResources } onDragOver={ this._allowDropOnResources }>
-                    { playerResourceEls }
+                <div>
+                    <div className="you-label">You</div>
+                    <div className="player-resources" onDrop={ this._onCardDroppedOnResources } onDragOver={ this._allowDropOnResources }>
+                        <div className="resources-label">Resources</div>
+                        { playerResourceEls }
+                    </div>
+                    <div className="player-stories" onDrop={ this._onCardDroppedOnStories } onDragOver={ this._allowDropOnStories }>
+                        <div className="story-label">Stories</div>
+                        { playerStoryEls }
+                    </div>
                 </div>
-                <div className="player-stories" onDrop={ this._onCardDroppedOnStories } onDragOver={ this._allowDropOnStories }>
-                    { playerStoryEls }
-                </div>
-                <div className="enemy-stories">
-                    { enemyStoryEls }
-                </div>
-                <div className="enemy-resources">
-                    { enemyResourceEls }
+                <div>
+                    <div className="enemy-label">Enemy</div>
+                    <div className="enemy-stories">
+                        { enemyStoryEls }
+                    </div>
+                    <div className="enemy-resources">
+                        { enemyResourceEls }
+                    </div>
                 </div>
                 <div className="enemy-hand">
                     { enemyHandEls }
                 </div>
-                <div className="resources-label">Resources</div>
-                <div className="story-label">Stories</div>
-                <div className="you-label">You</div>
-                <div className="enemy-label">Enemy</div>
             </div>
         );
     },

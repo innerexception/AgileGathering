@@ -82,23 +82,23 @@
 }
 
 .resources-label{
-    position: absolute;
-    top: 74%;
-    left: 44%;
     font-family: 'MAGIC', serif;
     font-size: 42px;
     opacity: 0.5;
     color: green;
+    margin-top: 5%;
+    margin-right: 43%;
+    float: right;
 }
 
 .story-label{
-    position: absolute;
-    top: 105%;
-    left: 46%;
     font-family: 'MAGIC', serif;
     font-size: 42px;
     opacity: 0.5;
     color: cornflowerblue;
+    margin-right: 45%;
+    margin-top: 5%;
+    float: right;
 }
 
 .you-label{
@@ -106,9 +106,9 @@
     text-shadow: 0 0 8px orange;
     font-size: 36px;
     transform: rotate(-90deg);
-    position: absolute;
-    top: 90%;
-    left: 5%;
+    float: left;
+    margin-left: -45px;
+    margin-top: 185px;
     color: white;
 }
 
@@ -117,9 +117,9 @@
     text-shadow: 0 0 8px orange;
     font-size: 36px;
     transform: rotate(-90deg);
-    position: absolute;
-    top: 155%;
-    left: 3%;
+    float: left;
+    margin-left: -75px;
+    margin-top: 186px;
     color: white;
 }
 

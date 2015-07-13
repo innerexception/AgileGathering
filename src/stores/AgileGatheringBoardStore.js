@@ -79,6 +79,13 @@ const checkAllPlayerCardStats = (player, newCard)=>{
     }
 };
 
+const getRandomCard = (cardIdArray) =>{
+    const index = Math.round(Math.random() * (cardIdArray.length-1));
+    const el = cardIdArray[index];
+    cardIdArray.splice(index, 1);
+    return el;
+};
+
 var AgileGatheringBoardStore = StoreCreator.create({
     get: (matchProp, activePlayerIdProp, currentPlayerIdProp, cardsProp) => {
         if(matchProp) match = matchProp;
@@ -167,7 +174,7 @@ AgileGatheringBoardStore.dispatchToken = Dispatcher.register((payload) => {
             if(remotePlayer.playerDeck.cardIds.length >= action.number){
                 if(remotePlayer.playerHand.length < 7){
                     for(var i = 0; i < action.number; i++) {
-                        let cardId = remotePlayer.playerDeck.cardIds.shift();
+                        let cardId = getRandomCard(remotePlayer.playerDeck.cardIds);
                         let card = getCardById(cardId);
 
                         remotePlayer.playerHand.push({
@@ -191,9 +198,11 @@ AgileGatheringBoardStore.dispatchToken = Dispatcher.register((payload) => {
             else{
                 remotePlayer.playerDeck.cardIds = [];
                 remotePlayer.playerHand = [];
-                RealtimeAPI.playerWon(_.filter(match.players, function(player){
+                let playerWon = _.filter(match.players, function(player){
                     return player.playerId != remotePlayer.playerId;
-                })[0]);
+                })[0];
+                playerWon.victoryMessage = "The other player ran out of cards!";
+                RealtimeAPI.playerWon(playerWon);
             }
             changed = true;
             break;
@@ -236,7 +245,7 @@ AgileGatheringBoardStore.dispatchToken = Dispatcher.register((payload) => {
 
                                     playerTurnOver.playerPoints += storyCard.maxPoints;
                                     if(playerTurnOver.playerPoints >= 20){
-                                        //TODO
+                                        playerTurnOver.victoryMessage = "20 SP Achieved!";
                                         RealtimeAPI.playerWon(playerTurnOver);
                                     }
                                 }

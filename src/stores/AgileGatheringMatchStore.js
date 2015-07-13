@@ -2,7 +2,7 @@ import _ from '../vendor/lodash.min.js';
 
 import Dispatcher from '../backend/AgileGatheringDispatcher';
 import StoreCreator from '../backend/StoreCreator';
-import { Decks, FileServerIP, ActionTypes, Cards } from '../Constants';
+import { Decks, ActionTypes, Cards } from '../Constants';
 
 import buzz from '../vendor/buzz.min.js';
 

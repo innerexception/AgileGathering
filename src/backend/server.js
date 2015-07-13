@@ -61,11 +61,14 @@ wsServer.on('request', function(request) {
 
 });
 
-var connect = require('connect'),
-  serveStatic = require('serve-static'),
-  serveIndex = require('serve-index');
+var express = require('express');
+var app = express();
+var http = require('http');
+var httpServer = http.Server(app);
+express.static.mime.define({'application/octet-stream': ['ttf']});
+app.use(express.static('/Users/jbaker/projects/AgileGathering/'));
 
-var app = connect()
-  .use(serveStatic('/Users/pairing/projects/churro/pages/businessCatty/sounds'))
-  .use(serveIndex('/Users/pairing/projects/churro/pages/businessCatty/sounds', {'icons': true, 'view': 'details'}))
-  .listen(7777);
+app.get('/', function(req, res){
+    res.sendfile('/Users/jbaker/projects/AgileGathering/index.html');
+});
+app.listen(3000);

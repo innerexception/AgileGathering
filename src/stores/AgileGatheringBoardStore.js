@@ -133,31 +133,20 @@ AgileGatheringBoardStore.dispatchToken = Dispatcher.register((payload) => {
             break;
         case ActionTypes.CARD_MODIFIED:
 
-            let otherRemotePlayer = getPlayer(action.playerId);
             let modifiedCard = getCardByOwner(action.targetCard, action.playerId);
             modifiedCard.modifiers.push(action.droppedCard);
 
+            let otherRemotePlayer = getPlayer(action.playerId);
             if(!action.droppedCard.isPayedFor && action.playerId === currentPlayerId){
                 otherRemotePlayer.resourcePool -= action.droppedCard.cost;
                 action.droppedCard.isPayedFor = true;
             }
 
             setModifiedCardStats(modifiedCard, action.droppedCard);
-
-            if(!otherRemotePlayer.modifierCards) otherRemotePlayer.modifierCards = [];
-            otherRemotePlayer.modifierCards.push(action.droppedCard);
-            changed = true;
-            break;
-        case ActionTypes.CARD_UNMODIFIED:
-            let unmodifyCard = getCardByOwner(action.targetCard, action.playerId);
-            unmodifyCard.modifiers = _.filter(unmodifyCard.modifiers, function(modifier){
-                return modifier.cardId !== action.droppedCard.cardId;
-            })[0];
-
-            otherOtherRemotePlayer.modifierCards = _.filter(otherOtherRemotePlayer.modifierCards, function(card){
-                return card.cardId !== action.droppedCard.cardId;
-            })[0];
-
+            if(otherRemotePlayer.playerId === currentPlayerId){
+                if(!otherRemotePlayer.modifierCards) otherRemotePlayer.modifierCards = [];
+                otherRemotePlayer.modifierCards.push(action.droppedCard);
+            }
             changed = true;
             break;
         case ActionTypes.DRAW_CARDS:
@@ -190,7 +179,8 @@ AgileGatheringBoardStore.dispatchToken = Dispatcher.register((payload) => {
                             value: card.value,
                             pptBonus: card.pptBonus,
                             ppt: card.ppt,
-                            cost: card.cost
+                            cost: card.cost,
+                            ownerId: remotePlayer.playerId
                         });
                     }
                 }

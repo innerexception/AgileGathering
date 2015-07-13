@@ -419,7 +419,5 @@ export default {
       points: -5,
       cost: 4
     }
-  ],
-
-  FileServerIP: 'localhost'
+  ]
 };

@@ -211,7 +211,7 @@ export default React.createClass({
 
     _onCardDropped(context, event){
         if(this._isValidTarget(context, this.state.dragPayload)){
-            BoardActions.applyCardToTarget(context, this.state.dragPayload, this.props.currentPlayerId);
+            BoardActions.applyCardToTarget(context, this.state.dragPayload, context.ownerId);
         }
         delete this.state.dragPayload;
     },

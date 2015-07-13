@@ -76,6 +76,7 @@ export default React.createClass({
 
         return this.state.victoryForPlayer ? (<div className="jumbotron atg-label victory">Victory to: { this.state.victoryForPlayer.playerName + " " + this.state.victoryForPlayer.victoryMessage }</div>) :
             (<div className={ this.state && this.state.transitionIn ? "deck-builder-transition jumbotron deck-builder-in" : "deck-builder-transition jumbotron" }>
+                <div className="flaire" style={{backgroundColor: this.state.messageColor ? this.state.messageColor : "transparent"}}>{ this.state.message }</div>
                 <div className='score-right'>
                     Resources:
                     <div className="player-resource-count-outer">
@@ -204,8 +205,7 @@ export default React.createClass({
         }
         else{
             //TODO flash resource meter
-            //TODO add flaire
-            //BoardActions.showFlaire('Not enough resources available!');
+            BoardActions.showFlaire('Not enough resources available!', 'red');
         }
     },
 

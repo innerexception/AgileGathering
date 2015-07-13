@@ -11,6 +11,7 @@ export default {
     JOINED_MATCH: 'jm',
     UPDATE_MATCH: 'um',
     PLAYER_WON: 'pw',
+    SHOW_FLAIRE: 'sfl',
     DELETE_MATCH: 'dm',
     MATCH_START: 'ms',
     CREATE_NEW_PLAYER: 'cnp',

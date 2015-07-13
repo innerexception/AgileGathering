@@ -7,6 +7,19 @@
     margin-right: 8%;
 }
 
+.flaire{
+    margin-left: auto;
+    margin-right: auto;
+    width: 50%;
+    text-align: center;
+    font-family: 'MAGIC', serif;
+    text-shadow: 0 0 8px orange;
+    font-size: 28px;
+    border-radius: 5px;
+    border: 1px solid black;
+    margin-bottom: 10px;
+}
+
 .player-resource-count-outer{
     background-color: white;
     width: 25px;

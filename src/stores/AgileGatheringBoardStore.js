@@ -1,17 +1,17 @@
 import _ from '../vendor/lodash.min.js';
 
 import Dispatcher from '../backend/AgileGatheringDispatcher';
+import BoardActions from '../actions/BoardActionCreators';
 import RealtimeAPI from '../backend/RealtimeAPI';
 import StoreCreator from '../backend/StoreCreator';
 import { ActionTypes } from '../Constants';
 
-let cards, activePlayerId, match, hasNotDrawnThisTurn = true, currentPlayerId, victoryForPlayer;
+let cards, activePlayerId, match, hasNotDrawnThisTurn = true, currentPlayerId, victoryForPlayer, message="", messageColor="";
 
 import buzz from '../vendor/buzz.min.js';
 
 const matchSounds = {
-    cardSelect: new buzz.sound("./res/snd/select.mp3")
-
+    //cardSelect: new buzz.sound("./res/snd/select.mp3")
 };
 
 const getCardByOwner = (card, ownerId) => {
@@ -99,7 +99,9 @@ var AgileGatheringBoardStore = StoreCreator.create({
             activePlayerId,
             currentPlayerId,
             hasNotDrawnThisTurn,
-            victoryForPlayer
+            victoryForPlayer,
+            message,
+            messageColor
         };
     }
 });
@@ -162,6 +164,9 @@ AgileGatheringBoardStore.dispatchToken = Dispatcher.register((payload) => {
 
             if(remotePlayer.playerDeck.cardIds.length >= action.number){
                 if(remotePlayer.playerHand.length < 7){
+                    setTimeout(()=>{
+                        BoardActions.showFlaire("Drew "+action.number + " cards.", "bisque");
+                    }, 1000);
                     for(var i = 0; i < action.number; i++) {
                         let cardId = getRandomCard(remotePlayer.playerDeck.cardIds);
                         let card = getCardById(cardId);
@@ -234,6 +239,11 @@ AgileGatheringBoardStore.dispatchToken = Dispatcher.register((payload) => {
                                     storyCard.isCompleted = true;
 
                                     playerTurnOver.playerPoints += storyCard.maxPoints;
+
+                                    setTimeout(()=>{
+                                        BoardActions.showFlaire("Story Completed! "+storyCard.maxPoints + " gained.", "bisque");
+                                    }, 1000);
+
                                     if(playerTurnOver.playerPoints >= 20){
                                         playerTurnOver.victoryMessage = "20 SP Achieved!";
                                         RealtimeAPI.playerWon(playerTurnOver);
@@ -256,6 +266,11 @@ AgileGatheringBoardStore.dispatchToken = Dispatcher.register((payload) => {
             break;
         case ActionTypes.PLAYER_WON:
             victoryForPlayer = action.player;
+            changed = true;
+            break;
+        case ActionTypes.SHOW_FLAIRE:
+            message = action.message;
+            messageColor = action.color;
             changed = true;
             break;
     }

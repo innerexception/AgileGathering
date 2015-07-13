@@ -28,7 +28,7 @@ export default React.createClass({
                         <div className="card-back-inner"></div>
                         <div className="card-back-title">Agile:</div>
                         <div className="card-back-subtitle">The Gathering</div>
-                        <div className="deck-name">{ match.matchName }</div>
+                        <div className="deck-name">{ match.players && match.players.length > 1 ? "MATCH FULL" : match.matchName }</div>
             </div>);
         }, this);
         return (<div className={ this.state && this.state.transitionIn ? "matches lobby-transition jumbotron lobby-in" : "matches lobby-transition jumbotron" }>

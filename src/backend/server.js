@@ -8,8 +8,8 @@ var fs = require('fs');
 var server = http.createServer(function(request, response) {
   // Not important for us. We're writing WebSocket server, not HTTP server
 });
-var privateKey  = fs.readFileSync('sslcert/key.pem', 'utf8');
-var certificate = fs.readFileSync('sslcert/cert.pem', 'utf8');
+var privateKey  = fs.readFileSync('./key.pem', 'utf8');
+var certificate = fs.readFileSync('./cert.pem', 'utf8');
 
 var credentials = {key: privateKey, cert: certificate};
 var app2 = express();

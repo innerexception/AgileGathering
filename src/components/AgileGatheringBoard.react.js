@@ -76,7 +76,7 @@ export default React.createClass({
 
         return this.state.victoryForPlayer ? (<div className="jumbotron atg-label victory">Victory to: { this.state.victoryForPlayer.playerName + " " + this.state.victoryForPlayer.victoryMessage }</div>) :
             (<div className={ this.state && this.state.transitionIn ? "deck-builder-transition jumbotron deck-builder-in" : "deck-builder-transition jumbotron" }>
-                <div className="flaire" style={{backgroundColor: this.state.messageColor ? this.state.messageColor : "transparent"}}>{ this.state.message }</div>
+                <div className={this.state.message ? "flaire" : "flaire flaire-fade"} style={{backgroundColor: this.state.messageColor ? this.state.messageColor : "transparent"}}>{ this.state.message || "....." }</div>
                 <div className='score-right'>
                     Resources:
                     <div className="player-resource-count-outer">
@@ -153,10 +153,10 @@ export default React.createClass({
         const length = card.modifiers.length;
         const modifierEls = _.map(card.modifiers, function(modifierCard, i){
             return (
-                <div className="card card-modifier" style={{marginTop:-25*(length-i), marginRight: "-120px", backgroundImage: "url(\""+CardTypes[card.type].imagePath+"\")"}}>
+                <div className="card card-modifier" style={{marginTop:-25*(length-i), marginRight: "-120px", backgroundImage: "url(\""+CardTypes[modifierCard.type].imagePath+"\")"}}>
                     <div className="card-title">{modifierCard.name}</div>
                     <img className="card-picture" src={ modifierCard.imagePath }/>
-                    <div className="card-type">{modifierCard.type}</div>
+                    <div className="card-type">{modifierCard.type}</div>3
                     <div className="card-text">{modifierCard.text}</div>
                 </div>
             );

@@ -132,6 +132,8 @@
     animation-name: cardFlip;
     animation-iteration-count: 1;
     animation-direction: alternate;
+    border-width: 3px;
+    border-color: cornflowerblue;
 }
 
 .card-title{

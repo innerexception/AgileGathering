@@ -140,7 +140,7 @@ export default {
       cardId: 'productOwner',
       modifiers: [],
       name: 'Product Owner',
-      text: 'I own the products.',
+      text: 'I own the products. +1 on all other resources.',
       imagePath: './res/img/stolt.jpg',
       type: 'resource',
       pptBonus: 1,
@@ -150,7 +150,7 @@ export default {
       cardId: 'productOwner2',
       modifiers: [],
       name: 'Product Owner',
-      text: 'I own the products.',
+      text: 'I own the products. +1 on all other resources.',
       imagePath: './res/img/stolt.jpg',
       type: 'resource',
       pptBonus: 1,
@@ -160,8 +160,8 @@ export default {
       cardId: 'scrumMaster',
       modifiers: [],
       name: 'Scrum Master',
-      text: 'Hug it out.',
-      imagePath: './res/img/rgreen.png',
+      text: 'Hug it out. +1 on all other resources.',
+      imagePath: './res/img/mball.jpg',
       type: 'resource',
       pptBonus: 1,
       cost: 2
@@ -170,8 +170,8 @@ export default {
       cardId: 'scrumMaster2',
       modifiers: [],
       name: 'Scrum Master',
-      text: 'Hug it out.',
-      imagePath: './res/img/rgreen.png',
+      text: 'Hug it out. +1 on all other resources.',
+      imagePath: './res/img/mball.jpg',
       type: 'resource',
       pptBonus: 1,
       cost: 2
@@ -308,7 +308,7 @@ export default {
       type: 'delay',
       points: 6,
       pptBonus: 2,
-      cost: 3
+      cost: 5
     },
     {
       cardId: 'powderDay',
@@ -348,6 +348,16 @@ export default {
       imagePath: './res/img/lunch.jpg',
       type: 'delay',
       points: 1,
+      cost: 1
+    },
+    {
+      cardId: 'raise',
+      modifiers: [],
+      name: 'Raise!',
+      text: 'This close to buying my island.',
+      imagePath: './res/img/raise.jpg',
+      type: 'boost',
+      points: -1,
       cost: 1
     },
     {

@@ -18,6 +18,11 @@
     border-radius: 5px;
     border: 1px solid black;
     margin-bottom: 10px;
+    transition: opacity 1s;
+}
+
+.flaire-fade{
+    opacity: 0;
 }
 
 .player-resource-count-outer{

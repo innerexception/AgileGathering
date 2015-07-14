@@ -61,14 +61,14 @@ wsServer.on('request', function(request) {
 
 });
 
-var express = require('express');
-var app = express();
-var http = require('http');
-var httpServer = http.Server(app);
-express.static.mime.define({'application/octet-stream': ['ttf']});
-app.use(express.static('/Users/jbaker/projects/AgileGathering/'));
-
-app.get('/', function(req, res){
-    res.sendfile('/Users/jbaker/projects/AgileGathering/index.html');
-});
-app.listen(3000);
+//var express = require('express');
+//var app = express();
+//var http = require('http');
+//var httpServer = http.Server(app);
+//express.static.mime.define({'application/octet-stream': ['ttf']});
+//app.use(express.static('/Users/jbaker/projects/AgileGathering/'));
+//
+//app.get('/', function(req, res){
+//    res.sendfile('/Users/jbaker/projects/AgileGathering/index.html');
+//});
+//app.listen(3000);

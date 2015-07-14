@@ -1,12 +1,11 @@
-var ENDPOINT = "ws://salty-garden-4707.herokuapp.com:1337";
-
 import ServerActionCreators from '../actions/ServerActionCreators';
 
 export default {
 
   launch: function() {
     return new Promise((resolve, reject) => {
-      this.websocket = new ReconnectingWebSocket(ENDPOINT);
+      var host = location.origin.replace(/^http/, 'ws');
+      this.websocket = new ReconnectingWebSocket(host);
       console.log('realtime: connecting');
       this.websocket.onopen = function() {
         console.log("realtime: connected");

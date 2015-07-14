@@ -66,9 +66,9 @@ var app = express();
 var http = require('http');
 var httpServer = http.Server(app);
 express.static.mime.define({'application/octet-stream': ['ttf']});
-app.use(express.static('/'));
+app.use(express.static('./'));
 
 app.get('/', function(req, res){
-    res.sendfile('/index.html');
+    res.sendfile('./index.html');
 });
 app.listen(process.env.PORT || 3000);

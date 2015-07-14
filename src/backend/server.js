@@ -1,6 +1,7 @@
 var WebSocketServer = require('websocket').server;
 var http = require('http');
 var fs = require('fs');
+var express = require('express');
 
 /**
  * HTTP server
@@ -70,7 +71,6 @@ wsServer.on('request', function(request) {
 
 });
 
-var express = require('express');
 var app = express();
 var httpServer = http.Server(app);
 express.static.mime.define({'application/octet-stream': ['ttf']});

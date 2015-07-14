@@ -13,7 +13,7 @@ console.log("http server listening on %d", port);
 
 var clients = [];
 
-var wsServer = new WebSocketServer({server: server});
+var wsServer = new WebSocketServer({httpServer: server});
 
 // This callback function is called every time someone
 // tries to connect to the WebSocket server

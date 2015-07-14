@@ -1,4 +1,4 @@
-var ENDPOINT = "ws://salty-garden-4707.herokuapp.com:1337";
+var ENDPOINT = "wss://salty-garden-4707.herokuapp.com:1337";
 
 import ServerActionCreators from '../actions/ServerActionCreators';
 

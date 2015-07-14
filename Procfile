@@ -1,1 +1,0 @@
-worker: npm ./src/backend/server.js

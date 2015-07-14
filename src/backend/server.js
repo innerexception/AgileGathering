@@ -7,7 +7,7 @@ var http = require('http');
 var server = http.createServer(function(request, response) {
   // Not important for us. We're writing WebSocket server, not HTTP server
 });
-server.listen(1337, function() {
+server.listen(process.env.PORT || 1337, function() {
   console.log((new Date()) + " Server is listening on port " + 1337);
 });
 
@@ -61,14 +61,14 @@ wsServer.on('request', function(request) {
 
 });
 
-//var express = require('express');
-//var app = express();
-//var http = require('http');
-//var httpServer = http.Server(app);
-//express.static.mime.define({'application/octet-stream': ['ttf']});
-//app.use(express.static('/Users/jbaker/projects/AgileGathering/'));
-//
-//app.get('/', function(req, res){
-//    res.sendfile('/Users/jbaker/projects/AgileGathering/index.html');
-//});
-//app.listen(3000);
+var express = require('express');
+var app = express();
+var http = require('http');
+var httpServer = http.Server(app);
+express.static.mime.define({'application/octet-stream': ['ttf']});
+app.use(express.static('/Users/jbaker/projects/AgileGathering/'));
+
+app.get('/', function(req, res){
+    res.sendfile('/Users/jbaker/projects/AgileGathering/index.html');
+});
+app.listen(process.env.PORT || 3000);

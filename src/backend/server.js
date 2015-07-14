@@ -1,8 +1,5 @@
 var WebSocketServer = require('websocket').server;
 var http = require('http');
-var https = require('https');
-var fs = require('fs');
-var express = require('express');
 
 /**
  * HTTP server
@@ -10,16 +7,8 @@ var express = require('express');
 var server = http.createServer(function(request, response) {
   // Not important for us. We're writing WebSocket server, not HTTP server
 });
-var privateKey  = fs.readFileSync('./key.pem', 'utf8');
-var certificate = fs.readFileSync('./cert.pem', 'utf8');
-
-var credentials = {key: privateKey, cert: certificate};
-var app2 = express();
-
-//pass in your express app and credentials to create an https server
-var httpsServer = https.createServer(credentials, app2);
-httpsServer.listen(1337, function() {
-    console.log((new Date()) + "Secure Server is listening on port " + 1337);
+server.listen(1337, function() {
+  console.log((new Date()) + " Server is listening on port " + 1337);
 });
 
 /**
@@ -31,7 +20,7 @@ var clients = [];
 var wsServer = new WebSocketServer({
   // WebSocket server is tied to a HTTP server. WebSocket request is just
   // an enhanced HTTP request. For more info http://tools.ietf.org/html/rfc6455#page-6
-  httpServer: httpsServer
+  httpServer: server
 });
 
 // This callback function is called every time someone
@@ -72,8 +61,10 @@ wsServer.on('request', function(request) {
 
 });
 
+var express = require('express');
 var app = express();
-var httpServer = https.Server(app);
+var http = require('http');
+var httpServer = http.Server(app);
 express.static.mime.define({'application/octet-stream': ['ttf']});
 app.use(express.static('./'));
 

@@ -1,5 +1,5 @@
 var WebSocketServer = require('websocket').server;
-var http = require('http');
+var https = require('https');
 var fs = require('fs');
 var express = require('express');
 
@@ -72,7 +72,7 @@ wsServer.on('request', function(request) {
 });
 
 var app = express();
-var httpServer = http.Server(app);
+var httpServer = https.Server(app);
 express.static.mime.define({'application/octet-stream': ['ttf']});
 app.use(express.static('./'));
 

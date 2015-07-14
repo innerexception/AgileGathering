@@ -1,27 +1,19 @@
-var WebSocketServer = require('websocket').server;
-var http = require('http');
+var WebSocketServer = require("ws").Server;
+var http = require("http");
+var express = require("express");
+var app = express();
+var port = process.env.PORT || 5000;
 
-/**
- * HTTP server
- */
-var server = http.createServer(function(request, response) {
-  // Not important for us. We're writing WebSocket server, not HTTP server
-});
-server.listen(1337, function() {
-  console.log((new Date()) + " Server is listening on port " + 1337);
-});
+app.use(express.static(__dirname + "/"));
 
-/**
- * WebSocket server
- */
+var server = http.createServer(app);
+server.listen(port);
+
+console.log("http server listening on %d", port);
 
 var clients = [];
 
-var wsServer = new WebSocketServer({
-  // WebSocket server is tied to a HTTP server. WebSocket request is just
-  // an enhanced HTTP request. For more info http://tools.ietf.org/html/rfc6455#page-6
-  httpServer: server
-});
+var wsServer = new WebSocketServer({server: server});
 
 // This callback function is called every time someone
 // tries to connect to the WebSocket server
@@ -60,15 +52,3 @@ wsServer.on('request', function(request) {
   });
 
 });
-
-var express = require('express');
-var app = express();
-var http = require('http');
-var httpServer = http.Server(app);
-express.static.mime.define({'application/octet-stream': ['ttf']});
-app.use(express.static('./'));
-
-app.get('/', function(req, res){
-    res.sendfile('./index.html');
-});
-app.listen(process.env.PORT || 3000);
